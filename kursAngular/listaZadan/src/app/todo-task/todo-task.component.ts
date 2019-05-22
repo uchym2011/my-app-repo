@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
+import { Task } from '../models/task';
 
 @Component({
   selector: 'app-todo-task',
@@ -11,7 +12,7 @@ export class TodoTaskComponent implements OnInit {
 
   // komentujemy bo juz nie potrzebujemy otrzymywać z komponentu nadrzednego, tylko mamy to w serwisie
   //@Input()
-  tasksList = [];
+  tasksList: Array<Task> = [];
 
 /*   @Output()
   emitDone = new EventEmitter<string>();
@@ -24,7 +25,7 @@ export class TodoTaskComponent implements OnInit {
     // musimy tutaj zainicjalizować listeZadan
     // jak zasubskrybujemy będa wysłane do nas tasks
     // i do tej zmiennej przypisujemy to co do nas przyszło
-    this.tasksService.getTasksListObs().subscribe((tasks: Array<string>) => {
+    this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
       this.tasksList = tasks;
     })
   }
@@ -32,12 +33,12 @@ export class TodoTaskComponent implements OnInit {
   ngOnInit() {
   }
 
-  remove(task: string) {
+  remove(task: Task) {
     //this.emitRemove.emit(task);
     this.tasksService.remove(task);
   }
 
-  done(task: string) {
+  done(task: Task) {
     //this.emitDone.emit(task);
     this.tasksService.done(task);
   }

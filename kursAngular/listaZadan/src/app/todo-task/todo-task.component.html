@@ -1,7 +1,7 @@
 <ng-container *ngIf="tasksList.length > 0; else noTask">
   <p [ngStyle]="{color: getColor()}" >Zadania do wykonania: {{tasksList.length}}</p>
   <ul>
-    <li *ngFor="let task of tasksList; let odd = odd" [ngClass]="{'odd-li': odd===true, 'last-li': tasksList.length===1 }">{{task}}
+    <li *ngFor="let task of tasksList; let odd = odd" [ngClass]="{'odd-li': odd===true, 'last-li': tasksList.length===1 }">{{task.name}}
       <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
       <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
     </li>
