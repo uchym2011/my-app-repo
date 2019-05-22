@@ -1,36 +1,16 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div>
   <div class="container">
-    <div>
-      Miejsce na dodawanie tasków
-      <input [(ngModel)]="newTask">
-      <button (click)="add()">Dodaj</button>
-    </div>
+    <app-add-task (emitTask)="add($event)"></app-add-task>
   </div>
 
   <div class="container">
-
     <div>
-      <ng-container *ngIf="tasksList.length > 0; else noTask">
-      <ul>
-        <li *ngFor="let task of tasksList">{{task}}
-        <button (click)="remove(task)">Usuń</button>
-        <button (click)="done(task)">Zrobione</button>
-        </li>
-      </ul>
-    </ng-container>
-    <ng-template #noTask>Brak zadań, masz czas wolny!</ng-template>
-
-
+        <app-todo-task [tasksList]="tasksList" (emitDone)="done($event)" (emitRemove)="remove($event)"></app-todo-task>
     </div>
 
     <div>
-      Zadania wykonane: {{tasksDone.length}}
-      <ul>
-        <li *ngFor="let done of tasksDone">
-          {{done}}
-        </li>
-      </ul>
+      <app-done-task [tasksDone]="tasksDone"></app-done-task>
     </div>
 
   </div>
