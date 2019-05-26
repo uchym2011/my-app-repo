@@ -10,6 +10,7 @@ import { TasksService } from './services/tasks.service';
 import { CheckedDirective } from './shared/checked.directive';
 import { DateDirective } from './shared/date.directive';
 import { TransformTaskPipe } from './shared/transform-task.pipe';
+import { SortNamePipe } from './shared/sort-name.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TransformTaskPipe } from './shared/transform-task.pipe';
     DoneTaskComponent,
     CheckedDirective,
     DateDirective,
-    TransformTaskPipe
+    TransformTaskPipe,
+    SortNamePipe
   ],
   imports: [
     BrowserModule,

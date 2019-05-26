@@ -26,8 +26,11 @@ export class TodoTaskComponent implements OnInit {
     // jak zasubskrybujemy będa wysłane do nas tasks
     // i do tej zmiennej przypisujemy to co do nas przyszło
     this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
-      this.tasksList = tasks;
-    })
+
+      // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
+      // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
+      this.tasksList = tasks.slice();
+    });
   }
 
   ngOnInit() {
