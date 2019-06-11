@@ -5,49 +5,64 @@ import { Task } from '../models/task';
 @Injectable()
 export class TasksService {
 
-  private tasksList: Array<Task> = [];
-  private tasksDone: Array<Task> = [];
+  //private tasksList: Array<Task> = [];
+
+  // refaktoryzacja, mozemy sie pozbyć poniewaz mamy propertke isDone
+  // private tasksDone: Array<Task> = [];
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
-  private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
+  //private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
   constructor() {
-    this.tasksList =
+    const tasksList =
       [
       { name: 'Nauka Angulara', created: new Date().toLocaleString(), isDone: false },
       { name: 'Nauka TypeScript', created: new Date().toLocaleString(), isDone: false },
       { name: 'Ogladanie Gry o Tron', created: new Date().toLocaleString(), isDone: false },
-      { name: 'Budowa Serwera NAS', created: new Date().toLocaleString(), isDone: false }
+      { name: 'Ogladanie The Walking Dead', created: new Date().toLocaleString(), end: new Date().toLocaleString(),  isDone: true },
+      { name: 'Budowa Serwera NAS', created: new Date().toLocaleString(), end: new Date().toLocaleString(), isDone: true}
       ];
 
     // wrzucmay nasza liste wypełniona danymi
-    this.tasksListObs.next(this.tasksList);
+    this.tasksListObs.next(tasksList);
   }
 
   add(task: Task) {
-    this.tasksList.push(task);
+    // dodajemy do listy
+    //this.tasksList.push(task);
 
+    // propagujemy
     // przy wrzucaniu zadania do naszej listy musimy tez obsluzyc .taskListObs
-    this.tasksListObs.next(this.tasksList);
+    //this.tasksListObs.next(this.tasksList);
+
+    const list = this.tasksListObs.getValue();
+    list.push(task);
+    this.tasksListObs.next(list);
   }
 
   remove(task: Task) {
-    this.tasksList = this.tasksList.filter(e => e !== task);
+    const list = this.tasksListObs.getValue().filter(e => e !== task);
     // po każdym elemencie się kręcimy (po całej liście) i oznaczamy każdy element jako e i sprawdzamy
     // czy ten element jest różny od tego z parametru który przychodzi
     // jeśli warunek będzie zwróci true to filter zachowa ten element, a jeśli nie to go odrzuci
     // zachowane elementy tworzą nową tablice, więc metoda zwróci nową listę
 
     // przy usuwaniu zadania z naszej listy musimy tez obsluzyc .taskListObs że coś sie zmieniło
-    this.tasksListObs.next(this.tasksList);
+    this.tasksListObs.next(list);
   }
 
   done(task: Task) {
-    this.tasksDone.push(task);
-    this.remove(task);
+    // this.tasksDone.push(task);
+    // this.remove(task);
 
     // przy konczeniu zadania z naszej listy musimy tez obsluzyc .taskDoneObs że coś sie zmieniło
-    this.tasksDoneObs.next(this.tasksDone);
+    // this.tasksDoneObs.next(this.tasksDone);
+    task.end = new Date().toLocaleString();
+    task.isDone = true;
+    const list = this.tasksListObs.getValue();
+
+    // metoda next rozpropagowuje w subjectach ze cos sie zmienilo
+    this.tasksListObs.next(list);
   }
 
   // brakuje nam jeszcze metod dostepu do tych Subjectow
@@ -56,8 +71,8 @@ export class TasksService {
     return this.tasksListObs.asObservable();
   }
 
-  getTasksDoneObs(): Observable<Array<Task>> {
+/*   getTasksDoneObs(): Observable<Array<Task>> {
     return this.tasksDoneObs.asObservable();
-  }
+  } */
 
 }

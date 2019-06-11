@@ -29,7 +29,9 @@ export class TodoTaskComponent implements OnInit {
 
       // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
       // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
-      this.tasksList = tasks.slice();
+      // this.tasksList = tasks.slice();
+
+      this.tasksList = tasks.filter(t => t.isDone === false)
     });
   }
 
@@ -44,7 +46,7 @@ export class TodoTaskComponent implements OnInit {
   done(task: Task) {
     //this.emitDone.emit(task);
     this.tasksService.done(task);
-    task.end = new Date().toLocaleString();
+    //task.end = new Date().toLocaleString();
   }
 
   getColor(): string{
