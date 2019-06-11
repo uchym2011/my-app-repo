@@ -13,10 +13,12 @@ export class TasksService {
 
   constructor() {
     this.tasksList =
-      [{ name: 'Nauka Angulara', created: new Date() },
-      { name: 'Nauka TypeScript', created: new Date() },
-      { name: 'Ogladanie Gry o Tron', created: new Date() },
-      { name: 'Budowa Serwera NAS', created: new Date() }];
+      [
+      { name: 'Nauka Angulara', created: new Date().toLocaleString(), isDone: false },
+      { name: 'Nauka TypeScript', created: new Date().toLocaleString(), isDone: false },
+      { name: 'Ogladanie Gry o Tron', created: new Date().toLocaleString(), isDone: false },
+      { name: 'Budowa Serwera NAS', created: new Date().toLocaleString(), isDone: false }
+      ];
 
     // wrzucmay nasza liste wypełniona danymi
     this.tasksListObs.next(this.tasksList);
