@@ -33,7 +33,7 @@ export class TasksService {
     this.tasksListObs.next(tasksList); */
   }
 
-  add(task: Task) {
+  add(task: Array<Task>) {
     // dodajemy do listy
     // this.tasksList.push(task);
 
@@ -41,8 +41,7 @@ export class TasksService {
     // przy wrzucaniu zadania do naszej listy musimy tez obsluzyc .taskListObs
     // this.tasksListObs.next(this.tasksList);
 
-    const list = this.tasksListObs.getValue();
-    list.push(task);
+    const list = this.tasksListObs.getValue().concat(task);
     this.tasksListObs.next(list);
   }
 
