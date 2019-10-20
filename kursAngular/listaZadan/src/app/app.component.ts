@@ -5,17 +5,8 @@ import { TasksService } from './services/tasks.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
-  //providers: [TasksService] przeniesiony do @ng_module
+  // providers: [TasksService] przeniesiony do @ng_module
 })
 export class AppComponent {
-  title = 'listaZadan';
-
-constructor(private tasksService: TasksService){
-
-}
-
-save() {
-  this.tasksService.saveTaskInDB();
-}
 
 }

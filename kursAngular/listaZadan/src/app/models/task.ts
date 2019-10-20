@@ -4,5 +4,5 @@ export interface Task {
   name: string;
   created: string;
   end?: string;
-  isDone: boolean;
+  isDone: number;
 }

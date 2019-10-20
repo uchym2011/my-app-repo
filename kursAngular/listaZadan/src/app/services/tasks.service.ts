@@ -6,15 +6,20 @@ import { HttpService } from './http.service';
 @Injectable()
 export class TasksService {
 
-  //private tasksList: Array<Task> = [];
+  // private tasksList: Array<Task> = [];
 
   // refaktoryzacja, mozemy sie pozbyć poniewaz mamy propertke isDone
   // private tasksDone: Array<Task> = [];
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
-  //private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
+  // private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
   constructor(private httpSevice: HttpService) {
+
+    this.httpSevice.getTasks().subscribe(list => {
+      this.tasksListObs.next(list);
+    });
+
  /*    const tasksList =
       [
       { name: 'Nauka Angulara', created: new Date().toLocaleString(), isDone: false },
@@ -30,11 +35,11 @@ export class TasksService {
 
   add(task: Task) {
     // dodajemy do listy
-    //this.tasksList.push(task);
+    // this.tasksList.push(task);
 
     // propagujemy
     // przy wrzucaniu zadania do naszej listy musimy tez obsluzyc .taskListObs
-    //this.tasksListObs.next(this.tasksList);
+    // this.tasksListObs.next(this.tasksList);
 
     const list = this.tasksListObs.getValue();
     list.push(task);
@@ -59,7 +64,7 @@ export class TasksService {
     // przy konczeniu zadania z naszej listy musimy tez obsluzyc .taskDoneObs że coś sie zmieniło
     // this.tasksDoneObs.next(this.tasksDone);
     task.end = new Date().toLocaleString();
-    task.isDone = true;
+    task.isDone = 1;
     const list = this.tasksListObs.getValue();
 
     // metoda next rozpropagowuje w subjectach ze cos sie zmienilo

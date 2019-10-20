@@ -3,3 +3,9 @@ li{
   background: lightslategray;
   margin: 5px;
 }
+
+.container{
+  display: grid;
+  justify-content: center;
+  padding: 20px;
+}

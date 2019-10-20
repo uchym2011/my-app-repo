@@ -11,7 +11,7 @@ import { Task } from '../models/task';
 export class TodoTaskComponent implements OnInit {
 
   // komentujemy bo juz nie potrzebujemy otrzymywać z komponentu nadrzednego, tylko mamy to w serwisie
-  //@Input()
+  // @Input()
   tasksList: Array<Task> = [];
 
 /*   @Output()
@@ -31,7 +31,7 @@ export class TodoTaskComponent implements OnInit {
       // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
       // this.tasksList = tasks.slice();
 
-      this.tasksList = tasks.filter(t => t.isDone === false)
+      this.tasksList = tasks.filter(t => t.isDone === 0);
     });
   }
 
@@ -39,19 +39,21 @@ export class TodoTaskComponent implements OnInit {
   }
 
   remove(task: Task) {
-    //this.emitRemove.emit(task);
+    // this.emitRemove.emit(task);
     this.tasksService.remove(task);
   }
 
   done(task: Task) {
-    //this.emitDone.emit(task);
+    // this.emitDone.emit(task);
     this.tasksService.done(task);
-    //task.end = new Date().toLocaleString();
+    // task.end = new Date().toLocaleString();
   }
 
-  getColor(): string{
+  getColor(): string {
     return this.tasksList.length > 4 ? 'red' : 'green';
   }
 
-
+  save() {
+    this.tasksService.saveTaskInDB();
+  }
 }

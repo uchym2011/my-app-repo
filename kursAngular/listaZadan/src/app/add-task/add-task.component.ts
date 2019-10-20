@@ -20,7 +20,7 @@ export class AddTaskComponent implements OnInit {
 
   add() {
 
-    const task: Task = {name: this.newTask, created: new Date().toLocaleString(), isDone: false };
+    const task: Task = {name: this.newTask, created: new Date().toLocaleString(), isDone: 0 };
 
     /**   this.tasksList.push(this.newTask);
       console.log(this.tasksList);

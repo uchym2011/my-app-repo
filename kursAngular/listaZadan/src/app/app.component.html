@@ -1,23 +1,35 @@
+
+
 <!-- Nie komunikujemy sie juz z naszymi dziecmi, tylko nasze podrzedne komponenty zdecydowały się na bezposrednia komunikację z serwissem -->
 <div>
-  <div class="container">
-    <!-- <app-add-task (emitTask)="add($event)"></app-add-task> -->
+
+    <ul class="nav nav-pills justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="doneTask" routerLinkActive="active">Wykonane</a>
+        </li>
+      </ul>
+
+      <router-outlet></router-outlet>
+
+<!--   <div class="container">
+    <app-add-task (emitTask)="add($event)"></app-add-task>
     <app-add-task></app-add-task>
   </div>
 
   <div class="container">
     <div>
-        <!-- <app-todo-task [tasksList]="tasksList" (emitDone)="done($event)" (emitRemove)="remove($event)"></app-todo-task> -->
+        <app-todo-task [tasksList]="tasksList" (emitDone)="done($event)" (emitRemove)="remove($event)"></app-todo-task>
         <app-todo-task></app-todo-task>
     </div>
 
     <div>
-      <!-- <app-done-task [tasksDone]="tasksDone"></app-done-task> -->
+      <app-done-task [tasksDone]="tasksDone"></app-done-task>
       <app-done-task></app-done-task>
     </div>
 
-  </div>
-
-<button (click)="save()" >Zapisz</button>
+  </div> -->
 
 </div>
