@@ -1,20 +1,24 @@
-
-
 <!-- Nie komunikujemy sie juz z naszymi dziecmi, tylko nasze podrzedne komponenty zdecydowały się na bezposrednia komunikację z serwissem -->
 <div>
 
-    <ul class="nav nav-pills justify-content-center">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="doneTask" routerLinkActive="active">Wykonane</a>
-        </li>
-      </ul>
+  <ul class="nav nav-pills justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="doneTask" routerLinkActive="active">Wykonane</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="!authService.user" routerLink="login" routerLinkActive="active">Zaloguj</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" *ngIf="authService.user" (click)="logout()">Wyloguj</a>
+    </li>
+  </ul>
 
-      <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-<!--   <div class="container">
+  <!--   <div class="container">
     <app-add-task (emitTask)="add($event)"></app-add-task>
     <app-add-task></app-add-task>
   </div>

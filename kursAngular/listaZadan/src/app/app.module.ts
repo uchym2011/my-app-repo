@@ -16,16 +16,19 @@ import { HttpService } from './services/http.service';
 import { AppRoutingModule } from './app.routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthService } from './auth/auth.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 
 const config = {
-  apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
-  authDomain: "autoryzacja-lista-zadan.firebaseapp.com",
-  databaseURL: "https://autoryzacja-lista-zadan.firebaseio.com",
-  projectId: "autoryzacja-lista-zadan",
-  storageBucket: "autoryzacja-lista-zadan.appspot.com",
-  messagingSenderId: "447948890498",
-  appId: "1:447948890498:web:a1c1b2879ae54327bf2f9b"
+  apiKey: 'AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758',
+  authDomain: 'autoryzacja-lista-zadan.firebaseapp.com',
+  databaseURL: 'https://autoryzacja-lista-zadan.firebaseio.com',
+  projectId: 'autoryzacja-lista-zadan',
+  storageBucket: 'autoryzacja-lista-zadan.appspot.com',
+  messagingSenderId: '447948890498',
+  appId: '1:447948890498:web:a1c1b2879ae54327bf2f9b'
 };
 
 @NgModule({
@@ -37,7 +40,8 @@ const config = {
     CheckedDirective,
     DateDirective,
     TransformTaskPipe,
-    SortNamePipe
+    SortNamePipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,7 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule
   ],
-  providers: [TasksService, HttpService],
+  providers: [TasksService, HttpService, AuthService, AuthGuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
