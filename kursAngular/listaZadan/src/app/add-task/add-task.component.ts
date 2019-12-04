@@ -3,6 +3,7 @@ import { TasksService } from '../services/tasks.service';
 import { Task } from '../models/task';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-add-task',
@@ -13,7 +14,7 @@ export class AddTaskComponent implements OnInit {
 
   addForm: FormGroup;
 
-  constructor(private tasksService: TasksService) { }
+  constructor(private tasksService: TasksService,private authService: AuthService) { }
 
   newTask: string;
 
@@ -60,7 +61,7 @@ export class AddTaskComponent implements OnInit {
 
     // w petli dla każdego taskName pobieramy taski.
     tasksArr.forEach(taskName => {
-      const task = { name: taskName, created: new Date().toLocaleString(), isDone: 0 };
+      const task = { name: taskName, userId: this.authService.user.uid, created: new Date().toLocaleString(), isDone: 0 };
       tasksList.push(task);
     });
     return tasksList;
