@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Task } from '../models/task';
-import { HttpService } from './http.service';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'firebase';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Task } from "../models/task";
+import { HttpService } from "./http.service";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { User } from "firebase";
 
 @Injectable()
 export class TasksService {
-
   // private tasksList: Array<Task> = [];
 
   // refaktoryzacja, mozemy sie pozbyć poniewaz mamy propertke isDone
   // private tasksDone: Array<Task> = [];
 
-
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
   // private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
-  constructor(private httpSevice: HttpService, private angularFire: AngularFireAuth) {
-
+  constructor(
+    private httpSevice: HttpService,
+    private angularFire: AngularFireAuth
+  ) {
     angularFire.authState.subscribe(user => {
       if (user) {
         this.init();
@@ -40,12 +40,12 @@ export class TasksService {
        this.tasksListObs.next(tasksList); */
   }
 
-  init(){
-    console.log('Wykonuję tasks.service.ts init()');
+  init() {
+    console.log("Wykonuję tasks.service.ts init()");
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
-}
+  }
 
   add(task: Array<Task>) {
     // dodajemy do listy
@@ -87,8 +87,8 @@ export class TasksService {
   // brakuje nam jeszcze metod dostepu do tych Subjectow
   // zwracamy jako Observalble abyśmy mogli subskrybować
   getTasksListObs(): Observable<Array<Task>> {
-    console.log('Wykonuję tasks.service.ts getTasksListObs()');
-    this.init();
+    console.log("Wykonuję tasks.service.ts getTasksListObs()");
+    // this.init();
     return this.tasksListObs.asObservable();
   }
 
@@ -97,17 +97,15 @@ export class TasksService {
     } */
 
   saveTaskInDB() {
-
-    console.log('Wykonuję tasks.service.ts saveTaskInDB()');
+    console.log("Wykonuję tasks.service.ts saveTaskInDB()");
 
     this.httpSevice.saveTasks(this.tasksListObs.getValue());
 
     //this.tasksListObs.next([]);
 
+    // ! TEN KOD WIELE ZMIENIA!
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
-
   }
-
 }
