@@ -1,16 +1,31 @@
 <div class="container">
-<app-add-task></app-add-task>
-<ng-container *ngIf="tasksList.length > 0; else noTask">
-  <p [ngStyle]="{color: getColor()}" >Zadania do wykonania: {{tasksList.length}}</p>
-  <ul>
-    <li appDate [date] = "task.created" *ngFor="let task of tasksList | sortName; let odd = odd" [ngClass]="{'odd-li': odd===true, 'last-li': tasksList.length===1 }">{{task.name | transformTask: '!'}}
-      <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
-      <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
-    </li>
-  </ul>
-</ng-container>
-<ng-template #noTask>Brak zadań, masz czas wolny!</ng-template>
+  <app-add-task></app-add-task>
+  <ng-container *ngIf="tasksList.length > 0; else noTask">
+    <p [ngStyle]="{color: getColor()}">Zadania do wykonania: {{tasksList.length}}</p>
 
-<button (click)="save()" >Zapisz</button>
+    <div *ngFor="let task of tasksList; let odd = odd">
+      <ul *ngIf="task.priority == 1;">
+        <li  appDate [date]="task.created" [ngClass]="{'odd-li': odd===true, 'last-li': tasksList.length===1 }">
+          <b>{{task.name | transformTask: '!'}}</b>
+          <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
+          <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
+          {{task.priority | transformTask: ' - Zadanie priorytetowe !'}}
+          <input type="checkbox" ng-model="task.priority">
+        </li>
+      </ul>
+      <ul *ngIf="task.priority < 1;">
+
+        <li appDate [date]="task.created">
+            {{task.name | transformTask: '!'}}
+            <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
+            <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
+            {{task.priority | transformTask: '!'}}
+        </li>
+      </ul>
+    </div>
+
+  </ng-container>
+  <ng-template #noTask>Brak zadań, masz czas wolny!</ng-template>
+  <button (click)="save()">Zapisz</button>
 
 </div>

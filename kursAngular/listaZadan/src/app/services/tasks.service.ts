@@ -41,6 +41,7 @@ export class TasksService {
   }
 
   init(){
+    console.log('Wykonuję tasks.service.ts init()');
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
@@ -86,6 +87,8 @@ export class TasksService {
   // brakuje nam jeszcze metod dostepu do tych Subjectow
   // zwracamy jako Observalble abyśmy mogli subskrybować
   getTasksListObs(): Observable<Array<Task>> {
+    console.log('Wykonuję tasks.service.ts getTasksListObs()');
+    this.init();
     return this.tasksListObs.asObservable();
   }
 
@@ -94,7 +97,17 @@ export class TasksService {
     } */
 
   saveTaskInDB() {
+
+    console.log('Wykonuję tasks.service.ts saveTaskInDB()');
+
     this.httpSevice.saveTasks(this.tasksListObs.getValue());
+
+    //this.tasksListObs.next([]);
+
+    this.httpSevice.getTasks().subscribe(list => {
+      this.tasksListObs.next(list);
+    });
+
   }
 
 }

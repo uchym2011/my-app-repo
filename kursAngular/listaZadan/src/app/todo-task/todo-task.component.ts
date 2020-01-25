@@ -56,5 +56,15 @@ export class TodoTaskComponent implements OnInit {
 
   save() {
     this.tasksService.saveTaskInDB();
+
+    this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
+      // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
+      // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
+      // this.tasksList = tasks.slice();
+      debugger;
+      //this.tasksList = tasks.filter(t => t.end === null);
+
+    });
+
   }
 }

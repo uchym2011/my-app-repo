@@ -1,3 +1,5 @@
+//import { ExecFileSyncOptionsWithBufferEncoding } from 'child_process';
+
 // tworzymy interfejsc który będzie reprezentował nasz obiekt Task
 export interface Task {
   _id?: {"$oid": string}
@@ -6,4 +8,5 @@ export interface Task {
   created: string;
   end?: string;
   isDone: number;
+  priority?: number;
 }
