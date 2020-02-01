@@ -7,9 +7,12 @@ import { AuthService } from './auth.service';
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) {
+    console.log('Wykonuję auth-guard.service.ts constructor #1');
+   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    console.log('Wykonuję auth-guard.service.ts canActivate #1');
     if (this.authService.user) {
       return true;
     }

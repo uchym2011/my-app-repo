@@ -15,30 +15,32 @@ export class HttpService {
   readonly param = new HttpParams().append("userId", "1");
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    console.log("Wykonuję contruktor getTasks()");
+    console.log('Wykonuję http.service.ts constructor #1');
     this.getTasks();
   }
 
   getParams(): string {
     const uid = this.authService.user.uid;
-    console.log("getParams UID2 = " + uid);
+    console.log('Wykonuję http.service.ts hetParams #1 [uid] = ' + uid);
     return uid;
   }
 
   getTasks(): Observable<Array<Task>> {
-    console.log("Wykonuję getTasks()");
+    console.log('Wykonuję http.service.ts getTasks #1');
     this.http.get(this.URL_DB).subscribe(tasks => {
       console.log(tasks);
     });
     return this.http.get<Array<Task>>(this.URL_DB + "/" + this.getParams());
   }
 
-  saveTasks(list: Array<Task>) {
-    console.log("Wykonuję saveTasks()");
+    saveTasks(list: Array<Task>) {
+    console.log('Wykonuję http.service.ts saveTasks #1');
     //console.log(JSON.stringify(list));
 
     this.http.put(this.URL_DB, list).subscribe(data => {
-      console.log("dane " + data);
+
+      console.log('Wykonuję http.service.ts saveTasks #2 + [dane] = ' + data);
     });
+
   }
 }

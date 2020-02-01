@@ -12,9 +12,11 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(public authService: AuthService, private router: Router) {
+    console.log('Wykonuję app.component.ts constructor #1');
   }
 
   logout() {
+    console.log('Wykonuję app.component.ts logout() #1');
     this.authService.logout();
     this.router.navigate(['/login']);
   }

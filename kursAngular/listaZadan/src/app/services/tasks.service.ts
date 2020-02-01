@@ -19,6 +19,7 @@ export class TasksService {
     private httpSevice: HttpService,
     private angularFire: AngularFireAuth
   ) {
+    console.log('Wykonuję tasks.service.ts constructor #1');
     angularFire.authState.subscribe(user => {
       if (user) {
         this.init();
@@ -41,13 +42,14 @@ export class TasksService {
   }
 
   init() {
-    console.log("Wykonuję tasks.service.ts init()");
+    console.log('Wykonuję tasks.service.ts init #1');
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
   }
 
   add(task: Array<Task>) {
+    console.log('Wykonuję tasks.service.ts add #1');
     // dodajemy do listy
     // this.tasksList.push(task);
 
@@ -60,7 +62,14 @@ export class TasksService {
   }
 
   remove(task: Task) {
-    const list = this.tasksListObs.getValue().filter(e => e !== task);
+    console.log('Wykonuję tasks.service.ts remove #1');
+    //debugger;
+    task.isDone = -1;
+    const list = this.tasksListObs.getValue();
+    //debugger;
+    // !
+    //const list = this.tasksListObs.getValue().filter(e => e !== task);
+
     // po każdym elemencie się kręcimy (po całej liście) i oznaczamy każdy element jako e i sprawdzamy
     // czy ten element jest różny od tego z parametru który przychodzi
     // jeśli warunek będzie zwróci true to filter zachowa ten element, a jeśli nie to go odrzuci
@@ -71,6 +80,7 @@ export class TasksService {
   }
 
   done(task: Task) {
+    console.log('Wykonuję tasks.service.ts done #1');
     // this.tasksDone.push(task);
     // this.remove(task);
 
@@ -87,7 +97,7 @@ export class TasksService {
   // brakuje nam jeszcze metod dostepu do tych Subjectow
   // zwracamy jako Observalble abyśmy mogli subskrybować
   getTasksListObs(): Observable<Array<Task>> {
-    console.log("Wykonuję tasks.service.ts getTasksListObs()");
+    console.log('Wykonuję tasks.service.ts getTasksListObs #1');
     // this.init();
     return this.tasksListObs.asObservable();
   }
@@ -97,15 +107,17 @@ export class TasksService {
     } */
 
   saveTaskInDB() {
-    console.log("Wykonuję tasks.service.ts saveTaskInDB()");
+    console.log('Wykonuję tasks.service.ts saveTaskInDB #1');
 
     this.httpSevice.saveTasks(this.tasksListObs.getValue());
 
+    //this.getTasksListObs
     //this.tasksListObs.next([]);
 
     // ! TEN KOD WIELE ZMIENIA!
-    this.httpSevice.getTasks().subscribe(list => {
-      this.tasksListObs.next(list);
-    });
+    //console.log('Wykonuję tasks.service.ts saveTaskInDB #1  ! TEN KOD WIELE ZMIENIA!');
+    //this.httpSevice.getTasks().subscribe(list => {
+    //  this.tasksListObs.next(list);
+    //});
   }
 }

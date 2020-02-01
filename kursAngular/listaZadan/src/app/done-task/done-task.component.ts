@@ -13,6 +13,7 @@ export class DoneTaskComponent implements OnInit {
   tasksDone: Array<Task> = [];
 
   constructor(private tasksService: TasksService) {
+    console.log('Wykonuję done-task.component.ts constructor #1');
     this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
       this.tasksDone = tasks.filter(t => t.isDone === 1);
     });

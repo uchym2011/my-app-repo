@@ -12,12 +12,14 @@ export class AuthService {
 
   constructor(public angularFire: AngularFireAuth, private router: Router) {
     // pilnuje czy jestesmy zalogowani
+    console.log('Wykonuję auth.service.ts constructor #1');
     angularFire.authState.subscribe(user => {
       this.user = user;
     });
   }
 
   login(email: string, password: string) {
+    console.log('Wykonuję auth.service.ts login #1');
     this.angularFire.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -29,6 +31,7 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
+    console.log('Wykonuję auth.service.ts signup #1');
     this.angularFire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
@@ -40,6 +43,7 @@ export class AuthService {
   }
 
   logout() {
+    console.log('Wykonuję auth.service.ts logout #1');
     this.angularFire.auth.signOut();
   }
 

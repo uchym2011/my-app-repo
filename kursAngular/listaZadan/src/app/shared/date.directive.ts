@@ -21,7 +21,7 @@ export class DateDirective {
   // metoda przyjmuje jakiś event
   @HostListener('mouseenter')
   mouseenter(eventDate: Event){
-    console.log(this.date);
+    //console.log(this.date);
     this.paragraph.innerHTML = this.date;
 
     // wstrykujemy do naszego elemntu li ten nasz nowy paragraph
@@ -30,7 +30,7 @@ export class DateDirective {
 
   @HostListener('mouseleave')
   mouseleave(eventDate: Event){
-    console.log(this.date);
+    //console.log(this.date);
     this.renderer.removeChild(this.el.nativeElement, this.paragraph);
   }
 }

@@ -9,8 +9,8 @@
           <b>{{task.name | transformTask: '!'}}</b>
           <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
           <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
-          {{task.priority | transformTask: ' - Zadanie priorytetowe !'}}
-          <input type="checkbox" ng-model="task.priority">
+          {{task.priority + ' - Zadanie priorytetowe !'}}
+
         </li>
       </ul>
       <ul *ngIf="task.priority < 1;">
@@ -19,7 +19,7 @@
             {{task.name | transformTask: '!'}}
             <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
             <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
-            {{task.priority | transformTask: '!'}}
+            {{task.priority + '!'}}
         </li>
       </ul>
     </div>
