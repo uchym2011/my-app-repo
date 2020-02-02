@@ -1,24 +1,26 @@
-<div>
-  Miejsce na dodawanie tasków 2:
+<ul>
+<div style="">
+  <h3>Miejsce na dodawanie tasków:</h3>
   <form [formGroup]="addForm2" (ngSubmit)="add2()">
     <div>
       <div style="display: inline-block;" formArrayName="taskName">
         <div *ngFor="let task of addForm2.get('taskName')['controls']; let i = index;">
-        <label>{{i+1}}</label><input type="text" [formControlName]="i">
+        <label>{{i+1 + '.'}} &nbsp; </label><input type="text" [formControlName]="i">
         </div>
 
       </div>
 
       <div formArrayName="priority" style="display: inline-block;">
         <div *ngFor="let task of addForm2.get('priority')['controls']; let i = index;">
-          <label>Piorytetowe:</label> <input type="checkbox" [formControlName]="i">
+          <label> &nbsp; Piorytetowe: &nbsp;</label> <input type="checkbox" [formControlName]="i">
         </div>
       </div>
     </div>
 
     <div>
-      <button type="submit">Dodaj</button>
-      <button type="button" (click)="addField2()">Dodaj więcej</button>
+      <button type="submit" class="btn btn-warning" style="margin-right: 15px;">Dodaj</button>
+      <button type="button" (click)="addField2()" class="btn btn-warning">Dodaj więcej</button>
     </div>
   </form>
 </div>
+</ul>

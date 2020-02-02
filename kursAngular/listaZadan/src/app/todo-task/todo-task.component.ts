@@ -20,6 +20,8 @@ export class TodoTaskComponent implements OnInit {
   // komentujemy bo juz nie potrzebujemy otrzymywać z komponentu nadrzednego, tylko mamy to w serwisie
   // @Input()
   tasksList: Array<Task> = [];
+  tasksListPrior: Array<Task> = [];
+  tasksListNorm: Array<Task> = [];
 
   /*   @Output()
   emitDone = new EventEmitter<string>();
@@ -46,9 +48,16 @@ export class TodoTaskComponent implements OnInit {
       //this.tasksList = tasks.slice();
 
       this.tasksList = tasks.filter(t => t.isDone == 0);
+
+      this.tasksListPrior = tasks.filter(t => t.isDone == 0 && t.priority == 1);
+
+      this.tasksListNorm = tasks.filter(t => t.isDone == 0 && t.priority < 1);
       //debugger;
       //this.tasksList = tasks.filter(t => t.end === null);
     });
+
+
+
   }
 
   remove(task: Task) {

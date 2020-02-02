@@ -14,7 +14,7 @@ export class HttpService {
   // readonly param = new HttpParams().set('apiKey', '');
   readonly param = new HttpParams().append("userId", "1");
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService/* , private snackBar: MatSnackBarModule */) {
     console.log('Wykonuję http.service.ts constructor #1');
     this.getTasks();
   }
@@ -38,8 +38,8 @@ export class HttpService {
     //console.log(JSON.stringify(list));
 
     this.http.put(this.URL_DB, list).subscribe(data => {
-
-      console.log('Wykonuję http.service.ts saveTasks #2 + [dane] = ' + data);
+      alert(data["message"]);
+      console.log('Wykonuję http.service.ts saveTasks #2 + [dane] = ' + JSON.stringify(data["message"]) + ' ');
     });
 
   }

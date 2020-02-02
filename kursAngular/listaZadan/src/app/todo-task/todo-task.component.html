@@ -1,7 +1,19 @@
 <div class="container">
   <app-add-task></app-add-task>
   <ng-container *ngIf="tasksList.length > 0; else noTask">
-    <p [ngStyle]="{color: getColor()}">Zadania do wykonania: {{tasksList.length}}</p>
+    <ul [ngStyle]="{color: getColor()}">Zadania do wykonania: {{tasksList.length}}</ul>
+
+    <ul><h2>Priorytety ({{tasksListPrior.length}})</h2>
+      <li *ngFor = "let taskPrior of tasksListPrior">
+        <b>{{taskPrior.name | transformTask: '!'}}</b>
+      </li>
+    </ul>
+
+    <ul><h2>Normalne ({{tasksListNorm.length}})</h2>
+      <li *ngFor = "let taskNorm of tasksListNorm">
+        {{ taskNorm.name }}
+      </li>
+    </ul>
 
     <div *ngFor="let task of tasksList; let odd = odd">
       <ul *ngIf="task.priority == 1;">
@@ -9,7 +21,7 @@
           <b>{{task.name | transformTask: '!'}}</b>
           <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
           <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
-          {{task.priority + ' - Zadanie priorytetowe !'}}
+          {{' - Zadanie priorytetowe !'}}
 
         </li>
       </ul>
@@ -19,9 +31,10 @@
             {{task.name | transformTask: '!'}}
             <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
             <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
-            {{task.priority + '!'}}
+            {{ '!'}}
         </li>
       </ul>
+
     </div>
 
   </ng-container>

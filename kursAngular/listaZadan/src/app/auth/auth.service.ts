@@ -26,8 +26,22 @@ export class AuthService {
         this.router.navigate(['/todoTask']);
       })
       .catch(err => {
+        const check = err;
+        if (check.code == "auth/wrong-password") {
+          check.message = "Wpisane hasło jest niepoprawne!";
+        }
+        else if (check.code == "auth/invalid-email") {
+          check.message = "Niepoprawnie wpisany adres email!";
+        }
+        else if (check.code == "auth/too-many-requests") {
+          check.message = "Zbyt dużo błędnych logowań, spróbuj ponownie później";
+        }
+
+        alert(check.message);
         console.log(err);
+
       });
+
   }
 
   signup(email: string, password: string) {
