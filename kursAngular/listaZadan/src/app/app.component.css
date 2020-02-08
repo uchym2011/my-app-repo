@@ -1,4 +1,53 @@
-.container{
+.container {
   display: flex;
   justify-content: space-around;
+}
+
+
+.nav {
+  display: flex;
+  border-bottom: 2px solid black;
+}
+
+
+.nav__logo {
+  width: 15%;
+}
+
+.nav__info {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+
+.nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.nav__start {
+  cursor: pointer;
+  transition: .4s;
+}
+
+.nav__about {
+  cursor: pointer;
+  transition: .4s;
+}
+
+.nav__start:hover {
+  font-weight: bold;
+}
+
+.nav__about:hover {
+  font-weight: bold;
+}
+
+.nav__login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
 }

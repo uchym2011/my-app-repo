@@ -1,0 +1,34 @@
+.containerLogin {
+  display: flex;
+}
+
+.loginForm {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+}
+
+.welcome {
+  width: 50%;
+}
+
+.welcome__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome__pic {
+  width: 60%;
+}
+
+.welcome__info {
+  width: 60%;
+
+}
+
+h1 {
+  font-size: 1.5rem;
+}

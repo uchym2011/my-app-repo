@@ -1,7 +1,5 @@
-<!-- Nie komunikujemy sie juz z naszymi dziecmi, tylko nasze podrzedne komponenty zdecydowały się na bezposrednia komunikację z serwissem -->
 <div>
-
-  <ul class="nav nav-pills justify-content-center">
+  <!-- <ul class="nav nav-pills justify-content-center">
     <li class="nav-item">
       <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
     </li>
@@ -14,26 +12,20 @@
     <li class="nav-item">
       <a class="nav-link" *ngIf="authService.user" (click)="logout()">Wyloguj</a>
     </li>
-  </ul>
-
+  </ul> -->
+  <nav class="nav">
+    <div class="nav__logo">
+      <h1>Habbits</h1>
+    </div>
+    <div class="nav__info">
+      <div class="nav__container">
+        <div class="nav__start">Get Started</div>
+        <div class="nav__about">Learn More</div>
+      </div>
+    </div>
+    <div class="nav__login">
+      <button class="nav__btnLogin">Login</button>
+    </div>
+  </nav>
   <router-outlet></router-outlet>
-
-  <!--   <div class="container">
-    <app-add-task (emitTask)="add($event)"></app-add-task>
-    <app-add-task></app-add-task>
-  </div>
-
-  <div class="container">
-    <div>
-        <app-todo-task [tasksList]="tasksList" (emitDone)="done($event)" (emitRemove)="remove($event)"></app-todo-task>
-        <app-todo-task></app-todo-task>
-    </div>
-
-    <div>
-      <app-done-task [tasksDone]="tasksDone"></app-done-task>
-      <app-done-task></app-done-task>
-    </div>
-
-  </div> -->
-
 </div>

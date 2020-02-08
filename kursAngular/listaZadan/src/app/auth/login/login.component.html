@@ -1,23 +1,46 @@
-<div class="container">
-  <form (ngSubmit)="login(formData)" #formData="ngForm">
+<div class="container containerLogin">
+  <div class="welcome">
+    <div class="welcome__container">
+      <img src="../../../assets/macro-1452987_640.jpg" alt="" class="welcome__pic">
+      <div class="welcome__info">
+        <h1>Zmotywuj się by osiągnąć swoje cele.</h1>
+        <p>
+          Nadszedł czas, aby dobrze się bawić podczas wykonywania swoich zadań! Dołącz do 10
+          miliardów użytkowników i popraw poprzez osiąganie celów!.
+        </p>
+      </div>
+    </div>
+  </div>
+  <form (ngSubmit)="login(formData)" #formData="ngForm" class="loginForm">
+
+    <div class="input-group mb-3">
+      <input ngModel type="name" name="name" required class="form-control" placeholder="name" aria-label="name"
+        aria-describedby="basic-addon1">
+
+    </div>
+
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">@</span>
       </div>
-      <input ngModel type="email" name="email" required class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+      <input ngModel type="email" name="email" required class="form-control" placeholder="Email" aria-label="Email"
+        aria-describedby="basic-addon1">
     </div>
 
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="glyphicon glyphicon-pawn"></span>
       </div>
-      <input ngModel type="password" name="password" required required class="form-control" placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1">
+      <input ngModel type="password" name="password" required required class="form-control" placeholder="Hasło"
+        aria-label="Hasło" aria-describedby="basic-addon1">
     </div>
 
 
-      <button type="submit" [disabled]="formData.invalid" class="btn btn-secondary btn-lg" style="margin-right: 15px;">Zaloguj</button>
-      <button type="button" [disabled]="formData.invalid" (click)="signup(formData)" class="btn btn-primary btn-lg">Rejestracja</button>
+    <button type="submit" [disabled]="formData.invalid" class="btn btn-secondary btn-lg"
+      style="margin-right: 15px;">Zaloguj</button>
+    <button type="button" [disabled]="formData.invalid" (click)="signup(formData)"
+      class="btn btn-primary btn-lg">Rejestracja</button>
 
   </form>
 </div>
