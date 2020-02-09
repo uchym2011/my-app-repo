@@ -1,12 +1,22 @@
 .containerLogin {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 100vw; */
+  height: 91vh;
+  background-color: #8AA3FF;
 }
 
 .loginForm {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
+  /* background-color: red; */
+}
+
+.welcome__btn {
+  width: 100%;
 }
 
 .welcome {
@@ -22,6 +32,8 @@
 
 .welcome__pic {
   width: 60%;
+  border-radius: 5%;
+  margin-bottom: 10px;
 }
 
 .welcome__info {
@@ -29,6 +41,20 @@
 
 }
 
+.loginForm__title {
+  font-size: 1.6rem;
+  color: #FFD970;
+}
+
 h1 {
+
+  color: white;
   font-size: 1.5rem;
+}
+
+
+p {
+
+  color: white;
+  font-size: .9rem;
 }
