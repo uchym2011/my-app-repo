@@ -36,6 +36,9 @@ export class AuthService {
         else if (check.code == "auth/too-many-requests") {
           check.message = "Zbyt dużo błędnych logowań, spróbuj ponownie później";
         }
+        else if (check.code == "auth/user-not-found") {
+          check.message = "Niepoprawny adres email, brak takiego użytkownika!";
+        }
 
         alert(check.message);
         console.log(err);
