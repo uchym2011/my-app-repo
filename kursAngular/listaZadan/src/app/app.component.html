@@ -23,9 +23,22 @@
         <div class="nav__about">Learn More</div>
       </div>
     </div>
-    <div class="nav__login">
-      <button class="btn btn-primary btn-sm">Login</button>
+    <div class="nav__btn">
+      <!-- ! -->
+      <button class="btn btn-primary btn-sm" (click)="activeLogin()">Login</button>
     </div>
   </nav>
+  <!--! MUSI POCHODZIC SKAD INNAD -->
+  <div class="login" *ngIf="loginBtn">
+    <div class="login__container">
+      <div class="login__title">
+        <h1>Logowanie:</h1>
+      </div>
+      <div class="login__main">
+        <input type="text" class="login__input">
+        <input type="text" class="login__input">
+      </div>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </div>
