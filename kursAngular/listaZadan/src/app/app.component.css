@@ -55,38 +55,3 @@
   align-items: center;
   width: 15%;
 }
-
-
-.login {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: 300px;
-  background-color: #1739B3;
-  z-index: 100;
-}
-
-
-.login__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 60%;
-  flex-direction: column;
-  /* background-color: red; */
-}
-
-
-.login__main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 40%;
-}

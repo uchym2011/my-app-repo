@@ -29,16 +29,6 @@
     </div>
   </nav>
   <!--! MUSI POCHODZIC SKAD INNAD -->
-  <div class="login" *ngIf="loginBtn">
-    <div class="login__container">
-      <div class="login__title">
-        <h1>Logowanie:</h1>
-      </div>
-      <div class="login__main">
-        <input type="text" class="login__input">
-        <input type="text" class="login__input">
-      </div>
-    </div>
-  </div>
+  <app-login1 *ngIf="loginBtn" (unactiveLoginPopup)="activeLogin()" [loginActive]="loginBtn"></app-login1>
   <router-outlet></router-outlet>
 </div>

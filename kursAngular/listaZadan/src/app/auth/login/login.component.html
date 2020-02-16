@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  <form (ngSubmit)="login(formData)" #formData="ngForm" class="loginForm">
+  <form (ngSubmit)="signup(formData)" #formData="ngForm" class="loginForm">
     <h1 class="loginForm__title">Dołącz do elity</h1>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
@@ -45,9 +45,40 @@
     >
       Zaloguj
     </button> -->
-    <button type="button" [disabled]="formData.invalid" (click)="signup(formData)"
-      class="btn btn-primary btn-lg welcome__btn">
+    <button type="submit" [disabled]="formData.invalid" class="btn btn-primary btn-lg welcome__btn">
       Zaczynamy !
     </button>
   </form>
 </div>
+
+
+
+<!-- 
+
+<div class="container">
+  <form (ngSubmit)="login(formData)" #formData="ngForm">
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">@</span>
+      </div>
+      <input ngModel type="email" name="email" required class="form-control" placeholder="Email" aria-label="Email"
+        aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="glyphicon glyphicon-pawn"></span>
+      </div>
+      <input ngModel type="password" name="password" required required class="form-control" placeholder="Hasło"
+        aria-label="Hasło" aria-describedby="basic-addon1">
+    </div>
+
+
+    <button type="submit" [disabled]="formData.invalid" class="btn btn-secondary btn-lg"
+      style="margin-right: 15px;">Zaloguj</button>
+    <button type="button" [disabled]="formData.invalid" (click)="signup(formData)"
+      class="btn btn-primary btn-lg">Rejestracja</button>
+
+  </form>
+</div> -->

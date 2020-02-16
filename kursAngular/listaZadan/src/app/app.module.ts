@@ -19,6 +19,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { Login1Component } from './auth/login1/login1.component';
 
 
 const config = {
@@ -41,7 +42,8 @@ const config = {
     DateDirective,
     TransformTaskPipe,
     SortNamePipe,
-    LoginComponent
+    LoginComponent,
+    Login1Component
   ],
   imports: [
     BrowserModule,
