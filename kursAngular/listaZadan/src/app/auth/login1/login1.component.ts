@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { NgForm } from "@angular/forms";
+import { LoginHandlerService } from "../login-handler.service";
 
 @Component({
   selector: "app-login1",
@@ -8,11 +9,10 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./login1.component.css"]
 })
 export class Login1Component implements OnInit {
-  @Input()
-  loginActive;
-  @Output()
-  unactiveLoginPopup = new EventEmitter();
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private loginHandlerService: LoginHandlerService
+  ) {}
 
   ngOnInit() {}
 
@@ -22,6 +22,9 @@ export class Login1Component implements OnInit {
   }
 
   unactiveLoginComp() {
-    this.unactiveLoginPopup.emit();
+    this.loginHandlerService.activeLoginPopup();
+    this.loginHandlerService
+      .setLoginPopupState()
+      .subscribe(popupState => console.log(popupState));
   }
 }

@@ -1,0 +1,30 @@
+<form (ngSubmit)="signup(formData)" #formData="ngForm" class="loginForm">
+  <h1 class="loginForm__title">Dołącz do elity</h1>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+    </div>
+    <input ngModel type="name" name="name" required class="form-control" aria-label="name"
+      aria-describedby="basic-addon1" />
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+    </div>
+    <input ngModel type="email" name="email" required class="form-control" aria-label="Email"
+      aria-describedby="basic-addon1" />
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+    </div>
+    <input ngModel type="password" name="password" required required class="form-control" aria-label="Hasło"
+      aria-describedby="basic-addon1" />
+  </div>
+
+  <button type="submit" [disabled]="formData.invalid" class="btn btn-primary btn-lg welcome__btn">
+    Zaczynamy !
+  </button>
+</form>

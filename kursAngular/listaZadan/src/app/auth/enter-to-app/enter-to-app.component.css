@@ -1,0 +1,25 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: red; */
+}
+
+.loginForm__title {
+  font-size: 1.6rem;
+  color: #FFD970;
+}
+
+h1 {
+
+  color: white;
+  font-size: 1.5rem;
+}
+
+
+p {
+
+  color: white;
+  font-size: .9rem;
+}

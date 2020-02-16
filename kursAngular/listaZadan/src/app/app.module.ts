@@ -20,6 +20,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { Login1Component } from './auth/login1/login1.component';
+import { EnterToAppComponent } from './auth/enter-to-app/enter-to-app.component';
 
 
 const config = {
@@ -43,7 +44,8 @@ const config = {
     TransformTaskPipe,
     SortNamePipe,
     LoginComponent,
-    Login1Component
+    Login1Component,
+    EnterToAppComponent
   ],
   imports: [
     BrowserModule,

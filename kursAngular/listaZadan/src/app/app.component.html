@@ -24,11 +24,8 @@
       </div>
     </div>
     <div class="nav__btn">
-      <!-- ! -->
       <button class="btn btn-primary btn-sm" (click)="activeLogin()">Login</button>
     </div>
   </nav>
-  <!--! MUSI POCHODZIC SKAD INNAD -->
-  <app-login1 *ngIf="loginBtn" (unactiveLoginPopup)="activeLogin()" [loginActive]="loginBtn"></app-login1>
   <router-outlet></router-outlet>
 </div>
