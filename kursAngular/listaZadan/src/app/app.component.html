@@ -1,18 +1,18 @@
 <div>
-  <!-- <ul class="nav nav-pills justify-content-center">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="doneTask" routerLinkActive="active">Wykonane</a>
-    </li>
-    <li class="nav-item">
+  <!-- <ul class="nav nav-pills justify-content-center"> -->
+  <li class="nav-item">
+    <a class="nav-link" routerLink="todoTask" routerLinkActive="active">Zadania</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="doneTask" routerLinkActive="active">Wykonane</a>
+  </li>
+  <!-- <li class="nav-item">
       <a class="nav-link" *ngIf="!authService.user" routerLink="login" routerLinkActive="active">Zaloguj</a>
-    </li>
-    <li class="nav-item">
+    </li> -->
+  <!-- <li class="nav-item">
       <a class="nav-link" *ngIf="authService.user" (click)="logout()">Wyloguj</a>
-    </li>
-  </ul> -->
+    </li> -->
+  <!-- </ul> -->
   <nav class="nav">
     <div class="nav__logo">
       <h1>Habbits</h1>
@@ -23,8 +23,12 @@
         <div class="nav__about">Learn More</div>
       </div>
     </div>
-    <div class="nav__btn">
+    <div *ngIf="!userPanelAvailable" class="nav__btn">
       <button class="btn btn-primary btn-sm" (click)="activeLogin()">Login</button>
+      <!-- ! ZMIENIAJĄCY SIĘ W LOCIE NAZWA BUTTONA -->
+    </div>
+    <div *ngIf="userPanelAvailable" class="nav__btn">
+      <button class="btn btn-primary btn-sm" (click)="logout()">Logout</button>
     </div>
   </nav>
   <router-outlet></router-outlet>

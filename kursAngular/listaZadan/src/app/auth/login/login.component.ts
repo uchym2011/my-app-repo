@@ -23,8 +23,8 @@ export class LoginComponent {
   }
 
   // w serwisie wywołuje rejestrację
-  signup(formData: NgForm) {
-    console.log("Wykonuję add-login.component.ts signup #1");
-    this.authService.signup(formData.value.email, formData.value.password);
-  }
+  // signup(formData: NgForm) {
+  //   console.log("Wykonuję add-login.component.ts signup #1");
+  //   this.authService.signup(formData.value.email, formData.value.password);
+  // }
 }
