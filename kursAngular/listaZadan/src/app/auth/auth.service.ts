@@ -35,7 +35,7 @@ export class AuthService {
       .then(user => {
         // ! MOZNA COS LEPSZEGO DAĆ BO TO TAK JAKBY PO IFie
         this.changeLoginState();
-        this.router.navigate(["/todoTask"]);
+        this.router.navigate(["/desktopApp"]);
       })
       .catch(err => {
         const check = err;

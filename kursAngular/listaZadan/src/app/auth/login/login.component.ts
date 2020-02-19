@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     console.log("Wykonuję add-login.component.ts login #1 !!!!");
     console.log(formData);
     this.authService.login(formData.value.email, formData.value.password);
-    this.router.navigate(["/todoTask"]);
     this.unactiveLoginComp();
   }
 

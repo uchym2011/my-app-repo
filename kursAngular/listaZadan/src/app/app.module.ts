@@ -21,6 +21,8 @@ import { AuthService } from "./auth/auth.service";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+import { NavigationComponent } from './layout/navigation/navigation.component';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -44,7 +46,9 @@ const config = {
     SortNamePipe,
     WelcomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MainLayoutComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

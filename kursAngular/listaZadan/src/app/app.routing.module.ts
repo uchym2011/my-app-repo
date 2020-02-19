@@ -4,6 +4,7 @@ import { TodoTaskComponent } from "./todo-task/todo-task.component";
 import { DoneTaskComponent } from "./done-task/done-task.component";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { WelcomeComponent } from "./auth/welcome/welcome.component";
+import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
 
 const appRoutes: Routes = [
   {
@@ -11,15 +12,25 @@ const appRoutes: Routes = [
     redirectTo: "/login",
     pathMatch: "full"
   },
+  // {
+  //   path: "todoTask",
+  //   component: TodoTaskComponent,
+  //   canActivate: [AuthGuardService]
+  // },
+  // {
+  //   path: "doneTask",
+  //   component: DoneTaskComponent,
+  //   canActivate: [AuthGuardService]
+  // },
   {
-    path: "todoTask",
-    component: TodoTaskComponent,
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: "doneTask",
-    component: DoneTaskComponent,
-    canActivate: [AuthGuardService]
+    path: "desktopApp",
+    component: MainLayoutComponent,
+    canActivate: [AuthGuardService],
+    children: [
+      { path: "todoTask", component: TodoTaskComponent },
+      { path: "doneTask", component: DoneTaskComponent },
+      { path: "", redirectTo: "todoTasks", pathMatch: "full" }
+    ]
   },
   {
     path: "login",
