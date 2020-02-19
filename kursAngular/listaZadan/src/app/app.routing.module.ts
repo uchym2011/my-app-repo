@@ -2,8 +2,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { TodoTaskComponent } from "./todo-task/todo-task.component";
 import { DoneTaskComponent } from "./done-task/done-task.component";
-import { LoginComponent } from "./auth/login/login.component";
 import { AuthGuardService } from "./auth/auth-guard.service";
+import { WelcomeComponent } from "./auth/welcome/welcome.component";
 
 const appRoutes: Routes = [
   {
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   },
   {
     path: "login",
-    component: LoginComponent
+    component: WelcomeComponent
   }
 ];
 

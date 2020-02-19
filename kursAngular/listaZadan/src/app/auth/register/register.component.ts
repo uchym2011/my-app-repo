@@ -4,11 +4,11 @@ import { NgForm } from "@angular/forms";
 import { LoginHandlerService } from "../login-handler.service";
 
 @Component({
-  selector: "app-enter-to-app",
-  templateUrl: "./enter-to-app.component.html",
-  styleUrls: ["./enter-to-app.component.css"]
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"]
 })
-export class EnterToAppComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   constructor(public authService: AuthService) {}
 
   ngOnInit() {}
