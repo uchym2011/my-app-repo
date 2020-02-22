@@ -15,11 +15,7 @@ export class NavigationComponent {
     private router: Router,
     private loginHandlerSerice: LoginHandlerService
   ) {
-    this.authService.userIsLoggedObs.subscribe(
-      state => (this.userPanelAvailable = state)
-    );
     console.log("Wykonuję app.component.ts constructor #1");
-    console.log("SPR AUTH SERVICE");
     console.log(this.authService.user);
   }
 
@@ -30,9 +26,6 @@ export class NavigationComponent {
   }
   activeLogin() {
     this.loginHandlerSerice.activeLoginPopup();
-
-    // this.router.navigate(["/todoTask"]);
-    // console.log("authService.user");
     console.log(this.authService.user);
   }
 }

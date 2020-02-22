@@ -20,15 +20,12 @@ export class LoginComponent implements OnInit {
 
   login(formData: NgForm) {
     console.log("Wykonuję add-login.component.ts login #1 !!!!");
-    console.log(formData);
     this.authService.login(formData.value.email, formData.value.password);
     this.unactiveLoginComp();
   }
 
   unactiveLoginComp() {
     this.loginHandlerService.activeLoginPopup();
-    this.loginHandlerService
-      .setLoginPopupState()
-      .subscribe(popupState => console.log(popupState));
+    this.loginHandlerService.setLoginPopupState().subscribe();
   }
 }
