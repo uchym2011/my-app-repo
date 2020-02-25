@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { User } from "firebase";
 import { Router } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -10,6 +10,8 @@ import { BehaviorSubject } from "rxjs";
 export class AuthService {
   // ? user NIE POWINIEN BYĆ SUBJECTEM ? :)
   user: User;
+  userIsLogged = false;
+  userIsLoggedObs = new BehaviorSubject<boolean>(this.userIsLogged);
 
   constructor(public angularFire: AngularFireAuth, private router: Router) {
     // pilnuje czy jestesmy zalogowani
@@ -25,6 +27,7 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(user => {
         this.router.navigate(["/desktopApp"]);
+        this.changeLoginState();
       })
       .catch(err => {
         const check = err;
@@ -57,5 +60,10 @@ export class AuthService {
   logout() {
     console.log("Wykonuję auth.service.ts logout #1");
     this.angularFire.auth.signOut();
+  }
+
+  changeLoginState() {
+    this.userIsLogged = !this.userIsLogged;
+    this.userIsLoggedObs.next(this.userIsLogged);
   }
 }

@@ -17,15 +17,19 @@ export class NavigationComponent {
   ) {
     console.log("Wykonuję app.component.ts constructor #1");
     console.log(this.authService.user);
+    this.authService.userIsLoggedObs.subscribe(
+      state => (this.userPanelAvailable = state)
+    );
   }
 
   logout() {
     console.log("Wykonuję app.component.ts logout() #1");
     this.authService.logout();
     this.router.navigate(["/login"]);
+    this.authService.changeLoginState();
   }
   activeLogin() {
     this.loginHandlerSerice.activeLoginPopup();
-    console.log(this.authService.user);
+    console.log(this.userPanelAvailable);
   }
 }
