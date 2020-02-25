@@ -50,7 +50,11 @@ export class AuthService {
     this.angularFire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
-        console.log(user);
+        this.router.navigate([
+          "/desktopApp",
+          { queryParams: { registred: "true" } }
+        ]);
+        this.changeLoginState();
       })
       .catch(err => {
         console.log(err);
