@@ -1,13 +1,8 @@
-.container {
-  display: flex;
-  justify-content: space-around;
-}
-
-
 .nav {
   display: flex;
-  border-bottom: 2px solid black;
+  height: 7%;
   background-color: #1739B3;
+  border-bottom: 2px solid black;
 }
 
 

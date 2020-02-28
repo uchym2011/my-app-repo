@@ -3,7 +3,8 @@
   justify-content: center;
   align-items: center;
   /* width: 100vw; */
-  height: 91vh;
+  /* ! HEIGTH MUSI BYĆ KOMPATYBILNY Z NAVIGACJA GŁOWNA TAM TERAZ HEIGHT JEST 7 */
+  height: 93vh;
   background-color: #8AA3FF;
 }
 

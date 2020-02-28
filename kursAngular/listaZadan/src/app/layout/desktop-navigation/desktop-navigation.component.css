@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.navPanel {
+  width: 5vw;
+  height: 100%;
+  background-color: #1739B3;
+}
+
+.navPanel__list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 30%;
+  list-style: none;
+}
+
+.navPanel__element:nth-of-type(1) {
+  background-color: darkslategrey;
+}
+
+.navPanel__element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 33.33%;
+  background-color: #1739B3;
+  border-bottom: 2px solid gray;
+}
+
+
+.navPanel__icon {
+  color: gray;
+  font-size: 1.4rem;
+}
+
+/* .active {
+  color: coral;
+} */

@@ -12,16 +12,6 @@ const appRoutes: Routes = [
     redirectTo: "/login",
     pathMatch: "full"
   },
-  // {
-  //   path: "todoTask",
-  //   component: TodoTaskComponent,
-  //   canActivate: [AuthGuardService]
-  // },
-  // {
-  //   path: "doneTask",
-  //   component: DoneTaskComponent,
-  //   canActivate: [AuthGuardService]
-  // },
   {
     path: "desktopApp",
     component: MainLayoutComponent,
