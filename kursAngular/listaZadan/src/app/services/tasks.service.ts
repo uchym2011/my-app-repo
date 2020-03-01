@@ -5,6 +5,9 @@ import { HttpService } from "./http.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { User } from "firebase";
 
+import { User as UserDB } from "../models/user";
+import { Project } from "../models/project";
+
 @Injectable()
 export class TasksService {
   // private tasksList: Array<Task> = [];
@@ -13,13 +16,17 @@ export class TasksService {
   // private tasksDone: Array<Task> = [];
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
+
+  private projectsListObs = new BehaviorSubject<Array<Project>>([]);
+
+  private tasksUserObs = new BehaviorSubject<Array<UserDB>>([]);
   // private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
   constructor(
     private httpSevice: HttpService,
     private angularFire: AngularFireAuth
   ) {
-    console.log('Wykonuję tasks.service.ts constructor #1');
+    console.log("Wykonuję tasks.service.ts constructor #1");
     angularFire.authState.subscribe(user => {
       if (user) {
         this.init();
@@ -42,14 +49,24 @@ export class TasksService {
   }
 
   init() {
-    console.log('Wykonuję tasks.service.ts init #1');
+    console.log("Wykonuję tasks.service.ts init #1");
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
+
+    this.httpSevice.getProjectsUsers().subscribe(list => {
+      this.projectsListObs.next(list);
+    });
+
+    /* TABELA_USERS NIE KASOWAC PRZYKLAD
+    console.log('Wykonuję tasks.service.ts init #2 gerUser');
+    this.httpSevice.getUser().subscribe(userdb => {
+      this.tasksUserObs.next(userdb);
+    }); */
   }
 
   add(task: Array<Task>) {
-    console.log('Wykonuję tasks.service.ts add #1');
+    console.log("Wykonuję tasks.service.ts add #1");
     // dodajemy do listy
     // this.tasksList.push(task);
 
@@ -62,7 +79,7 @@ export class TasksService {
   }
 
   remove(task: Task) {
-    console.log('Wykonuję tasks.service.ts remove #1');
+    console.log("Wykonuję tasks.service.ts remove #1");
     //debugger;
     task.isDone = -1;
     const list = this.tasksListObs.getValue();
@@ -80,7 +97,7 @@ export class TasksService {
   }
 
   done(task: Task) {
-    console.log('Wykonuję tasks.service.ts done #1');
+    console.log("Wykonuję tasks.service.ts done #1");
     // this.tasksDone.push(task);
     // this.remove(task);
 
@@ -97,17 +114,30 @@ export class TasksService {
   // brakuje nam jeszcze metod dostepu do tych Subjectow
   // zwracamy jako Observalble abyśmy mogli subskrybować
   getTasksListObs(): Observable<Array<Task>> {
-    console.log('Wykonuję tasks.service.ts getTasksListObs #1');
+    console.log("Wykonuję tasks.service.ts getTasksListObs #1");
     // this.init();
     return this.tasksListObs.asObservable();
   }
+
+  getProjectsListObs(): Observable<Array<Project>> {
+    console.log("Wykonuję tasks.service.ts getProjectsListObs #1");
+    // this.init();
+    return this.projectsListObs.asObservable();
+  }
+
+  /* TABELA_USERS NIE KASOWAC PRZYKLAD
+    getUserListObs(): Observable<Array<UserDB>> {
+    console.log('Wykonuję tasks.service.ts getTasksListObs #1');
+    // this.init();
+    return this.tasksUserObs.asObservable();
+  }*/
 
   /*   getTasksDoneObs(): Observable<Array<Task>> {
       return this.tasksDoneObs.asObservable();
     } */
 
   saveTaskInDB() {
-    console.log('Wykonuję tasks.service.ts saveTaskInDB #1');
+    console.log("Wykonuję tasks.service.ts saveTaskInDB #1");
 
     this.httpSevice.saveTasks(this.tasksListObs.getValue());
 
@@ -120,4 +150,20 @@ export class TasksService {
     //  this.tasksListObs.next(list);
     //});
   }
+
+  /*  TABELA_USERS NIE KASOWAC PRZYKLAD
+    insertUserInDB(user: UserDB) {
+    console.log('Wykonuję tasks.service.ts sinsertUserInDB #1');
+
+    this.httpSevice.insertUser(user);
+
+    //this.getTasksListObs
+    //this.tasksListObs.next([]);
+
+    // ! TEN KOD WIELE ZMIENIA!
+    //console.log('Wykonuję tasks.service.ts saveTaskInDB #1  ! TEN KOD WIELE ZMIENIA!');
+    //this.httpSevice.getTasks().subscribe(list => {
+    //  this.tasksListObs.next(list);
+    //});
+  } */
 }

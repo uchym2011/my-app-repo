@@ -8,7 +8,6 @@ import { BehaviorSubject, Subject } from "rxjs";
   providedIn: "root"
 })
 export class AuthService {
-  // ? user NIE POWINIEN BYĆ SUBJECTEM ? :)
   user: User;
   userIsLogged = false;
   userIsLoggedObs = new BehaviorSubject<boolean>(this.userIsLogged);
@@ -38,6 +37,8 @@ export class AuthService {
         } else if (check.code == "auth/too-many-requests") {
           check.message =
             "Zbyt dużo błędnych logowań, spróbuj ponownie później";
+        } else if (check.code == "auth/user-not-found") {
+          check.message = "Niepoprawny adres email, brak takiego użytkownika!";
         }
 
         alert(check.message);
@@ -45,11 +46,14 @@ export class AuthService {
       });
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, name: string) {
     console.log("Wykonuję auth.service.ts signup #1");
     this.angularFire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
+        user.user.updateProfile({
+          displayName: name
+        });
         this.router.navigate([
           "/desktopApp",
           { queryParams: { registred: "true" } }
@@ -59,6 +63,10 @@ export class AuthService {
       .catch(err => {
         console.log(err);
       });
+
+    /*     this.angularFire.auth.currentUser.updateProfile({
+        displayName: 'Witek'
+      }) */
   }
 
   logout() {
