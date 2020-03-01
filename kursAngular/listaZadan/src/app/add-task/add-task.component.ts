@@ -5,14 +5,13 @@ import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { AuthService } from '../auth/auth.service';
 
+
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.css']
 })
 export class AddTaskComponent implements OnInit {
-
-  addForm: FormGroup;
 
   addForm2: FormGroup;
 
@@ -30,7 +29,7 @@ export class AddTaskComponent implements OnInit {
   */
 
  add2() {
-  console.log('Wykonuję add-task.component.ts add2() #1');
+  //console.log('Wykonuję add-task.component.ts add2() #1');
   console.log('Wykonuję add-task.component.ts add2() #2' + this.addForm2);
   const taskList = this.createTaskList();
   this.tasksService.add(taskList);
@@ -46,22 +45,6 @@ export class AddTaskComponent implements OnInit {
 
 }
 
-  add() {
-    console.log('Wykonuję add-task.component.ts add() #1');
-    console.log('Wykonuję add-task.component.ts add() #2' + this.addForm);
-    const taskList = this.createTaskList();
-    this.tasksService.add(taskList);
-    this.addForm = this.initForm();
-    console.log('Wykonuję add-task.component.ts add() #3' + this.addForm);
-    /**   this.tasksList.push(this.newTask);
-      console.log(this.tasksList);
-      this.newTask = '';*/
-
-    //this.emitTask.emit(this.newTask);
-    //this.tasksService.add(task);
-    //this.newTask = '';
-
-  }
 
   ngOnInit() {
 
@@ -71,16 +54,6 @@ export class AddTaskComponent implements OnInit {
     console.log('Wykonuję add-task.component.ts ngOnInit() #1');
 
     this.addForm2 = this.initForm2();
-
-    this.addForm = this.initForm();
-  }
-
-  initForm() {
-    console.log('Wykonuję add-task.component.ts initForm() #1');
-    return new FormGroup({
-      taskName: new FormArray([new FormControl(null, Validators.required)]),
-      priority: new FormArray([new FormControl("Temat")])
-    });
   }
 
   initForm2() {
@@ -112,12 +85,6 @@ export class AddTaskComponent implements OnInit {
     }
 
     return tasksList;
-  }
-
-  addField() {
-    console.log('Wykonuję add-task.component.ts addField() #1');
-    const arr = <FormArray>this.addForm.get('taskName');
-    arr.push(new FormControl(null, Validators.required));
   }
 
   addField2() {

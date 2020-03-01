@@ -9,6 +9,11 @@ import {
 import { TasksService } from "../services/tasks.service";
 import { Task } from "../models/task";
 import { AuthService } from "../auth/auth.service";
+import { Project } from '../models/project';
+
+/*TABELA_USERS NIE KASOWAC PRZYKLAD
+import { User } from '../models/user';
+*/
 
 @Component({
   selector: "app-todo-task",
@@ -23,13 +28,20 @@ export class TodoTaskComponent implements OnInit {
   tasksListPrior: Array<Task> = [];
   tasksListNorm: Array<Task> = [];
 
+  projectList: Array<Project> = [];
+
+  // TABELA_USERS NIE KASOWAC PRZYKLAD
+  //currentUser: Array<User> = [];
+
+  currentUserNew: string;
+
   /*   @Output()
   emitDone = new EventEmitter<string>();
 
   @Output()
   emitRemove = new EventEmitter<string>(); */
 
-  constructor(private tasksService: TasksService) {
+  constructor(private tasksService: TasksService, private authService: AuthService) {
     console.log('Wykonuję todo-task.component.ts constructor #1');
     // musimy tutaj zainicjalizować listeZadan
     // jak zasubskrybujemy będa wysłane do nas tasks
@@ -37,6 +49,7 @@ export class TodoTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+
     console.log('Wykonuję todo-task.component.ts ngOnInit #1');
     this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
       // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
@@ -52,12 +65,25 @@ export class TodoTaskComponent implements OnInit {
       this.tasksListPrior = tasks.filter(t => t.isDone == 0 && t.priority == 1);
 
       this.tasksListNorm = tasks.filter(t => t.isDone == 0 && t.priority < 1);
+
+      console.log('TASKS LIST: ' + this.tasksList);
       //debugger;
       //this.tasksList = tasks.filter(t => t.end === null);
     });
 
+    /* TABELA_USERS NIE KASOWAC PRZYKLAD
+    this.tasksService.getUserListObs().subscribe((userdb: Array<User>) => {
+      this.currentUser = userdb;
+    }); */
 
+    this.tasksService.getProjectsListObs().subscribe((project: Array<Project>) => {
+      this.projectList = project;
+    });
 
+    console.log('PROJEKT LIST: ' + this.projectList);
+
+    console.log('todo-task.component.ts dodane !!!! - ' + this.authService.user.displayName);
+    this.currentUserNew = this.authService.user.displayName;
   }
 
   remove(task: Task) {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class AuthService {
     this.angularFire.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
+        console.log(user);
         this.router.navigate(['/todoTask']);
       })
       .catch(err => {
@@ -47,16 +49,27 @@ export class AuthService {
 
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, name: string) {
     console.log('Wykonuję auth.service.ts signup #1');
     this.angularFire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
+        console.log(user.user.uid);
+        user.user.updateProfile({
+          displayName: name,
+          photoURL: "https://example.com/jane-q-user/profile.jpg"
+        })
         console.log(user);
       })
       .catch(err => {
         console.log(err);
       });
+
+
+/*     this.angularFire.auth.currentUser.updateProfile({
+        displayName: 'Witek'
+      }) */
+
   }
 
   logout() {

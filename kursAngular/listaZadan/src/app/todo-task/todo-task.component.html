@@ -1,7 +1,14 @@
 <div class="container">
+  <div *ngIf="currentUserNew">Witaj Nowe: {{ currentUserNew }} </div>
   <app-add-task></app-add-task>
+
+  <ng-container *ngIf="projectList.length > 0; else noTask">
+    <p [ngStyle]="{color: getColor()}">PROJEKTY: {{projectList.length}}</p>
+  </ng-container>
+
   <ng-container *ngIf="tasksList.length > 0; else noTask">
     <ul [ngStyle]="{color: getColor()}">Zadania do wykonania: {{tasksList.length}}</ul>
+
 
     <ul><h2>Priorytety ({{tasksListPrior.length}})</h2>
       <li *ngFor = "let taskPrior of tasksListPrior">

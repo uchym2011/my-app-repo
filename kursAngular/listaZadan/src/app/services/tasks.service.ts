@@ -5,6 +5,11 @@ import { HttpService } from "./http.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { User } from "firebase";
 
+import { User as UserDB } from "../models/user";
+import { Project } from '../models/project';
+
+
+
 @Injectable()
 export class TasksService {
   // private tasksList: Array<Task> = [];
@@ -13,6 +18,10 @@ export class TasksService {
   // private tasksDone: Array<Task> = [];
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
+
+  private projectsListObs = new BehaviorSubject<Array<Project>>([]);
+
+  private tasksUserObs = new BehaviorSubject<Array<UserDB>>([]);
   // private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
   constructor(
@@ -46,6 +55,16 @@ export class TasksService {
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
+
+    this.httpSevice.getProjectsUsers().subscribe(list => {
+      this.projectsListObs.next(list);
+    });
+
+      /* TABELA_USERS NIE KASOWAC PRZYKLAD
+    console.log('Wykonuję tasks.service.ts init #2 gerUser');
+    this.httpSevice.getUser().subscribe(userdb => {
+      this.tasksUserObs.next(userdb);
+    }); */
   }
 
   add(task: Array<Task>) {
@@ -102,6 +121,19 @@ export class TasksService {
     return this.tasksListObs.asObservable();
   }
 
+  getProjectsListObs(): Observable<Array<Project>> {
+    console.log('Wykonuję tasks.service.ts getProjectsListObs #1');
+    // this.init();
+    return this.projectsListObs.asObservable();
+  }
+
+  /* TABELA_USERS NIE KASOWAC PRZYKLAD
+    getUserListObs(): Observable<Array<UserDB>> {
+    console.log('Wykonuję tasks.service.ts getTasksListObs #1');
+    // this.init();
+    return this.tasksUserObs.asObservable();
+  }*/
+
   /*   getTasksDoneObs(): Observable<Array<Task>> {
       return this.tasksDoneObs.asObservable();
     } */
@@ -120,4 +152,21 @@ export class TasksService {
     //  this.tasksListObs.next(list);
     //});
   }
+
+/*  TABELA_USERS NIE KASOWAC PRZYKLAD
+    insertUserInDB(user: UserDB) {
+    console.log('Wykonuję tasks.service.ts sinsertUserInDB #1');
+
+    this.httpSevice.insertUser(user);
+
+    //this.getTasksListObs
+    //this.tasksListObs.next([]);
+
+    // ! TEN KOD WIELE ZMIENIA!
+    //console.log('Wykonuję tasks.service.ts saveTaskInDB #1  ! TEN KOD WIELE ZMIENIA!');
+    //this.httpSevice.getTasks().subscribe(list => {
+    //  this.tasksListObs.next(list);
+    //});
+  } */
+
 }
