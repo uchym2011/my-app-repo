@@ -6,7 +6,7 @@ import { LoginHandlerService } from "src/app/auth/login-handler.service";
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
-  styleUrls: ["./navigation.component.css"]
+  styleUrls: ["./navigation.component.scss"]
 })
 export class NavigationComponent {
   userPanelAvailable: boolean;
