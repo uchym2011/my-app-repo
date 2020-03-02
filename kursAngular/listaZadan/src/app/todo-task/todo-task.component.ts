@@ -18,7 +18,7 @@ import { User } from '../models/user';
 @Component({
   selector: "app-todo-task",
   templateUrl: "./todo-task.component.html",
-  styleUrls: ["./todo-task.component.css"],
+  styleUrls: ["./todo-task.component.scss"],
   encapsulation: ViewEncapsulation.Emulated
 })
 export class TodoTaskComponent implements OnInit {

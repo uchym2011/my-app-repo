@@ -1,0 +1,47 @@
+.containerLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 93vh;
+  background-color: #8AA3FF;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    font-size: 1.6rem;
+    color: #FFD970;
+  }
+}
+
+
+.welcome {
+  width: 50%;
+
+  &__btn {
+    width: 100%;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__pic {
+    width: 60%;
+    height: 250px;
+    border-radius: 5%;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+  }
+
+  &__info {
+    width: 60%;
+  }
+}
