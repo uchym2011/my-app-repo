@@ -5,6 +5,7 @@ import { DoneTaskComponent } from "./done-task/done-task.component";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { WelcomeComponent } from "./auth/welcome/welcome.component";
 import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
+import { ProjectsComponent } from "./components/projects/projects.component";
 
 const appRoutes: Routes = [
   {
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     children: [
       { path: "todoTask", component: TodoTaskComponent },
       { path: "doneTask", component: DoneTaskComponent },
+      { path: "projects", component: ProjectsComponent },
       { path: "", redirectTo: "todoTasks", pathMatch: "full" }
     ]
   },

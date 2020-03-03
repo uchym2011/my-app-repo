@@ -24,6 +24,8 @@ import { RegisterComponent } from "./auth/register/register.component";
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { NavigationComponent } from './layout/navigation/navigation.component';
 import { DesktopNavigationComponent } from './layout/desktop-navigation/desktop-navigation.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectComponent } from './components/project/project.component';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -50,7 +52,9 @@ const config = {
     RegisterComponent,
     MainLayoutComponent,
     NavigationComponent,
-    DesktopNavigationComponent
+    DesktopNavigationComponent,
+    ProjectsComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

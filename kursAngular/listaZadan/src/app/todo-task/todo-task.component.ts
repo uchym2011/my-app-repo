@@ -54,14 +54,6 @@ export class TodoTaskComponent implements OnInit {
   ngOnInit() {
     console.log("Wykonuję todo-task.component.ts ngOnInit #1");
     this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
-      // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
-      // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
-      // this.tasksList = tasks.slice();
-      // !alert("ds");
-      // debugger;
-      // ! BEZ METODY FILTER!
-      //this.tasksList = tasks.slice();
-
       this.tasksList = tasks.filter(t => t.isDone == 0);
 
       this.tasksListPrior = tasks.filter(t => t.isDone == 0 && t.priority == 1);
