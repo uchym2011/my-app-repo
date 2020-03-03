@@ -5,7 +5,7 @@ import { DoneTaskComponent } from "./done-task/done-task.component";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { WelcomeComponent } from "./auth/welcome/welcome.component";
 import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
-import { ProjectsComponent } from "./components/projects/projects.component";
+import { ProjectsComponent } from "./layout/projects/projects.component";
 
 const appRoutes: Routes = [
   {

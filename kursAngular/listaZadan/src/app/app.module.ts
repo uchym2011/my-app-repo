@@ -21,11 +21,12 @@ import { AuthService } from "./auth/auth.service";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
-import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { NavigationComponent } from './layout/navigation/navigation.component';
-import { DesktopNavigationComponent } from './layout/desktop-navigation/desktop-navigation.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { ProjectComponent } from './components/project/project.component';
+import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
+import { NavigationComponent } from "./layout/navigation/navigation.component";
+import { DesktopNavigationComponent } from "./layout/desktop-navigation/desktop-navigation.component";
+import { ProjectsComponent } from "./layout/projects/projects.component";
+import { ProjectComponent } from "./components/project/project.component";
+import { ProjectDirective } from './shared/project.directive';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -54,7 +55,8 @@ const config = {
     NavigationComponent,
     DesktopNavigationComponent,
     ProjectsComponent,
-    ProjectComponent
+    ProjectComponent,
+    ProjectDirective
   ],
   imports: [
     BrowserModule,
