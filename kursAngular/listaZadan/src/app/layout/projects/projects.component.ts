@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectsService } from "src/app/services/projects.service";
 import { Project } from "src/app/models/project";
-// ! PRZENIES DO LAYOUTU
+
 // ! ZROB GLOBALNE STYLE
 // ! LOCAL STORAGE DLA LOGOWANIA
 
