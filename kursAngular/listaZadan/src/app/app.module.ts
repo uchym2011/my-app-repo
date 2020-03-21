@@ -31,6 +31,7 @@ import { TaskDirective } from "./shared/task.directive";
 import { CheckboxDirective } from "./shared/checkbox.directive";
 import { TasksComponent } from './layout/tasks/tasks.component';
 import { TaskComponent } from './components/task/task.component';
+import { ManagementToolsComponent } from './components/management-tools/management-tools.component';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -64,7 +65,8 @@ const config = {
     TaskDirective,
     CheckboxDirective,
     TasksComponent,
-    TaskComponent
+    TaskComponent,
+    ManagementToolsComponent
   ],
   imports: [
     BrowserModule,
