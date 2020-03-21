@@ -3,8 +3,9 @@
   padding: 0npm;
 }
 
-.nav {
-  width: 100%;
+.navi {
+  display: flex;
+  width: 100vw;
   /* ! HEIGTH MUSI BYĆ KOMPATYBILNY Z NAVIGACJA GŁOWNA TAM TERAZ HEIGHT JEST 7 */
   height: 93%;
   background-color: steelblue;

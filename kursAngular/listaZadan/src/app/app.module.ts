@@ -21,9 +21,16 @@ import { AuthService } from "./auth/auth.service";
 import { AuthGuardService } from "./auth/auth-guard.service";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
-import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
-import { NavigationComponent } from './layout/navigation/navigation.component';
-import { DesktopNavigationComponent } from './layout/desktop-navigation/desktop-navigation.component';
+import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
+import { NavigationComponent } from "./layout/navigation/navigation.component";
+import { DesktopNavigationComponent } from "./layout/desktop-navigation/desktop-navigation.component";
+import { ProjectsComponent } from "./layout/projects/projects.component";
+import { ProjectComponent } from "./components/project/project.component";
+import { ProjectDirective } from "./shared/project.directive";
+import { TaskDirective } from "./shared/task.directive";
+import { CheckboxDirective } from "./shared/checkbox.directive";
+import { TasksComponent } from './layout/tasks/tasks.component';
+import { TaskComponent } from './components/task/task.component';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -50,7 +57,14 @@ const config = {
     RegisterComponent,
     MainLayoutComponent,
     NavigationComponent,
-    DesktopNavigationComponent
+    DesktopNavigationComponent,
+    ProjectsComponent,
+    ProjectComponent,
+    ProjectDirective,
+    TaskDirective,
+    CheckboxDirective,
+    TasksComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
