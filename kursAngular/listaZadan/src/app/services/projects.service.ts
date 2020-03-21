@@ -13,7 +13,8 @@ export class ProjectsService {
     description: "Na pewno mi się uda!",
     status: true,
     userId: 0,
-    endDate: new Date()
+    endDate: new Date(),
+    tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
   };
   projects: Array<Project> = [
     {
@@ -23,7 +24,8 @@ export class ProjectsService {
       description: "Na pewno mi się uda!",
       status: true,
       userId: 0,
-      endDate: new Date()
+      endDate: new Date(),
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
     },
     {
       projectId: 1,
@@ -32,7 +34,8 @@ export class ProjectsService {
       description: "Na pewno mi się uda!",
       status: true,
       userId: 0,
-      endDate: new Date()
+      endDate: new Date(),
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
     },
     {
       projectId: 2,
@@ -41,7 +44,8 @@ export class ProjectsService {
       description: "Na pewno mi się uda!",
       status: true,
       userId: 0,
-      endDate: new Date()
+      endDate: new Date(),
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
     },
     {
       projectId: 3,
@@ -50,7 +54,8 @@ export class ProjectsService {
       description: "Na pewno mi się uda!",
       status: true,
       userId: 0,
-      endDate: new Date()
+      endDate: new Date(),
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
     },
     {
       projectId: 4,
@@ -59,7 +64,8 @@ export class ProjectsService {
       description: "Na pewno mi się uda!",
       status: true,
       userId: 0,
-      endDate: new Date()
+      endDate: new Date(),
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
     }
   ];
   projectsObs = new BehaviorSubject<Array<Project>>(this.projects);

@@ -26,7 +26,11 @@ import { NavigationComponent } from "./layout/navigation/navigation.component";
 import { DesktopNavigationComponent } from "./layout/desktop-navigation/desktop-navigation.component";
 import { ProjectsComponent } from "./layout/projects/projects.component";
 import { ProjectComponent } from "./components/project/project.component";
-import { ProjectDirective } from './shared/project.directive';
+import { ProjectDirective } from "./shared/project.directive";
+import { TaskDirective } from "./shared/task.directive";
+import { CheckboxDirective } from "./shared/checkbox.directive";
+import { TasksComponent } from './layout/tasks/tasks.component';
+import { TaskComponent } from './components/task/task.component';
 
 const config = {
   apiKey: "AIzaSyCrvIJaFSRzPO8q3QRGSkfArzAYKsZz758",
@@ -56,7 +60,11 @@ const config = {
     DesktopNavigationComponent,
     ProjectsComponent,
     ProjectComponent,
-    ProjectDirective
+    ProjectDirective,
+    TaskDirective,
+    CheckboxDirective,
+    TasksComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

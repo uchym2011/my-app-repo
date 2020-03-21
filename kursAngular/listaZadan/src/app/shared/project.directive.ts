@@ -1,11 +1,16 @@
 import { Directive, ElementRef, Renderer2 } from "@angular/core";
 
 @Directive({
-  selector: "[appProject]"
+  selector: "[appUiProject]"
 })
 export class ProjectDirective {
-  private card;
   constructor(private el: ElementRef, private rerender: Renderer2) {
-    this.card = this.rerender.createElement("div");
+    el.nativeElement.style.position = "relative";
+    el.nativeElement.style.display = "flex";
+    el.nativeElement.style.height = "5%";
+    el.nativeElement.style.justifyContent = "flexStart";
+    el.nativeElement.style.alignItems = "center";
+    el.nativeElement.style.borderBottom = "1px solid black";
+    el.nativeElement.style.background = "blue";
   }
 }

@@ -6,6 +6,7 @@ import { AuthGuardService } from "./auth/auth-guard.service";
 import { WelcomeComponent } from "./auth/welcome/welcome.component";
 import { MainLayoutComponent } from "./layout/main-layout/main-layout.component";
 import { ProjectsComponent } from "./layout/projects/projects.component";
+import { TasksComponent } from "./layout/tasks/tasks.component";
 
 const appRoutes: Routes = [
   {
@@ -19,7 +20,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService],
     children: [
       { path: "todoTask", component: TodoTaskComponent },
-      { path: "doneTask", component: DoneTaskComponent },
+      { path: "daily", component: TasksComponent },
       { path: "projects", component: ProjectsComponent },
       { path: "", redirectTo: "todoTasks", pathMatch: "full" }
     ]

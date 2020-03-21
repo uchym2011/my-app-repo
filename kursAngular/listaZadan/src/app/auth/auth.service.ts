@@ -11,8 +11,6 @@ export class AuthService {
   user: User;
   userIsLogged = false;
   userIsLoggedObs = new BehaviorSubject<boolean>(this.userIsLogged);
-  // userIsLogged = JSON.parse(localStorage.getItem("loggedIn") || false;
-  //
 
   constructor(public angularFire: AngularFireAuth, private router: Router) {
     // pilnuje czy jestesmy zalogowani

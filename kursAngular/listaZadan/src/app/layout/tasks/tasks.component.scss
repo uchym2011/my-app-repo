@@ -1,0 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+.tasks {
+  display: flex;
+  justify-content: center;
+  width: 95vw;
+  height: 100%;
+
+  &__list {
+    width: 40%;
+  }
+}
