@@ -69,7 +69,6 @@ export class TodoTaskComponent implements OnInit {
       this.tasksListNorm = tasks.filter(t => t.isDone == 0 && t.priority < 1);
 
       console.log("TASKS LIST: " + this.tasksList);
-      //debugger;
       //this.tasksList = tasks.filter(t => t.end === null);
     });
 
@@ -81,8 +80,8 @@ export class TodoTaskComponent implements OnInit {
     this.tasksService
       .getProjectsListObs()
       .subscribe((project: Array<Project>) => {
-        debugger;
         this.projectList = project;
+        ///debugger;
       });
 
     console.log("PROJEKT LIST: " + this.projectList);
@@ -118,7 +117,6 @@ export class TodoTaskComponent implements OnInit {
 
     // this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
     //   // dodajemy slice aby zwrociła nową tą samą tablice ale z nową referencje, wykryje to angular i posortuje
-    //   debugger;
     //   // mozemy dac pure true przy sortowaniu i jest to bardziej wydajne
     //   // this.tasksList = tasks.slice();
     //   //this.tasksList = tasks.filter(t => t.end === null);

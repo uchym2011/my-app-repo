@@ -13,17 +13,19 @@ import { Project } from "../models/project";
 })
 
 export class HttpService {
-  readonly URL_DB = "http://localhost:3001/tasks";
-  //readonly URL_DB = 'http://uchym.ddns.net:3001/tasks';
-
-  // readonly param = new HttpParams().set('apiKey', '');
-  readonly param = new HttpParams().append("userId", "1");
 
   constructor(private http: HttpClient, private authService: AuthService) {
     //console.log('Wykonuję http.service.ts constructor #1');
     //this.getTasks();
     //this.getUser();
   }
+  readonly URL_DB = "http://localhost:3001/tasks";
+  //readonly URL_DB = 'http://uchym.ddns.net:3001/tasks';
+
+  // readonly param = new HttpParams().set('apiKey', '');
+  readonly param = new HttpParams().append("userId", "1");
+
+  private projectListB: Array<Project> = [];
 
   getParams(): string {
     const uid = this.authService.user.uid;
@@ -48,12 +50,35 @@ export class HttpService {
     return this.http.get<Array<User>>("http://localhost:3001/user/" + this.getParams());
   }
 
+
   getProjectsUsers(): Observable<Array<Project>> {
     console.log('Wykonuję http.service.ts :::::::::: getProjectsUsers #1');
-    this.http.get("http://localhost:3001/projects/" + this.getParams()).subscribe(project => {
-      console.log('PROJECT ARRAY : ' + project[0].name);
-      //alert(user[0].firstName + ' ' + user[0].surname);
+    // ZROBIC WSTAWIANIE BIEZACEGO
+    //this.http.put
+  const uid = this.getParams();
+
+    const projectListBB =
+    [
+     {
+       name:"Bieżący",
+       description:"Bieżący projekt",
+       status:"B",
+       userId: uid,
+       endDate: "2020-04-01 12:00:00"
+     }
+    ];
+    console.log('log' + projectListBB);
+
+    this.http.put("http://localhost:3001/projects/" + uid, projectListBB).subscribe(data => {
+      console.log('getProjectsUsers + [dane] = ' + data);
+
+      this.http.get("http://localhost:3001/projects/" + uid).subscribe(project => {
+        console.log('PROJECT ARRAY : ' + project[0].name);
+        //alert(user[0].firstName + ' ' + user[0].surname);
+      });
+
     });
+
     return this.http.get<Array<Project>>("http://localhost:3001/projects/" + this.getParams());
   }
 

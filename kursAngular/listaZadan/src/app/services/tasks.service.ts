@@ -27,6 +27,7 @@ export class TasksService {
     private angularFire: AngularFireAuth
   ) {
     console.log("Wykonuję tasks.service.ts constructor #1");
+
     angularFire.authState.subscribe(user => {
       if (user) {
         this.init();
@@ -34,6 +35,7 @@ export class TasksService {
         this.tasksListObs.next([]);
       }
     });
+    console.log('tasks.serive.ts contructor user: ' + this.angularFire.auth.currentUser.uid );
 
     /*    const tasksList =
          [
@@ -53,6 +55,23 @@ export class TasksService {
     this.httpSevice.getTasks().subscribe(list => {
       this.tasksListObs.next(list);
     });
+
+    const projectListBB: Array<Project> =
+    [
+     {
+       name:"Bieżący",
+       description:"Bieżący projekt",
+       status:"B",
+       userId: this.angularFire.auth.currentUser.uid,
+       endDate: null
+     }
+    ];
+    console.log('logiii ' + projectListBB);
+
+    const lista = this.projectsListObs.getValue().concat(projectListBB);
+    this.projectsListObs.next(lista);
+    console.log('dodaje project init ' + projectListBB);
+
 
     this.httpSevice.getProjectsUsers().subscribe(list => {
       this.projectsListObs.next(list);
@@ -80,7 +99,6 @@ export class TasksService {
 
   remove(task: Task) {
     console.log("Wykonuję tasks.service.ts remove #1");
-    //debugger;
     task.isDone = -1;
     const list = this.tasksListObs.getValue();
     //debugger;
@@ -122,6 +140,12 @@ export class TasksService {
   getProjectsListObs(): Observable<Array<Project>> {
     console.log("Wykonuję tasks.service.ts getProjectsListObs #1");
     // this.init();
+
+    this.httpSevice.getProjectsUsers().subscribe(list => {
+      this.projectsListObs.next(list);
+      ///debugger;
+    });
+
     return this.projectsListObs.asObservable();
   }
 
