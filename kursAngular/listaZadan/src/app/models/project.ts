@@ -1,9 +1,9 @@
 export interface Project {
-  projectId?: string;
+  projectid?: string;
   name: string;
-  created?: Date;
+  created?: string;
   description: string;
   status: string;
   userId: string;
-  endDate: Date;
+  endDate: string;
 }

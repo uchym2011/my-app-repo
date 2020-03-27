@@ -9,4 +9,5 @@ export interface Task {
   end?: string;
   isDone: number;
   priority?: number;
+  projectid?: number;
 }

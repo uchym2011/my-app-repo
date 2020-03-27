@@ -17,10 +17,12 @@ export class TasksService {
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
 
-  private projectsListObs = new BehaviorSubject<Array<Project>>([]);
+  public projectsListObs = new BehaviorSubject<Array<Project>>([]);
 
   private tasksUserObs = new BehaviorSubject<Array<UserDB>>([]);
   // private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
+
+  public projectListService: Array<Project> = [];
 
   constructor(
     private httpSevice: HttpService,
@@ -77,6 +79,13 @@ export class TasksService {
       this.projectsListObs.next(list);
     });
 
+     this.getProjectsListObs()
+        .subscribe((project: Array<Project>) => {
+        this.projectListService = project;
+        ///debugger;
+      });
+
+
     /* TABELA_USERS NIE KASOWAC PRZYKLAD
     console.log('Wykonuję tasks.service.ts init #2 gerUser');
     this.httpSevice.getUser().subscribe(userdb => {
@@ -95,6 +104,19 @@ export class TasksService {
 
     const list = this.tasksListObs.getValue().concat(task);
     this.tasksListObs.next(list);
+  }
+
+  addProject(project: Array<Project>) {
+    console.log("Wykonuję tasks.service.ts add #1");
+    // dodajemy do listy
+    // this.tasksList.push(task);
+
+    // propagujemy
+    // przy wrzucaniu zadania do naszej listy musimy tez obsluzyc .taskListObs
+    // this.tasksListObs.next(this.tasksList);
+
+    const list = this.projectsListObs.getValue().concat(project);
+    this.projectsListObs.next(list);
   }
 
   remove(task: Task) {
