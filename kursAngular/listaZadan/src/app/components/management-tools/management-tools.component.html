@@ -1,5 +1,18 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="add()"
+  [ngClass]="{
+    input: !inputActive,
+    'input--active': inputActive
+  }"
+>
+  <input formControlName="projectContent" type="text" class="input__element" />
+</form>
+
 <div class="tools">
-  <div class="tools__element"><i class="fas fa-plus"></i></div>
+  <div class="tools__element" (click)="toggleInput()">
+    <i class="fas fa-plus"></i>
+  </div>
   <div class="tools__element"><i class="fas fa-search"></i></div>
   <div class="tools__element"><i class="fas fa-sort-amount-up"></i></div>
 </div>

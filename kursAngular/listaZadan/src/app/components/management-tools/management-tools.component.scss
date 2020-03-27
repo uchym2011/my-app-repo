@@ -1,3 +1,28 @@
+.input {
+  display: none;
+
+  &--active {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 40px;
+    background-color: greenyellow;
+  }
+
+  &__element {
+    // display: none;
+    width: 30%;
+    height: 90%;
+    // &--active {
+    //   width: 30%;
+    //   height: 90%;
+    // }
+  }
+}
+
 .tools {
   position: absolute;
   top: 50%;
@@ -16,6 +41,12 @@
     height: 50px;
     background-color: #1739B3;
     border: 1px solid black;
+    cursor: pointer;
+    transition: .8s;
+
+    &:hover {
+      background-color: #8AA3FF;
+    }
   }
 }
 

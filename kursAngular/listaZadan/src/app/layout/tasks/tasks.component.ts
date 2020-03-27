@@ -9,11 +9,11 @@ import { Project } from "src/app/models/project";
 })
 export class TasksComponent implements OnInit {
   project: Project;
-  constructor(private projectsService: ProjectsService) {
-    projectsService
-      .getProjects()
-      .subscribe(project => (this.project = project[0]));
-  }
+  constructor(private projectsService: ProjectsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projectsService
+      .getInitialProject()
+      .subscribe(values => (this.project = values));
+  }
 }
