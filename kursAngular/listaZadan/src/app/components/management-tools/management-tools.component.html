@@ -1,12 +1,9 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="add()"
-  [ngClass]="{
+<form [formGroup]="form" (ngSubmit)="add()" [ngClass]="{
     input: !inputActive,
     'input--active': inputActive
-  }"
->
+  }">
   <input formControlName="projectContent" type="text" class="input__element" />
+  <button type="submit" class="input__submit">></button>
 </form>
 
 <div class="tools">

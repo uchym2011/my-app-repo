@@ -20,9 +20,9 @@ export class ManagementToolsComponent implements OnInit {
       projectContent: ""
     });
 
-    this.form.valueChanges.subscribe(values =>
-      console.log(values.projectContent)
-    );
+    // this.form.valueChanges.subscribe(values =>
+    //   // console.log(values.projectContent)
+    // );
   }
 
   toggleInput() {
@@ -31,6 +31,7 @@ export class ManagementToolsComponent implements OnInit {
 
   add() {
     this.projectService.addTask(this.form.value.projectContent);
+    this.toggleInput();
     console.log(this.projectService.initialProject);
   }
 }
