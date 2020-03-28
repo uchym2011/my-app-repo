@@ -1,4 +1,5 @@
 <main class="projects">
+  <app-management-tools [environment]="'projects'"></app-management-tools>
   <ul class="projects__list">
     <app-project *ngFor="let project of projects" [project]="project"></app-project>
   </ul>

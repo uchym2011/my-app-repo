@@ -8,8 +8,11 @@ import { ProjectsService } from "src/app/services/projects.service";
   styleUrls: ["./management-tools.component.scss"]
 })
 export class ManagementToolsComponent implements OnInit {
+  @Input() environment;
+
   inputActive = false;
   form: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectsService
@@ -29,9 +32,16 @@ export class ManagementToolsComponent implements OnInit {
     this.inputActive = !this.inputActive;
   }
 
-  add() {
+  addTask() {
     this.projectService.addTask(this.form.value.projectContent);
+  }
+
+  addProject() {
+    this.projectService.addProject(this.form.value.projectContent);
+  }
+
+  formSubmit() {
+    this.environment === "tasks" ? this.addTask() : this.addProject();
     this.toggleInput();
-    console.log(this.projectService.initialProject);
   }
 }

@@ -70,6 +70,17 @@ export class ProjectsService {
   ];
   projectsObs = new BehaviorSubject<Array<Project>>(this.projects);
   initialProjecObs = new BehaviorSubject<Project>(this.initialProject);
+
+  templateProject: Project = {
+    projectId: 0,
+    name: "",
+    created: new Date(),
+    description: "",
+    status: true,
+    userId: 0,
+    endDate: new Date(),
+    tasks: []
+  };
   constructor() {}
 
   getProjects(): Observable<Array<Project>> {
@@ -80,12 +91,14 @@ export class ProjectsService {
     return this.initialProjecObs.asObservable();
   }
 
-  //  JAK ZA POMOCĄ OBSERWABLA WPAKOWAĆ WARTOŚĆ DO DANEGO OBIEKTU DO TABLICY
-  // JESTEM W TRKACIE DODAWANIA Z INPUTA WYSUWAJĄCEGO SIĘ, TEKSTU
-  //  KTÓRY NA PIERWSZY STRZAŁ ZASILI TABLCE TASKÓW!
-  addTask(task) {
+  addTask(task: string) {
     const tasks = this.initialProjecObs.value.tasks;
     tasks.push(task);
-    // this.initialProjecObs.next(tasks);
+  }
+
+  addProject(title: string) {
+    const projects = this.projectsObs.value;
+    this.templateProject.name = title;
+    projects.push(this.templateProject);
   }
 }
