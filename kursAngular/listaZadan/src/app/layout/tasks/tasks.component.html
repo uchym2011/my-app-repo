@@ -1,6 +1,11 @@
 <main class="tasks">
-  <app-management-tools [environment]="'tasks'"></app-management-tools>
+  <app-management-tools (open)="filterList($event)" [environment]="'findTask'"></app-management-tools>
   <ul class="tasks__list">
-    <app-task *ngFor="let task of project.tasks" [project]="task"></app-task>
+    <ng-container *ngIf="filteredTasks.length > 0">
+      <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
+    </ng-container>
+    <ng-container *ngIf="!filteredTasks.length">
+      <app-task *ngFor="let task of project.tasks" [project]="task"></app-task>
+    </ng-container>
   </ul>
 </main>

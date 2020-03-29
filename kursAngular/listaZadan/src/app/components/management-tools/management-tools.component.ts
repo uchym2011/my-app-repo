@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ProjectsService } from "src/app/services/projects.service";
 
@@ -9,6 +9,7 @@ import { ProjectsService } from "src/app/services/projects.service";
 })
 export class ManagementToolsComponent implements OnInit {
   @Input() environment;
+  @Output() open: EventEmitter<any> = new EventEmitter();
 
   inputActive = false;
   form: FormGroup;
@@ -23,9 +24,9 @@ export class ManagementToolsComponent implements OnInit {
       projectContent: ""
     });
 
-    // this.form.valueChanges.subscribe(values =>
-    //   // console.log(values.projectContent)
-    // );
+    this.form.valueChanges.subscribe(values =>
+      this.startFinding(values.projectContent)
+    );
   }
 
   toggleInput() {
@@ -40,8 +41,20 @@ export class ManagementToolsComponent implements OnInit {
     this.projectService.addProject(this.form.value.projectContent);
   }
 
+  startFinding(searchingText: string) {
+    this.open.emit(searchingText);
+  }
+
   formSubmit() {
     this.environment === "tasks" ? this.addTask() : this.addProject();
     this.toggleInput();
+
+    if (this.environment === "tasks") {
+      this.addTask();
+    } else if (this.environment === "projects") {
+      this.addProject();
+    } else if (this.environment === "findTask") {
+      this.startFinding(this.form.value.projectContent);
+    }
   }
 }
