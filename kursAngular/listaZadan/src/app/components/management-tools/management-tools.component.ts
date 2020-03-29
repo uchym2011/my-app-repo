@@ -9,8 +9,9 @@ import { ProjectsService } from "src/app/services/projects.service";
 })
 export class ManagementToolsComponent implements OnInit {
   @Input() environment;
-  @Output() open: EventEmitter<any> = new EventEmitter();
+  @Output() emitFinder: EventEmitter<any> = new EventEmitter();
 
+  mode: string;
   inputActive = false;
   form: FormGroup;
 
@@ -29,7 +30,15 @@ export class ManagementToolsComponent implements OnInit {
     );
   }
 
-  toggleInput() {
+  changeMode(event) {
+    // ! USTAWIAM TRYB W KTÓRYM WYSZUKIWARKA MA SZUKAĆ :)
+    // ! CHANGE ON SWITCH
+    if (event.target.classList[1] === "fa-plus") {
+      this.mode = "addition";
+    } else if (event.target.classList[1] === "fa-search") {
+      this.mode = "searching";
+    }
+    console.log(this.mode);
     this.inputActive = !this.inputActive;
   }
 
@@ -42,12 +51,12 @@ export class ManagementToolsComponent implements OnInit {
   }
 
   startFinding(searchingText: string) {
-    this.open.emit(searchingText);
+    this.emitFinder.emit(searchingText);
   }
 
   formSubmit() {
     this.environment === "tasks" ? this.addTask() : this.addProject();
-    this.toggleInput();
+    this.inputActive = !this.inputActive;
 
     if (this.environment === "tasks") {
       this.addTask();
