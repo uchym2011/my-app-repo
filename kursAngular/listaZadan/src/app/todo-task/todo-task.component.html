@@ -4,6 +4,10 @@
 
   <ng-container *ngIf="projectList.length > 0; else noTask">
     <p [ngStyle]="{color: getColor()}">PROJEKTY: {{projectList.length}}</p>
+    <p>Name: {{projectList[0].name}}</p>
+    <p>ID: {{projectList[0].projectid}}</p>
+    <p>Description: {{projectList[0].description}}</p>
+    <p>Created: {{projectList[0].created}}</p>
   </ng-container>
 
   <ng-container *ngIf="tasksList.length > 0; else noTask">

@@ -1,10 +1,9 @@
 export interface Project {
-  projectId?: number;
+  projectid?: number;
   name: string;
   created?: Date;
   description: string;
-  status: boolean;
-  userId: number;
+  status: string;
+  userId: string;
   endDate: Date;
-  tasks: Array<string>;
 }

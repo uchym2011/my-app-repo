@@ -3,3 +3,17 @@
   <!-- <input appUiCheckbox type="checkbox" name="" id=""> -->
   <h4 appUiTask>{{ project.name }}</h4>
 </li>
+
+<div *ngFor="let project of projectList">
+  <ul>Lista Projektów:
+    <li>
+        {{'Nr projektu: ' + project.projectid}}
+        {{'Nazwa: ' + project.name}}
+        {{'Utworzono: ' + project.created}}
+        {{'Opis: ' + project.description}}
+        {{'Data zakończenia: ' + project.endDate}}
+        {{'Status: ' + project.status}}
+    </li>
+  </ul>
+
+</div>

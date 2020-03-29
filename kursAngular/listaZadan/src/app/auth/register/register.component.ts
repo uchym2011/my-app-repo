@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
 
   // w serwisie wywołuje rejestrację
   signup(formData: NgForm) {
-    debugger;
     console.log("Wykonuję add-login.component.ts signup #1");
     this.authService.signup(
       formData.value.email,

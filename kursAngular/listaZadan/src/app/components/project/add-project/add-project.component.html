@@ -1,0 +1,29 @@
+<ul>
+<div>
+  <h3>Miejsce na dodawanie Projektów TYMCZASOWE:</h3>
+  <form [formGroup]="addFormProject" (ngSubmit)="addProject()">
+    <div>
+      <div style="display: inline-block;" formArrayName="name">
+        <div *ngFor="let project of addFormProject.get('name')['controls']; let i = index;">
+        <label>{{i+1 + '. Nazwa projektu: '}} &nbsp; </label><input type="text" [formControlName]="i">
+        </div>
+      </div>
+
+      <div formArrayName="description" style="display: inline-block;">
+        <div *ngFor="let project of addFormProject.get('description')['controls']; let i = index;">
+          <label> &nbsp; Opis: &nbsp;</label> <input type="text" [formControlName]="i">
+        </div>
+      </div>
+      <div formArrayName="endDate" style="display: inline-block;">
+        <div *ngFor="let project of addFormProject.get('endDate')['controls']; let i = index;">
+          <label> &nbsp; Zakończenie data: &nbsp;</label> <input type="datetime-local" [formControlName]="i">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" class="btn btn-warning" style="margin-right: 15px;">Dodaj</button>
+    </div>
+  </form>
+</div>
+</ul>

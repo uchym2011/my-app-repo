@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Project } from "src/app/models/project";
+import { TasksService } from 'src/app/services/tasks.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: "app-project",
@@ -9,7 +11,15 @@ import { Project } from "src/app/models/project";
 export class ProjectComponent implements OnInit {
   @Input() project;
 
-  constructor() {}
+  public projectList: Array<Project>;
 
-  ngOnInit() {}
+  constructor(private tasksService: TasksService, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.tasksService
+    .getProjectsListObs()
+    .subscribe((project: Array<Project>) => {
+      this.projectList = project;
+    });
+  }
 }
