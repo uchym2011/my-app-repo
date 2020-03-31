@@ -11,6 +11,8 @@ export class ManagementToolsComponent implements OnInit {
   @Input() environment;
   @Output() emitFinder: EventEmitter<any> = new EventEmitter();
 
+  private addingMode = "addition";
+  private searchingMode = "searching";
   mode: string;
   inputActive = false;
   form: FormGroup;
@@ -24,19 +26,23 @@ export class ManagementToolsComponent implements OnInit {
     this.form = this.fb.group({
       projectContent: ""
     });
-
-    this.form.valueChanges.subscribe(values =>
-      this.startFinding(values.projectContent)
-    );
+    // ! TUTAJ IF POWINIEN BYĆ NA ZEWNĄTRZ, ALE NIE ZADZIAŁA VALUE CHANGES
+    // ! PRAWDOPODOBNIE SPRAWA ZOSTANIE ROZIWĄZANA WRAZ Z RXJS
+    console.log(this.mode);
+    this.form.valueChanges.subscribe(values => {
+      if (this.mode === this.searchingMode) {
+        this.startFinding(values.projectContent);
+      }
+    });
   }
 
   changeMode(event) {
     // ! USTAWIAM TRYB W KTÓRYM WYSZUKIWARKA MA SZUKAĆ :)
     // ! CHANGE ON SWITCH
     if (event.target.classList[1] === "fa-plus") {
-      this.mode = "addition";
+      this.mode = this.addingMode;
     } else if (event.target.classList[1] === "fa-search") {
-      this.mode = "searching";
+      this.mode = this.searchingMode;
     }
     console.log(this.mode);
     this.inputActive = !this.inputActive;
@@ -55,15 +61,18 @@ export class ManagementToolsComponent implements OnInit {
   }
 
   formSubmit() {
-    this.environment === "tasks" ? this.addTask() : this.addProject();
-    this.inputActive = !this.inputActive;
+    // this.environment === "tasks" ? this.addTask() : this.addProject();
 
-    if (this.environment === "tasks") {
+    if (this.environment === "tasks" && this.mode === this.addingMode) {
       this.addTask();
-    } else if (this.environment === "projects") {
+    } else if (
+      this.environment === "projects" &&
+      this.mode === this.addingMode
+    ) {
       this.addProject();
     } else if (this.environment === "findTask") {
       this.startFinding(this.form.value.projectContent);
     }
+    this.inputActive = !this.inputActive;
   }
 }
