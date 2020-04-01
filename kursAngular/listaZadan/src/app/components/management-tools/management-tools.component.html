@@ -1,10 +1,12 @@
-<form [formGroup]="form" (ngSubmit)="formSubmit()" [ngClass]="{
-    input: !inputActive,
-    'input--active': inputActive
-  }">
-  <input formControlName="projectContent" type="text" class="input__element" />
-  <button type="submit" class="input__submit">></button>
-</form>
+<ng-container *ngIf="mode === 'addition' || mode === 'searching' ">
+  <form [formGroup]="form" (ngSubmit)="formSubmit()" [ngClass]="{
+      input: !inputActive,
+      'input--active': inputActive
+    }">
+    <input formControlName="projectContent" type="text" class="input__element" />
+    <button type="submit" class="input__submit">></button>
+  </form>
+</ng-container>
 
 <div class="tools">
   <div class="tools__element" (click)="changeMode($event)">

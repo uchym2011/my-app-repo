@@ -10,9 +10,11 @@ import { ProjectsService } from "src/app/services/projects.service";
 export class ManagementToolsComponent implements OnInit {
   @Input() environment;
   @Output() emitFinder: EventEmitter<any> = new EventEmitter();
+  @Output() activedSort: EventEmitter<any> = new EventEmitter();
 
   private addingMode = "addition";
   private searchingMode = "searching";
+  private sortingMode = "sort";
   mode: string;
   inputActive = false;
   form: FormGroup;
@@ -41,11 +43,14 @@ export class ManagementToolsComponent implements OnInit {
     // ! CHANGE ON SWITCH
     if (event.target.classList[1] === "fa-plus") {
       this.mode = this.addingMode;
+      this.inputActive = !this.inputActive;
     } else if (event.target.classList[1] === "fa-search") {
       this.mode = this.searchingMode;
+      this.inputActive = !this.inputActive;
+    } else if (event.target.classList[1] === "fa-sort-amount-up") {
+      this.mode = this.sortingMode;
+      this.activedSort.emit();
     }
-    console.log(this.mode);
-    this.inputActive = !this.inputActive;
   }
 
   addTask() {

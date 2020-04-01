@@ -14,7 +14,7 @@ export class ProjectsService {
     status: true,
     userId: 0,
     endDate: new Date(),
-    tasks: ["Task 1", "Task 2", "Task 3", "Task 4", "Mieć wszystko"]
+    tasks: ["Task 1", "Task 2", "Task 3", "Task 4", "Mieć wszystko", "ama"]
   };
   projects: Array<Project> = [
     {

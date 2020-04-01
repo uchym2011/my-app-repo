@@ -12,6 +12,8 @@ export class TasksComponent implements OnInit {
   filteredTasks: Array<string> = [];
   constructor(private projectsService: ProjectsService) {}
 
+  sortedList = false;
+
   ngOnInit() {
     this.projectsService
       .getInitialProject()
@@ -22,5 +24,10 @@ export class TasksComponent implements OnInit {
     this.filteredTasks = this.project.tasks.filter(
       taskTitle => taskTitle.indexOf(event) > -1
     );
+  }
+
+  handleSorting() {
+    this.sortedList = !this.sortedList;
+    console.log("sortedLIST W TASKS", this.sortedList);
   }
 }
