@@ -95,16 +95,13 @@ export class TasksService {
   }
 
   addProject(project: Array<Project>) {
-    console.log("Wykonuję tasks.service.ts add #1");
-    // dodajemy do listy
-    // this.tasksList.push(task);
-
-    // propagujemy
-    // przy wrzucaniu zadania do naszej listy musimy tez obsluzyc .taskListObs
-    // this.tasksListObs.next(this.tasksList);
-
-    const list = this.projectsListObs.getValue().concat(project);
-    this.projectsListObs.next(list);
+    console.log("Wykonuję tasks.service.ts addProject #1");
+    this.saveNewProjectInDB(project);
+    debugger;
+    this.httpSevice.getProjectsUsers().subscribe(list => {
+      this.projectsListObs.next(list);
+      debugger;
+    });
   }
 
   remove(task: Task) {
@@ -140,5 +137,9 @@ export class TasksService {
 
   saveTaskInDB() {
     this.httpSevice.saveTasks(this.tasksListObs.getValue());
+  }
+
+  saveNewProjectInDB(project: Array<Project>) {
+    this.httpSevice.saveProject(project);
   }
 }
