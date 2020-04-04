@@ -1,20 +1,27 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ProjectsService } from "src/app/services/projects.service";
+import { ManagementIcons } from "src/app/models/ManagementToolIcons";
 
 @Component({
   selector: "app-management-tools",
   templateUrl: "./management-tools.component.html",
-  styleUrls: ["./management-tools.component.scss"]
+  styleUrls: ["./management-tools.component.scss"],
 })
 export class ManagementToolsComponent implements OnInit {
+  // ! A MOŻE HOOK ON CHANGES :P?
   @Input() environment;
   @Output() emitFinder: EventEmitter<any> = new EventEmitter();
   @Output() activedSort: EventEmitter<any> = new EventEmitter();
 
-  private addingMode = "addition";
-  private searchingMode = "searching";
-  private sortingMode = "sort";
+  state = [];
+
+  icons: ManagementIcons = {
+    addition: "fa-plus",
+    search: "fa-search",
+    sort: "fa-sort-amount-up",
+  };
+
   mode: string;
   inputActive = false;
   form: FormGroup;
@@ -26,30 +33,48 @@ export class ManagementToolsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      projectContent: ""
+      projectContent: "",
     });
     // ! TUTAJ IF POWINIEN BYĆ NA ZEWNĄTRZ, ALE NIE ZADZIAŁA VALUE CHANGES
     // ! PRAWDOPODOBNIE SPRAWA ZOSTANIE ROZIWĄZANA WRAZ Z RXJS
-    console.log(this.mode);
-    this.form.valueChanges.subscribe(values => {
-      if (this.mode === this.searchingMode) {
+    this.form.valueChanges.subscribe((values) => {
+      if (this.mode === this.icons.search) {
         this.startFinding(values.projectContent);
       }
     });
   }
 
+  changeInputState(chosenMode) {
+    // ! MOżna TO ZROBIĆ Z RXJS
+    //! this.mode jako SUBSCRIBER i valueChanges w ngOninit
+    if (chosenMode !== "fa-sort-amount-up") {
+      this.state = ["fas", chosenMode];
+    }
+  }
+
+  stopSearchingList(mode) {
+    mode === "fa-search" ? this.startFinding(null) : null;
+  }
+
   changeMode(event) {
     // ! USTAWIAM TRYB W KTÓRYM WYSZUKIWARKA MA SZUKAĆ :)
     // ! CHANGE ON SWITCH
-    if (event.target.classList[1] === "fa-plus") {
-      this.mode = this.addingMode;
+    const targetClassName = event.target.classList[1];
+
+    if (!this.mode) {
+      this.mode = targetClassName;
+      this.changeInputState(targetClassName);
       this.inputActive = !this.inputActive;
-    } else if (event.target.classList[1] === "fa-search") {
-      this.mode = this.searchingMode;
-      this.inputActive = !this.inputActive;
-    } else if (event.target.classList[1] === "fa-sort-amount-up") {
-      this.mode = this.sortingMode;
-      this.activedSort.emit();
+      if (targetClassName === "fa-sort-amount-up") {
+        this.activedSort.emit();
+      }
+    } else {
+      this.stopSearchingList(this.mode);
+      this.mode = targetClassName;
+      this.changeInputState(targetClassName);
+      if (targetClassName === "fa-sort-amount-up") {
+        this.activedSort.emit();
+      }
     }
   }
 
@@ -66,18 +91,10 @@ export class ManagementToolsComponent implements OnInit {
   }
 
   formSubmit() {
-    // this.environment === "tasks" ? this.addTask() : this.addProject();
-
-    if (this.environment === "tasks" && this.mode === this.addingMode) {
-      this.addTask();
-    } else if (
-      this.environment === "projects" &&
-      this.mode === this.addingMode
-    ) {
-      this.addProject();
-    } else if (this.environment === "findTask") {
-      this.startFinding(this.form.value.projectContent);
+    if (this.mode === this.icons.addition) {
+      this.environment === "tasks" ? this.addTask : this.addProject;
+      this.mode = "";
+      this.inputActive = !this.inputActive;
     }
-    this.inputActive = !this.inputActive;
   }
 }

@@ -6,6 +6,12 @@
 .input {
   display: none;
 
+  &__state {
+    width: 100px;
+    text-align: center;
+    color: gray;
+  }
+
   &--active {
     position: absolute;
     top: 0;

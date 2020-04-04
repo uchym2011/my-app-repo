@@ -6,6 +6,8 @@
       <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
     </ng-container>
     <ng-container *ngIf="!filteredTasks.length">
+      <!-- ! WARTOŚĆ PIPA NIE JEST DODAWANA NATYCHMIASTOWO KOMPONENT PRZETWARZA TO NIEPOTRZEBNIE
+      ! PRZEZ CO TRZEBA DWA RAZY KLIKAĆ -->
       <app-task *ngFor="let task of project.tasks | sortName: sortedList" [project]="task"></app-task>
     </ng-container>
   </ul>
