@@ -45,10 +45,6 @@ export class AddTaskComponent implements OnInit {
 
     this.addForm2 = this.initForm2();
 
-    console.log('add-task ngOnInit projectid: ' + this.tasksService.projectListService[0].projectid);
-    ///debugger;
-
-
   }
 
   initForm2() {
@@ -77,7 +73,7 @@ export class AddTaskComponent implements OnInit {
       const task = {id: null, userId: this.authService.user.uid, name: tasksArr[_i], created: new Date().toLocaleString(), end: null, isDone: 0, priority: priorArr[_i], projectId: this.tasksService.projectListService[0].projectid};
       console.log('Wykonuję add-task.component.ts createTaskList() #2 [task] =' + task);
       tasksList.push(task);
-      debugger;
+      //debugger;
       //! tutaj potrzebne jest odczytanie projectId dla konkretnego użytkownika
       //! sprobować w serwisie odczytać projectId a potem go odczytać tutaj
     }

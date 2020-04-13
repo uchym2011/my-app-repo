@@ -92,6 +92,10 @@ export class HttpService {
     });
   }
 
+  saveProject(project: Array<Project>): Observable<any>{
+    return this.http.post("http://localhost:3001/projects/" + this.getParams(), project);
+  }
+
   insertUser(user: User) {
     this.http.put("http://localhost:3001/user/", user).subscribe(data => {
       console.log("insertUser" + data);

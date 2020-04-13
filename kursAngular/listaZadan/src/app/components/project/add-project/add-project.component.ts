@@ -23,7 +23,7 @@ export class AddProjectComponent implements OnInit {
     return new FormGroup({
       name: new FormArray([new FormControl('Nowa nazwa projektu', Validators.required)]),
       description: new FormArray([new FormControl('Opis')]),
-      endDate: new FormArray([new FormControl(null)])
+      endDate: new FormArray([new FormControl(new Date())])
     });
   }
 
