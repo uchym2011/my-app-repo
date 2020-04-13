@@ -84,7 +84,7 @@ export class ManagementToolsComponent implements OnInit {
   }
 
   startFinding(searchingText: string) {
-    this.emitFinder.emit(searchingText);
+    this.emitFinder.emit(searchingText.toLowerCase());
   }
 
   formSubmit() {

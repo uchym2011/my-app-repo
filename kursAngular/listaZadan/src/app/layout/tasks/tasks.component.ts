@@ -23,7 +23,7 @@ export class TasksComponent implements OnInit {
 
   filterList(event) {
     this.filteredTasks = this.project.tasks.filter(
-      (taskTitle) => taskTitle.indexOf(event) > -1
+      (taskTitle) => taskTitle.toLowerCase().indexOf(event) > -1
     );
   }
 

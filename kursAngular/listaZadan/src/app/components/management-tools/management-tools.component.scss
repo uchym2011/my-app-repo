@@ -25,9 +25,15 @@
   }
 
   &__submit {
+    width: 20px;
     height: 90%;
     background-color: white;
     border: 1px solid black;
+    transition: .9s;
+
+    &:hover {
+      background-color: gray;
+    }
   }
 
   &__element {

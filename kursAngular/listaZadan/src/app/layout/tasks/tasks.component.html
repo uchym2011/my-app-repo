@@ -4,6 +4,7 @@
   </app-management-tools>
   <app-project-details (unactiveDetails)="handleDescription($event)" [active]="activeDetails"></app-project-details>
   <ul class="tasks__list">
+    <!-- ! WYCZUWAM SIE POWTRZAJĄCY KOD -->
     <ng-container *ngIf="filteredTasks.length > 0">
       <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
     </ng-container>
