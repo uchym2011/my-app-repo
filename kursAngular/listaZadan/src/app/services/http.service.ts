@@ -92,14 +92,8 @@ export class HttpService {
     });
   }
 
-  saveProject(project: Array<Project>){
-    this.http.post("http://localhost:3001/projects/" + this.getParams(), project).subscribe(data => {
-      console.log(
-        "Wykonuję http.service.ts saveProject #2 + [dane] = " +
-          JSON.stringify(data["message"]) +
-          " "
-      );
-    });
+  saveProject(project: Array<Project>): Observable<any>{
+    return this.http.post("http://localhost:3001/projects/" + this.getParams(), project);
   }
 
   insertUser(user: User) {

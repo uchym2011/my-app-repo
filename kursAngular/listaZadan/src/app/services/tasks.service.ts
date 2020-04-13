@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, merge } from "rxjs";
 import { Task } from "../models/task";
 import { HttpService } from "./http.service";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -53,7 +53,7 @@ export class TasksService {
       this.tasksListObs.next(list);
     });
 
-    const projectListBB: Array<Project> =
+/*     const projectListBB: Array<Project> =
     [
      {
        name:"Bieżący",
@@ -67,7 +67,7 @@ export class TasksService {
 
     const lista = this.projectsListObs.getValue().concat(projectListBB);
     this.projectsListObs.next(lista);
-    console.log('dodaje project init ' + projectListBB);
+    console.log('dodaje project init ' + projectListBB); */
 
 
     this.httpSevice.getProjectsUsers().subscribe(list => {
@@ -96,12 +96,20 @@ export class TasksService {
 
   addProject(project: Array<Project>) {
     console.log("Wykonuję tasks.service.ts addProject #1");
-    this.saveNewProjectInDB(project);
-    debugger;
-    this.httpSevice.getProjectsUsers().subscribe(list => {
-      this.projectsListObs.next(list);
-      debugger;
-    });
+    //this.saveNewProjectInDB(project).subscribe(value => console.log("UNIKATOWE TEKSTY"));
+
+    this.httpSevice.saveProject(project).subscribe(value => {
+      this.httpSevice.getProjectsUsers().subscribe(list => {
+        this.projectsListObs.next(list);
+        //debugger;
+      });
+    })
+
+    //debugger;
+
+    //const example = this.httpSevice.saveProject(project).pipe(merge(this.httpSevice.getProjectsUsers()));
+
+
   }
 
   remove(task: Task) {
@@ -141,5 +149,6 @@ export class TasksService {
 
   saveNewProjectInDB(project: Array<Project>) {
     this.httpSevice.saveProject(project);
+
   }
 }
