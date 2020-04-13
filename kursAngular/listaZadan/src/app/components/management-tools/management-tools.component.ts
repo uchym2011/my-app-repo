@@ -13,6 +13,7 @@ export class ManagementToolsComponent implements OnInit {
   @Input() environment;
   @Output() emitFinder: EventEmitter<any> = new EventEmitter();
   @Output() activedSort: EventEmitter<any> = new EventEmitter();
+  @Output() activeDescription: EventEmitter<any> = new EventEmitter();
 
   state = [];
 
@@ -60,22 +61,18 @@ export class ManagementToolsComponent implements OnInit {
     // ! USTAWIAM TRYB W KTÓRYM WYSZUKIWARKA MA SZUKAĆ :)
     // ! CHANGE ON SWITCH
     const targetClassName = event.target.classList[1];
+    this.mode
+      ? this.stopSearchingList(this.mode)
+      : (this.inputActive = !this.inputActive);
+    this.mode = targetClassName;
+    this.changeInputState(targetClassName);
+  }
 
-    if (!this.mode) {
-      this.mode = targetClassName;
-      this.changeInputState(targetClassName);
-      this.inputActive = !this.inputActive;
-      if (targetClassName === "fa-sort-amount-up") {
-        this.activedSort.emit();
-      }
-    } else {
-      this.stopSearchingList(this.mode);
-      this.mode = targetClassName;
-      this.changeInputState(targetClassName);
-      if (targetClassName === "fa-sort-amount-up") {
-        this.activedSort.emit();
-      }
-    }
+  handleList() {
+    this.stopSearchingList(this.mode);
+    this.mode = "";
+    this.inputActive = false;
+    this.activedSort.emit();
   }
 
   addTask() {
@@ -92,9 +89,10 @@ export class ManagementToolsComponent implements OnInit {
 
   formSubmit() {
     if (this.mode === this.icons.addition) {
-      this.environment === "tasks" ? this.addTask : this.addProject;
+      this.environment === "tasks" ? this.addTask() : this.addProject();
       this.mode = "";
       this.inputActive = !this.inputActive;
+      this.activeDescription.emit(true);
     }
   }
 }

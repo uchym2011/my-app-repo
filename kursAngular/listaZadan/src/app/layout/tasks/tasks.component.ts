@@ -5,9 +5,10 @@ import { Project } from "src/app/models/project";
 @Component({
   selector: "app-tasks",
   templateUrl: "./tasks.component.html",
-  styleUrls: ["./tasks.component.scss"]
+  styleUrls: ["./tasks.component.scss"],
 })
 export class TasksComponent implements OnInit {
+  activeDetails = false;
   project: Project;
   filteredTasks: Array<string> = [];
   constructor(private projectsService: ProjectsService) {}
@@ -17,17 +18,21 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.projectsService
       .getInitialProject()
-      .subscribe(values => (this.project = values));
+      .subscribe((values) => (this.project = values));
   }
 
   filterList(event) {
     this.filteredTasks = this.project.tasks.filter(
-      taskTitle => taskTitle.indexOf(event) > -1
+      (taskTitle) => taskTitle.indexOf(event) > -1
     );
   }
 
   handleSorting() {
     this.sortedList = !this.sortedList;
     console.log("sortedLIST W TASKS", this.sortedList);
+  }
+
+  handleDescription(detailsState) {
+    this.activeDetails = detailsState;
   }
 }

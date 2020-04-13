@@ -1,6 +1,8 @@
 <main class="tasks">
-  <app-management-tools (activedSort)="handleSorting()" (emitFinder)="filterList($event)" [environment]="'tasks'">
+  <app-management-tools (activeDescription)="handleDescription($event)" (activedSort)="handleSorting()"
+    (emitFinder)="filterList($event)" [environment]="'tasks'">
   </app-management-tools>
+  <app-project-details (unactiveDetails)="handleDescription($event)" [active]="activeDetails"></app-project-details>
   <ul class="tasks__list">
     <ng-container *ngIf="filteredTasks.length > 0">
       <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>

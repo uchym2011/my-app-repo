@@ -5,13 +5,15 @@ import { Task } from "../models/task";
 
 @Pipe({
   name: "sortName",
-  pure: true
+  pure: true,
 })
 export class SortNamePipe implements PipeTransform {
-  transform(value: Array<Task>, args = false): Array<Task> {
+  transform(value: Array<string>, args = false): Array<string> {
     if (args) {
+      return value.sort();
+      // * More advanced case
       return value.sort((a, b) => {
-        if (a.name > b.name) {
+        if (a > b) {
           return 1;
         } else {
           return -1;
