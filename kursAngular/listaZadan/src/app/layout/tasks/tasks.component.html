@@ -1,17 +1,18 @@
 <main class="tasks">
-  <app-management-tools (activeDescription)="handleDescription($event)" (activedSort)="handleSorting()"
-    (emitFinder)="filterList($event)" [environment]="'tasks'">
+  <app-management-tools (activeDescription)="handleDescription($event)" (beginFinding)="filterList($event)"
+    [environment]="'tasks'">
   </app-management-tools>
-  <app-project-details (unactiveDetails)="handleDescription($event)" [active]="activeDetails"></app-project-details>
+
+  <ng-container *ngIf="activeDetails">
+    <app-project-details (unactiveDetails)="handleDescription($event)" [active]="activeDetails" [taskData]="taskData">
+    </app-project-details>
+  </ng-container>
   <ul class="tasks__list">
-    <!-- ! WYCZUWAM SIE POWTRZAJĄCY KOD -->
     <ng-container *ngIf="filteredTasks.length > 0">
       <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
     </ng-container>
     <ng-container *ngIf="!filteredTasks.length">
-      <!-- ! WARTOŚĆ PIPA NIE JEST DODAWANA NATYCHMIASTOWO KOMPONENT PRZETWARZA TO NIEPOTRZEBNIE
-      ! PRZEZ CO TRZEBA DWA RAZY KLIKAĆ -->
-      <app-task *ngFor="let task of project.tasks | sortName: sortedList" [project]="task"></app-task>
+      <app-task *ngFor="let task of project.tasks" [project]="task" (taskClicked)="test1($event)"></app-task>
     </ng-container>
   </ul>
 </main>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ProjectsService } from "src/app/services/projects.service";
 import { ManagementIcons } from "src/app/models/ManagementToolIcons";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-management-tools",
@@ -11,11 +12,14 @@ import { ManagementIcons } from "src/app/models/ManagementToolIcons";
 export class ManagementToolsComponent implements OnInit {
   // ! A MOŻE HOOK ON CHANGES :P?
   @Input() environment;
-  @Output() emitFinder: EventEmitter<any> = new EventEmitter();
+  @Output() beginFinding: EventEmitter<any> = new EventEmitter();
   @Output() activedSort: EventEmitter<any> = new EventEmitter();
   @Output() activeDescription: EventEmitter<any> = new EventEmitter();
 
   state = [];
+
+  activeTool: string;
+  modde: Observable<any>;
 
   icons: ManagementIcons = {
     addition: "fa-plus",
@@ -24,7 +28,7 @@ export class ManagementToolsComponent implements OnInit {
   };
 
   mode: string;
-  inputActive = false;
+  availablePanel = false;
   form: FormGroup;
 
   constructor(
@@ -34,64 +38,75 @@ export class ManagementToolsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      projectContent: "",
+      title: "",
     });
-    // ! TUTAJ IF POWINIEN BYĆ NA ZEWNĄTRZ, ALE NIE ZADZIAŁA VALUE CHANGES
-    // ! PRAWDOPODOBNIE SPRAWA ZOSTANIE ROZIWĄZANA WRAZ Z RXJS
     this.form.valueChanges.subscribe((values) => {
       if (this.mode === this.icons.search) {
-        this.startFinding(values.projectContent);
+        this.startFinding(values.title);
       }
     });
   }
 
-  changeInputState(chosenMode) {
-    // ! MOżna TO ZROBIĆ Z RXJS
-    //! this.mode jako SUBSCRIBER i valueChanges w ngOninit
+  changePanelState(chosenMode) {
     if (chosenMode !== "fa-sort-amount-up") {
       this.state = ["fas", chosenMode];
     }
   }
 
-  stopSearchingList(mode) {
-    mode === "fa-search" ? this.startFinding(null) : null;
+  stopFindingElements(mode) {
+    mode === "fa-search" ? this.startFinding("") : null;
   }
 
-  changeMode(event) {
-    // ! USTAWIAM TRYB W KTÓRYM WYSZUKIWARKA MA SZUKAĆ :)
-    // ! CHANGE ON SWITCH
-    const targetClassName = event.target.classList[1];
-    this.mode
-      ? this.stopSearchingList(this.mode)
-      : (this.inputActive = !this.inputActive);
-    this.mode = targetClassName;
-    this.changeInputState(targetClassName);
-  }
-
-  handleList() {
-    this.stopSearchingList(this.mode);
+  deactivePanel() {
+    this.availablePanel = false;
     this.mode = "";
-    this.inputActive = false;
-    this.activedSort.emit();
+  }
+
+  setupPanel(mode) {
+    this.mode = mode;
+    this.changePanelState(mode);
+  }
+
+  add() {
+    if (this.mode === "fa-plus") {
+      this.deactivePanel();
+    } else if (!this.mode) {
+      this.setupPanel("fa-plus");
+      this.availablePanel = true;
+    } else {
+      this.stopFindingElements(this.mode);
+      this.setupPanel("fa-plus");
+    }
+  }
+
+  searching() {
+    if (this.mode === "fa-search") {
+      this.deactivePanel();
+    } else if (!this.mode) {
+      this.setupPanel("fa-search");
+      this.availablePanel = true;
+    } else {
+      this.setupPanel("fa-search");
+    }
+  }
+  // HOW TO STOP FINDING
+  startFinding(searchingText) {
+    this.beginFinding.emit(searchingText);
   }
 
   addTask() {
-    this.projectService.addTask(this.form.value.projectContent);
+    this.projectService.addTask(this.form.value.title);
   }
 
   addProject() {
-    this.projectService.addProject(this.form.value.projectContent);
-  }
-
-  startFinding(searchingText: string) {
-    this.emitFinder.emit(searchingText.toLowerCase());
+    this.projectService.addProject(this.form.value.title);
   }
 
   formSubmit() {
     if (this.mode === this.icons.addition) {
       this.environment === "tasks" ? this.addTask() : this.addProject();
       this.mode = "";
-      this.inputActive = !this.inputActive;
+      this.availablePanel = !this.availablePanel;
       this.activeDescription.emit(true);
     }
   }

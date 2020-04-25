@@ -3,7 +3,7 @@ import { Project } from "../models/project";
 import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ProjectsService {
   initialProject: Project = {
@@ -12,9 +12,52 @@ export class ProjectsService {
     created: new Date(),
     description: "Na pewno mi się uda!",
     status: true,
-    userId: 0,
+    userId: 1,
     endDate: new Date(),
-    tasks: ["Task 1", "Task 2", "Task 3", "Task 4", "Mieć wszystko", "ama"]
+    tasks: [
+      {
+        title: "Task 1",
+        description: "Zrobie jutro po południu",
+        finishDate: `${new Date(+2)}`,
+        created: new Date(),
+        id: 11,
+      },
+      {
+        title: "Task 2",
+        description: "Zrobie za tydzień",
+        finishDate: new Date(+3),
+        created: new Date(),
+        id: 12,
+      },
+      {
+        title: "Task 3",
+        description: "Zrobie może dziś",
+        finishDate: new Date(+10),
+        created: new Date(),
+        id: 13,
+      },
+      {
+        title: "Task 4",
+        description: "Po godzinach po trochu",
+        finishDate: new Date(+10),
+        created: new Date(),
+        id: 14,
+      },
+      {
+        title: "Mieć wszystko",
+        description: "Nie od razu, ale za rok",
+        finishDate: new Date(+11),
+        created: new Date(),
+        id: 15,
+      },
+      {
+        title: "Mieć wszystko juz teraz",
+        description: "Za  5 dni i 5 nocy",
+        finishDate: new Date(+8),
+        created: new Date(),
+        id: 16,
+      },
+    ],
   };
   projects: Array<Project> = [
     {
@@ -25,7 +68,7 @@ export class ProjectsService {
       status: true,
       userId: 0,
       endDate: new Date(),
-      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"],
     },
     {
       projectId: 1,
@@ -35,7 +78,7 @@ export class ProjectsService {
       status: true,
       userId: 0,
       endDate: new Date(),
-      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"],
     },
     {
       projectId: 2,
@@ -45,7 +88,7 @@ export class ProjectsService {
       status: true,
       userId: 0,
       endDate: new Date(),
-      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"],
     },
     {
       projectId: 3,
@@ -55,7 +98,7 @@ export class ProjectsService {
       status: true,
       userId: 0,
       endDate: new Date(),
-      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"],
     },
     {
       projectId: 4,
@@ -65,8 +108,8 @@ export class ProjectsService {
       status: true,
       userId: 0,
       endDate: new Date(),
-      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"]
-    }
+      tasks: ["Task 1", "Task 2", "Task 3", "Task 4"],
+    },
   ];
   projectsObs = new BehaviorSubject<Array<Project>>(this.projects);
   initialProjecObs = new BehaviorSubject<Project>(this.initialProject);
@@ -79,7 +122,7 @@ export class ProjectsService {
     status: true,
     userId: 0,
     endDate: new Date(),
-    tasks: []
+    tasks: [],
   };
   constructor() {}
 
@@ -92,8 +135,27 @@ export class ProjectsService {
   }
 
   addTask(task: string) {
+    const taskObj = {
+      title: `${task}`,
+      description: "Zrobie jutro po południu",
+      finishDate: `${new Date(+2)}`,
+      created: new Date(),
+    };
     const tasks = this.initialProjecObs.value.tasks;
-    tasks.push(task);
+    tasks.push(taskObj);
+  }
+
+  changeTask(changed: any) {
+    const tasks = this.initialProjecObs.value.tasks;
+    const index = tasks.findIndex((task) => task.id === changed.id);
+    let matchedTask = { ...tasks[index] };
+    matchedTask = {
+      ...matchedTask,
+      finishDate: changed.finishDate,
+      description: changed.description,
+    };
+
+    tasks.splice(index, 1, matchedTask);
   }
 
   addProject(title: string) {

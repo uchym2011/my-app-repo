@@ -10,17 +10,17 @@ import { Task } from "../models/task";
 export class SortNamePipe implements PipeTransform {
   transform(value: Array<string>, args = false): Array<string> {
     if (args) {
-      return value.sort();
+      // return value.sort();
       // * More advanced case
       return value.sort((a, b) => {
-        if (a > b) {
+        if (a.toLowerCase() > b.toLowerCase()) {
           return 1;
         } else {
           return -1;
         }
       });
     }
-
     return value;
   }
+  // }
 }

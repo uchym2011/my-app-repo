@@ -1,18 +1,17 @@
 <ng-container *ngIf="mode === 'fa-plus' || mode === 'fa-search' ">
   <form [formGroup]="form" (ngSubmit)="formSubmit()" [ngClass]="{
-      input: !inputActive,
-      'input--active': inputActive
+      input: !availablePanel,
+      'input--active': availablePanel
     }">
     <div class="input__state"><i [ngClass]="state"></i></div>
-    <input formControlName="projectContent" type="text" class="input__element" />
+    <input formControlName="title" type="text" class="input__element" />
     <button type="submit" class="input__submit">></button>
   </form>
 </ng-container>
-
+<!-- setupPanelEnvirontment -->
 <div class="tools">
-  <div class="tools__element" (click)="changeMode($event)">
+  <div class="tools__element" (click)="add($event)">
     <i class="fas fa-plus"></i>
   </div>
-  <div class="tools__element" (click)="changeMode($event)"><i class="fas fa-search"></i></div>
-  <div class="tools__element" (click)="handleList()"><i class="fas fa-sort-amount-up"></i></div>
+  <div class="tools__element" (click)="searching($event)"><i class="fas fa-search"></i></div>
 </div>

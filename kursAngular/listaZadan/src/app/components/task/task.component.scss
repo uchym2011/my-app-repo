@@ -7,13 +7,21 @@
 
 .task {
   max-height: 50px;
+  transition: .9s;
 
-  &__schield {
+  &__shield {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 50;
-    background-color: red;
     cursor: pointer;
+    transition: .7;
+
+    &:hover {
+      background-color: rgba($color: grey, $alpha: .2);
+    }
+
   }
 }

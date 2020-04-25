@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ProjectsService } from "src/app/services/projects.service";
 import { Project } from "src/app/models/project";
+import { Task } from "src/app/models/task";
+import { Observable, forkJoin } from "rxjs";
 
 @Component({
   selector: "app-tasks",
@@ -11,9 +13,9 @@ export class TasksComponent implements OnInit {
   activeDetails = false;
   project: Project;
   filteredTasks: Array<string> = [];
-  constructor(private projectsService: ProjectsService) {}
+  taskData: Array<Task>;
 
-  sortedList = false;
+  constructor(private projectsService: ProjectsService) {}
 
   ngOnInit() {
     this.projectsService
@@ -22,17 +24,23 @@ export class TasksComponent implements OnInit {
   }
 
   filterList(event) {
+    const searchingElement = event ? event.toLowerCase() : event;
     this.filteredTasks = this.project.tasks.filter(
-      (taskTitle) => taskTitle.toLowerCase().indexOf(event) > -1
+      (taskTitle) => taskTitle.toLowerCase().indexOf(searchingElement) > -1
     );
-  }
-
-  handleSorting() {
-    this.sortedList = !this.sortedList;
-    console.log("sortedLIST W TASKS", this.sortedList);
   }
 
   handleDescription(detailsState) {
     this.activeDetails = detailsState;
+    console.log("desc");
+    this.projectsService
+      .getInitialProject()
+      .subscribe((project) => ([this.taskData] = project.tasks.slice(-1)));
+  }
+
+  test1(taskData) {
+    this.activeDetails = false;
+    this.taskData = taskData;
+    this.activeDetails = true;
   }
 }

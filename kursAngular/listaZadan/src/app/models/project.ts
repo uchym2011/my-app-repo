@@ -6,5 +6,5 @@ export interface Project {
   status: boolean;
   userId: number;
   endDate: Date;
-  tasks: Array<string>;
+  tasks: Array<any>;
 }
