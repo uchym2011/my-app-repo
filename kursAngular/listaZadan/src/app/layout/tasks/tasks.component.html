@@ -8,6 +8,7 @@
     </app-project-details>
   </ng-container>
   <ul class="tasks__list">
+    <h1 class="tasks__title"> {{project.title}}</h1>
     <ng-container *ngIf="filteredTasks.length > 0">
       <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
     </ng-container>

@@ -3,6 +3,7 @@ import { ProjectsService } from "src/app/services/projects.service";
 import { Project } from "src/app/models/project";
 import { Task } from "src/app/models/task";
 import { Observable, forkJoin } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-tasks",
@@ -11,16 +12,43 @@ import { Observable, forkJoin } from "rxjs";
 })
 export class TasksComponent implements OnInit {
   activeDetails = false;
+  // In daily tasks mode
   project: Project;
   filteredTasks: Array<string> = [];
-  taskData: Array<Task>;
+  taskData: any; // !DOSTROSUJ TYP
 
-  constructor(private projectsService: ProjectsService) {}
+  // NAWIGATION
+  projectId: number;
+
+  constructor(
+    private projectsService: ProjectsService,
+    private router: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.projectsService
       .getInitialProject()
       .subscribe((values) => (this.project = values));
+
+    this.router.params.subscribe((params) => {
+      this.projectId = +params["projectId"]; // (+) converts string 'id' to a number
+      console.log(this.projectId);
+      this.projectsService.getProjects().subscribe((projects) => {
+        // WYKONUJEMY JEŚLI PRZEKAZALIŚMY PARAMETR DO ROUTERA
+        if (this.projectId) {
+          // NOWA LISTA DO WYŚWIETLANIA TASKÓW
+          [this.project] = projects.filter(
+            (project) => project.projectId === this.projectId
+          );
+          // lISTA DO WYŚWIETLANIA DANYCH W DESCRIPTION PANELU BOCZNYM
+          // NIE POTRZEBNE JEST TUTAJ PRZEKAZYWANIE DO TEGO OBIEKTU POKOMBINUJ
+          this.taskData = this.project;
+          this.activeDetails = true;
+        }
+      });
+      // In a real app: dispatch action to load the details here.
+    });
+    console.log(this.projectId);
   }
 
   filterList(event) {

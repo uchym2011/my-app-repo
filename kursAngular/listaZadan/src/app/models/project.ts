@@ -1,10 +1,10 @@
 export interface Project {
   projectId?: number;
-  name: string;
+  title: string;
   created?: Date;
   description: string;
   status: boolean;
   userId: number;
-  endDate: Date;
-  tasks: Array<any>;
+  finishDate: Date;
+  tasks: any;
 }

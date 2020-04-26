@@ -1,7 +1,7 @@
 <main class="projects">
   <app-management-tools [environment]="'projects'"></app-management-tools>
-  <app-project-details></app-project-details>
   <ul class="projects__list">
-    <app-project *ngFor="let project of projects" [project]="project"></app-project>
+    <app-project *ngFor="let project of projects" [project]="project" [routerLink]="['/daily', project.projectId]">
+    </app-project>
   </ul>
 </main>

@@ -12,7 +12,7 @@ const appRoutes: Routes = [
   {
     path: "",
     redirectTo: "/login",
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: "desktopApp",
@@ -22,17 +22,18 @@ const appRoutes: Routes = [
       { path: "todoTask", component: TodoTaskComponent },
       { path: "daily", component: TasksComponent },
       { path: "projects", component: ProjectsComponent },
-      { path: "", redirectTo: "todoTasks", pathMatch: "full" }
-    ]
+      { path: "projects/:projectId", component: TasksComponent },
+      { path: "", redirectTo: "todoTasks", pathMatch: "full" },
+    ],
   },
   {
     path: "login",
-    component: WelcomeComponent
-  }
+    component: WelcomeComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
