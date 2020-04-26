@@ -52,9 +52,10 @@ export class TasksComponent implements OnInit {
   }
 
   filterList(event) {
+    console.log(event.toLowerCase());
     const searchingElement = event ? event.toLowerCase() : event;
     this.filteredTasks = this.project.tasks.filter(
-      (taskTitle) => taskTitle.toLowerCase().indexOf(searchingElement) > -1
+      (task) => task.title.toLowerCase().indexOf(searchingElement) > -1
     );
   }
 
