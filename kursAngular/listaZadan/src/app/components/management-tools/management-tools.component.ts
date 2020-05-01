@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ProjectsService } from "src/app/services/projects.service";
 import { ManagementIcons } from "src/app/models/ManagementToolIcons";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-management-tools",
@@ -10,25 +9,48 @@ import { Observable } from "rxjs";
   styleUrls: ["./management-tools.component.scss"],
 })
 export class ManagementToolsComponent implements OnInit {
-  // ! A MOŻE HOOK ON CHANGES :P?
+  /**
+   * Where the component should operate.
+   */
   @Input() environment;
+
+  /**
+   * Trigger finding item proces
+   */
   @Output() beginFinding: EventEmitter<any> = new EventEmitter();
-  @Output() activedSort: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * Trigger opening description panel
+   */
   @Output() activeDescription: EventEmitter<any> = new EventEmitter();
 
-  state = [];
+  /**
+   * Finder panel state
+   */
+  state: string[] = [];
 
-  activeTool: string;
-  modde: Observable<any>;
+  /**
+   * Is available finderPanel
+   */
+  finderPanel = false;
 
+  /**
+   * Icons
+   */
   icons: ManagementIcons = {
     addition: "fa-plus",
     search: "fa-search",
     sort: "fa-sort-amount-up",
   };
 
+  /**
+   * Component mode
+   */
   mode: string;
-  availablePanel = false;
+
+  /**
+   * Management tool component form
+   */
   form: FormGroup;
 
   constructor(
@@ -39,74 +61,57 @@ export class ManagementToolsComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       title: "",
+      searching: "",
     });
-    this.form.valueChanges.subscribe((values) => {
-      if (this.mode === this.icons.search) {
-        this.startFinding(values.title);
-      }
+
+    this.form.controls["searching"].valueChanges.subscribe((text) => {
+      this.beginFinding.emit(text);
     });
   }
 
-  changePanelState(chosenMode) {
-    if (chosenMode !== "fa-sort-amount-up") {
-      this.state = ["fas", chosenMode];
-    }
-  }
-
-  stopFindingElements(mode) {
-    mode === "fa-search" ? this.startFinding("") : null;
-  }
-
-  deactivePanel() {
-    this.availablePanel = false;
+  hidePanel(): void {
+    this.finderPanel = false;
     this.mode = "";
   }
 
-  setupPanel(mode) {
+  setupPanel(mode: string): void {
     this.mode = mode;
-    this.changePanelState(mode);
+    // Set panael state
+    this.state = ["fas", mode];
+    this.finderPanel = true;
   }
 
-  add() {
+  add(): void {
     if (this.mode === "fa-plus") {
-      this.deactivePanel();
+      this.hidePanel();
     } else if (!this.mode) {
+      // first mode init
       this.setupPanel("fa-plus");
-      this.availablePanel = true;
     } else {
-      this.stopFindingElements(this.mode);
+      // stop searching elements
+      this.beginFinding.emit("");
       this.setupPanel("fa-plus");
     }
   }
 
-  searching() {
+  searching(): void {
     if (this.mode === "fa-search") {
-      this.deactivePanel();
+      this.hidePanel();
     } else if (!this.mode) {
       this.setupPanel("fa-search");
-      this.availablePanel = true;
     } else {
       this.setupPanel("fa-search");
     }
   }
-  // HOW TO STOP FINDING
-  startFinding(searchingText) {
-    this.beginFinding.emit(searchingText);
-  }
 
-  addTask() {
-    this.projectService.addTask(this.form.value.title);
-  }
-
-  addProject() {
-    this.projectService.addProject(this.form.value.title);
-  }
-
-  formSubmit() {
+  formSubmit(): void {
     if (this.mode === this.icons.addition) {
-      this.environment === "tasks" ? this.addTask() : this.addProject();
+      const { title } = this.form.getRawValue();
+      this.environment === "tasks"
+        ? this.projectService.addTask(title)
+        : this.projectService.addProject(title);
       this.mode = "";
-      this.availablePanel = !this.availablePanel;
+      this.finderPanel = !this.finderPanel;
       this.activeDescription.emit(true);
     }
   }

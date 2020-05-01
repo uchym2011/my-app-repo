@@ -1,14 +1,19 @@
-<ng-container *ngIf="mode === 'fa-plus' || mode === 'fa-search' ">
-  <form [formGroup]="form" (ngSubmit)="formSubmit()" [ngClass]="{
-      input: !availablePanel,
-      'input--active': availablePanel
-    }">
-    <div class="input__state"><i [ngClass]="state"></i></div>
-    <input formControlName="title" type="text" class="input__element" />
-    <button type="submit" class="input__submit">></button>
+<div *ngIf="mode" class="finder">
+  <!-- if mode === true -->
+  <form [formGroup]="form" (ngSubmit)="formSubmit()" class="finder__form">
+    <span class="finder__state"><i [ngClass]="state"></i></span>
+
+    <ng-container *ngIf="mode === 'fa-plus'">
+      <input formControlName="title" type="text" class="finder__title finder__element" />
+      <button type="submit" class="finder__submit"></button>
+    </ng-container>
+
+    <ng-container *ngIf="mode === 'fa-search'">
+      <input formControlName="searching" type="text" class="finder__element" />
+    </ng-container>
   </form>
-</ng-container>
-<!-- setupPanelEnvirontment -->
+</div>
+
 <div class="tools">
   <div class="tools__element" (click)="add($event)">
     <i class="fas fa-plus"></i>
