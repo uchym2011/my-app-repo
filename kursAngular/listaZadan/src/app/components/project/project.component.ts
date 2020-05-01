@@ -16,7 +16,8 @@ export class ProjectComponent implements OnInit {
   constructor(private tasksService: TasksService, private authService: AuthService) {}
 
   ngOnInit() {
-    this.tasksService
+    //this.projectList = this.tasksService.projectListService;
+     this.tasksService
     .getProjectsListObs()
     .subscribe((project: Array<Project>) => {
       this.projectList = project;

@@ -32,7 +32,7 @@ export class HttpService {
   }
 
   getTasks(): Observable<Array<Task>> {
-    this.http.get(this.URL_DB + "/" + this.getParams()).subscribe(tasks => {});
+    this.http.get(this.URL_DB + "/" + this.getParams()).subscribe(tasks => { });
     return this.http.get<Array<Task>>(this.URL_DB + "/" + this.getParams());
   }
 
@@ -54,29 +54,46 @@ export class HttpService {
     console.log('Wykonuję http.service.ts :::::::::: getProjectsUsers #1');
     // ZROBIC WSTAWIANIE BIEZACEGO
     //this.http.put
-  const uid = this.getParams();
+    const uid = this.getParams();
 
     const projectListBB =
-    [
-     {
-       name:"Bieżący",
-       description:"Bieżący projekt",
-       status:"B",
-       userId: uid,
-       endDate: "2020-04-01 12:00:00"
-     }
-    ];
-    console.log('log' + projectListBB);
+      [
+        {
+          name: "Bieżący",
+          description: "Bieżący projekt",
+          status: "B",
+          userId: uid,
+          endDate: "2020-04-28 12:00:00"
+        }
+      ];
 
-    this.http.put("http://localhost:3001/projects/" + uid, projectListBB).subscribe(data => {
-      console.log('getProjectsUsers + [dane] = ' + data);
+/*     this.http.put("http://localhost:3001/projects/" + uid, projectListBB).subscribe(data => {
 
       this.http.get("http://localhost:3001/projects/" + uid).subscribe(project => {
         console.log('PROJECT ARRAY : ' + project[0].name);
         //alert(user[0].firstName + ' ' + user[0].surname);
       });
 
+    }); */
+
+    this.http.put("http://localhost:3001/projects/" + uid, projectListBB).subscribe(data => {
+    console.log('http.put ' + data.message);
+    this.http.get<Array<Project>>("http://localhost:3001/projects/" + this.getParams()).subscribe(gety =>{
+      console.log('http.get ' + gety.length);
     });
+    });
+    return this.http.get<Array<Project>>("http://localhost:3001/projects/" + this.getParams());
+
+  }
+
+  // tylko pobranie projektow bez inicjalizacji biezacego
+  getProjectsUsersOnly(): Observable<Array<Project>> {
+
+    console.log('%%% Wykonuję http.service.ts :::::::::: getProjectsUsersTest #1');
+
+/*     this.http.get("http://localhost:3001/projects/" + uid).subscribe(project => {
+      console.log('PROJECT ARRAY : ' + project[0].name);
+    }); */
 
     return this.http.get<Array<Project>>("http://localhost:3001/projects/" + this.getParams());
 
@@ -86,13 +103,13 @@ export class HttpService {
     this.http.put(this.URL_DB, list).subscribe(data => {
       console.log(
         "Wykonuję http.service.ts saveTasks #2 + [dane] = " +
-          JSON.stringify(data["message"]) +
-          " "
+        JSON.stringify(data["message"]) +
+        " "
       );
     });
   }
 
-  saveProject(project: Array<Project>): Observable<any>{
+  saveProject(project: Array<Project>): Observable<any> {
     return this.http.post("http://localhost:3001/projects/" + this.getParams(), project);
   }
 

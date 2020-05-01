@@ -70,9 +70,9 @@ export class TasksService {
     console.log('dodaje project init ' + projectListBB); */
 
 
-    this.httpSevice.getProjectsUsers().subscribe(list => {
+/*     this.httpSevice.getProjectsUsers().subscribe(list => {
       this.projectsListObs.next(list);
-    });
+    }); */
 
      this.getProjectsListObs()
         .subscribe((project: Array<Project>) => {
@@ -99,7 +99,7 @@ export class TasksService {
     //this.saveNewProjectInDB(project).subscribe(value => console.log("UNIKATOWE TEKSTY"));
 
     this.httpSevice.saveProject(project).subscribe(value => {
-      this.httpSevice.getProjectsUsers().subscribe(list => {
+      this.httpSevice.getProjectsUsersOnly().subscribe(list => {
         this.projectsListObs.next(list);
         //debugger;
       });
