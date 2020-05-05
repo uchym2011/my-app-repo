@@ -1,0 +1,57 @@
+.details {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 250px;
+  height: 100%;
+  top: 0;
+  left: -350px;
+  background-color: cadetblue;
+
+  &--active {
+    left: 0;
+  }
+
+  &__wraper {
+    height: 80%;
+  }
+
+  &__label {
+    display: block;
+    width: 89%;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #1739b3;
+    color: white;
+    padding-right: 10px;
+  }
+
+  &__element {
+    width: 100%;
+    padding-bottom: 10px;
+    // height: 150px;
+    // background-color: red;
+  }
+
+  &__description {
+    background-color: whitesmoke;
+    height: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
+
+    &:disabled {
+      background-color: #4682b4;
+    }
+  }
+
+  &__button {
+    width: 90%;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: #1739b3;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}

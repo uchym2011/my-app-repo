@@ -1,0 +1,17 @@
+<form [formGroup]=detailsForm class="details" (ngSubmit)="unactivePanel()" [ngClass]="{'details--active': active}">
+  <div class="details__header">
+    <h5> {{_taskData.title}} </h5>
+  </div>
+  <div class="details__wraper">
+    <div class="details__element">
+      <label class="details__label" for="finishDate">Data zakończenia:</label>
+      <input class="details__finishDate" type="date" name="finishDate" id="finishDate" formControlName="finishDate">
+    </div>
+    <div class="details__element" (click)="activeDescription()">
+      <label class="details__label" for="description">Opis:</label>
+      <textarea (blur)="unactiveDescription()" id="description" class="details__description"
+        [disabled]="isEnabledDescription" formControlName="description"></textarea>
+    </div>
+  </div>
+  <button class="details__button" type="submit">Zatwierdź</button>
+</form>

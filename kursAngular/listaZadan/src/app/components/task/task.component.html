@@ -1,5 +1,5 @@
-<li appUiProject class="task">
+<li appUiProject class="task" (click)="test(project)">
   <div class="task__shield"></div>
   <input appUiCheckbox type="checkbox" name="" id="">
-  <h4 appUiTask>{{ project }}</h4>
+  <h4 appUiTask>{{ project.title }}</h4>
 </li>

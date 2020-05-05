@@ -2,12 +2,17 @@
 
 // tworzymy interfejsc który będzie reprezentował nasz obiekt Task
 export interface Task {
-  _id?: {"$oid": string}
-  userId: string;
-  name: string;
-  created: string;
+  _id?: { $oid: string };
+  userId?: string;
+  title?: string;
+  created?: string;
   end?: string;
-  isDone: number;
+  finishDate?: string;
+  isDone?: number;
   priority?: number;
   projectid?: number;
+  // TODO
+  // description?: string;
 }
+
+// id: number;

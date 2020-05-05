@@ -1,5 +1,23 @@
 <main class="tasks">
-  <app-todo-task></app-todo-task>
+  <!-- <app-todo-task>
+    </app-todo-task> -->
+  <!-- <ul class="tasks__list"> -->
+  <!--  TODO -->
+  <!-- <app-management-tools (activeDescription)="handleDescription($event)" (beginFinding)="filterList($event)"
+    [environment]="'tasks'">
+  </app-management-tools> -->
+
+  <!-- <ng-container *ngIf="activeDetails">
+    <app-project-details (unactiveDetails)="handleDescription($event)" [active]="activeDetails" [taskData]="taskData">
+    </app-project-details>
+  </ng-container> -->
   <ul class="tasks__list">
+    <h1 class="tasks__title"> {{project.title}}</h1>
+    <ng-container *ngIf="filteredTasks.length > 0">
+      <app-task *ngFor="let task of filteredTasks" [project]="task"></app-task>
+    </ng-container>
+    <ng-container *ngIf="!filteredTasks.length">
+      <app-task *ngFor="let task of project.tasks" [project]="task" (taskClicked)="test1($event)"></app-task>
+    </ng-container>
   </ul>
 </main>

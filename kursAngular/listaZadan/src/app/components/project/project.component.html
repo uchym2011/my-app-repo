@@ -1,7 +1,7 @@
 <li appUiProject class="project">
-  <div class="project__shield"></div>
+  <div class="project__shield" (click)="openTasks()"></div>
   <!-- <input appUiCheckbox type="checkbox" name="" id=""> -->
-  <h4 appUiTask>{{ project.name }}</h4>
+  <h4 appUiTask>{{ project.title }}</h4>
 </li>
 
 <div *ngFor="let project of projectList">
