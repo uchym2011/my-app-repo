@@ -20,16 +20,10 @@ export class ProjectComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    //this.projectList = this.tasksService.projectListService;
-    this.tasksService
-      .getProjectsListObs()
-      .subscribe((project: Array<Project>) => {
-        this.projectList = project;
-      });
-  }
+  ngOnInit() {}
 
   openTasks() {
-    this.router.navigate(["desktopApp/projects", this.project.projectId]);
+    // * Za pomocą id przekazywanego łączy się z odpowiednim taskiem w swoim projeckie
+    // this.router.navigate(["desktopApp/projects", this.project.projectId]);
   }
 }

@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { TasksService } from '../../../services/tasks.service';
-import { AuthService } from '../../../auth/auth.service';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Project } from '../../../models/project';
+import { Component, OnInit } from "@angular/core";
+import { TasksService } from "../../../services/tasks.service";
+import { AuthService } from "../../../auth/auth.service";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Project } from "../../../models/project";
 
 @Component({
-  selector: 'app-add-project',
-  templateUrl: './add-project.component.html',
-  styleUrls: ['./add-project.component.css']
+  selector: "app-add-project",
+  templateUrl: "./add-project.component.html",
+  styleUrls: ["./add-project.component.css"],
 })
 export class AddProjectComponent implements OnInit {
-
   addFormProject: FormGroup;
 
-  constructor(private tasksService: TasksService,private authService: AuthService) { }
+  constructor(
+    private tasksService: TasksService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.addFormProject = this.initForm();
@@ -21,9 +23,12 @@ export class AddProjectComponent implements OnInit {
 
   initForm() {
     return new FormGroup({
-      name: new FormArray([new FormControl('Nowa nazwa projektu', Validators.required)]),
-      description: new FormArray([new FormControl('Opis')]),
-      endDate: new FormArray([new FormControl(new Date())])
+      // FORM CONTROL
+      name: new FormArray([
+        new FormControl("Nowa nazwa projektu", Validators.required),
+      ]),
+      description: new FormArray([new FormControl("Opis")]),
+      endDate: new FormArray([new FormControl(new Date())]),
     });
   }
 
@@ -37,24 +42,25 @@ export class AddProjectComponent implements OnInit {
   createProjectList() {
     const projectList = new Array<Project>();
 
-    const nameArr = <[string]>this.addFormProject.get('name').value;
-    const descriptionArr = <[string]>this.addFormProject.get('description').value;
-    const endDateArr = <[Date]>this.addFormProject.get('endDate').value;
+    const nameArr = <[string]>this.addFormProject.get("name").value;
+    const descriptionArr = <[string]>(
+      this.addFormProject.get("description").value
+    );
+    const endDateArr = <[Date]>this.addFormProject.get("endDate").value;
 
     for (var _i = 0; _i < nameArr.length; _i++) {
       const project = {
-                                projectid: null,
-                                name: nameArr[_i],
-                                created: new Date(),
-                                description: descriptionArr[_i],
-                                status: 'P',
-                                userId: this.authService.user.uid,
-                                endDate: endDateArr[_i]
+        projectid: null,
+        name: nameArr[_i],
+        created: new Date(),
+        description: descriptionArr[_i],
+        status: "P",
+        userId: this.authService.user.uid,
+        endDate: endDateArr[_i],
       };
       projectList.push(project);
     }
     /// debugger;
     return projectList;
   }
-
 }

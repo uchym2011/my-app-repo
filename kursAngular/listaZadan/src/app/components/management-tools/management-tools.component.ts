@@ -1,7 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+  Validators,
+} from "@angular/forms";
 import { ProjectsService } from "src/app/services/projects.service";
 import { ManagementIcons } from "src/app/models/ManagementToolIcons";
+import { TasksService } from "src/app/services/tasks.service";
+import { Project } from "src/app/models/project";
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
   selector: "app-management-tools",
@@ -53,9 +62,13 @@ export class ManagementToolsComponent implements OnInit {
    */
   form: FormGroup;
 
+  addFormProject: FormGroup;
+
   constructor(
     private fb: FormBuilder,
-    private projectService: ProjectsService
+    private projectService: ProjectsService,
+    private tasksService: TasksService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -104,12 +117,55 @@ export class ManagementToolsComponent implements OnInit {
     }
   }
 
+  addProject() {
+    this.addFormProject = this.initForm();
+    const projectList = this.createProjectList();
+    // w serwisie taksService zrobić add dla projektow
+    this.tasksService.addProject(projectList);
+  }
+
+  initForm() {
+    return new FormGroup({
+      name: new FormArray([
+        new FormControl("Nowa nazwa projektu", Validators.required),
+      ]),
+      description: new FormArray([new FormControl("Opis")]),
+      endDate: new FormArray([new FormControl(new Date())]),
+    });
+  }
+
+  createProjectList() {
+    const projectList = new Array<Project>();
+
+    const nameArr = <[string]>this.addFormProject.get("name").value;
+    const descriptionArr = <[string]>(
+      this.addFormProject.get("description").value
+    );
+    const endDateArr = <[Date]>this.addFormProject.get("endDate").value;
+
+    for (var _i = 0; _i < nameArr.length; _i++) {
+      const project = {
+        projectid: null,
+        name: nameArr[_i],
+        created: new Date(),
+        description: descriptionArr[_i],
+        status: "P",
+        userId: this.authService.user.uid,
+        endDate: endDateArr[_i],
+      };
+      projectList.push(project);
+    }
+    /// debugger;
+    return projectList;
+  }
+
   formSubmit(): void {
     if (this.mode === this.icons.addition) {
       const { title } = this.form.getRawValue();
       this.environment === "tasks"
         ? this.projectService.addTask(title)
-        : this.projectService.addProject(title);
+        : this.addProject();
+      // : this.projectService.addProject(title);
       this.mode = "";
       this.finderPanel = !this.finderPanel;
       this.activeDescription.emit(true);

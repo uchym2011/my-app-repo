@@ -2,8 +2,12 @@ import { Component, OnInit, Input } from "@angular/core";
 import { ProjectsService } from "src/app/services/projects.service";
 import { Project } from "src/app/models/project";
 import { Task } from "src/app/models/task";
-import { Observable, forkJoin } from "rxjs";
+import { Observable, forkJoin, combineLatest } from "rxjs";
+
+import { filter, tap, map } from "rxjs/operators";
+
 import { ActivatedRoute } from "@angular/router";
+import { TasksService } from "src/app/services/tasks.service";
 
 @Component({
   selector: "app-tasks",
@@ -20,12 +24,21 @@ export class TasksComponent implements OnInit {
   // NAWIGATION
   projectId: number;
 
+  dailyTasks$ = this.tasksService.getTasksListObs().pipe(
+    map((tasks) => tasks.filter((task) => task.projectid === 44)),
+    tap((v) => console.log(v))
+    // filter(tasks => tasks.projectId === 44)
+  );
+
   constructor(
     private projectsService: ProjectsService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private tasksService: TasksService
   ) {}
 
   ngOnInit() {
+    // this.dailyTasks$.subscribe((v) => console.log(v));
+
     this.projectsService
       .getInitialProject()
       .subscribe((values) => (this.project = values));
@@ -68,6 +81,7 @@ export class TasksComponent implements OnInit {
   }
 
   test1(taskData) {
+    console.log("ddssdsdsd");
     this.activeDetails = false;
     this.taskData = taskData;
     this.activeDetails = true;
