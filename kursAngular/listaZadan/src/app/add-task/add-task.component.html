@@ -15,6 +15,13 @@
           <label> &nbsp; Piorytetowe: &nbsp;</label> <input type="checkbox" [formControlName]="i">
         </div>
       </div>
+
+      <div formArrayName="description" style="display: inline-block;">
+        <div *ngFor="let task of addForm2.get('description')['controls']; let i = index;">
+          <label> &nbsp; Opis: &nbsp;</label> <input type="text" [formControlName]="i">
+        </div>
+      </div>
+
     </div>
 
     <div>

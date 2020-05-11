@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { TasksService } from "../services/tasks.service";
-import { Task } from "../models/task";
+import { Task } from "src/app/models/task";
 import { FormGroup, FormArray, FormControl, Validators } from "@angular/forms";
 import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
 import { AuthService } from "../auth/auth.service";
@@ -51,7 +51,8 @@ export class AddTaskComponent implements OnInit {
     console.log("Wykonuję add-task.component.ts initForm2() #1");
     return new FormGroup({
       taskName: new FormArray([new FormControl(null, Validators.required)]),
-      priority: new FormArray([new FormControl("1")])
+      priority: new FormArray([new FormControl('1')]),
+      description: new FormArray([new FormControl('Opis taska')])
     });
   }
 
@@ -59,9 +60,11 @@ export class AddTaskComponent implements OnInit {
     console.log("Wykonuję add-task.component.ts createTaskList() #1");
     const tasksList = new Array<Task>();
 
-    const tasksArr = <[string]>this.addForm2.get("taskName").value; //pobieramy talbice tasków
+    const tasksArr = <[string]>this.addForm2.get('taskName').value; //pobieramy talbice tasków
 
-    const priorArr = <[number]>this.addForm2.get("priority").value; //pobieramy priorytety
+    const priorArr = <[number]>this.addForm2.get('priority').value; //pobieramy priorytety
+
+    const descriptionArr = <[string]>this.addForm2.get('description').value; //pobieramy description
 
     // w petli dla każdego taskName pobieramy taski.
     /*     tasksArr.forEach(taskName => {
@@ -70,7 +73,7 @@ export class AddTaskComponent implements OnInit {
     }); */
 
     for (var _i = 0; _i < tasksArr.length; _i++) {
-      const task = {id: null, userId: this.authService.user.uid, name: tasksArr[_i], created: new Date().toLocaleString(), end: null, isDone: 0, priority: priorArr[_i], projectId: this.tasksService.projectListService[0].projectid};
+      const task = {id: null, userId: this.authService.user.uid, name: tasksArr[_i], created: new Date().toLocaleString(), end: null, isDone: 0, priority: priorArr[_i], projectId: this.tasksService.projectListService[0].projectid, description:  descriptionArr[_i]};
       console.log('Wykonuję add-task.component.ts createTaskList() #2 [task] =' + task);
       tasksList.push(task);
       //debugger;
@@ -88,5 +91,8 @@ export class AddTaskComponent implements OnInit {
 
     const arr2 = <FormArray>this.addForm2.get("priority");
     arr2.push(new FormControl("1"));
+
+    const arr3 = <FormArray>this.addForm2.get("description");
+    arr3.push(new FormControl("Opis taska"));
   }
 }

@@ -5,14 +5,14 @@ export interface Task {
   _id?: { $oid: string };
   userId?: string;
   title?: string;
+  name?: string;
   created?: string;
   end?: string;
-  finishDate?: string;
+  //finishDate?: string;
   isDone?: number;
   priority?: number;
   projectid?: number;
-  // TODO
-  // description?: string;
+  description?: string;
 }
 
 // id: number;

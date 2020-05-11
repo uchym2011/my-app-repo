@@ -17,21 +17,21 @@
     <ul>
       <h2>Priorytety ({{tasksListPrior.length}})</h2>
       <li *ngFor="let taskPrior of tasksListPrior">
-        <b>{{taskPrior.title | transformTask: '!'}}</b>
+        <b>{{taskPrior.name | transformTask: '!'}}</b>
       </li>
     </ul>
 
     <ul>
       <h2>Normalne ({{tasksListNorm.length}})</h2>
       <li *ngFor="let taskNorm of tasksListNorm">
-        {{ taskNorm.title }}
+        {{ taskNorm.name }}
       </li>
     </ul>
 
     <div *ngFor="let task of tasksList; let odd = odd">
       <ul *ngIf="task.priority == 1;">
         <li appDate [date]="task.created" [ngClass]="{'odd-li': odd===true, 'last-li': tasksList.length===1 }">
-          <b>{{task.title | transformTask: '!'}}</b>
+          <b>{{task.name | transformTask: '!'}}</b>
           <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
           <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
           {{' - Zadanie priorytetowe !'}}
@@ -41,7 +41,7 @@
       <ul *ngIf="task.priority < 1;">
 
         <li appDate [date]="task.created">
-          {{task.title | transformTask: '!'}}
+          {{task.name | transformTask: '!'}}
           <button type="button" class="btn btn-danger" (click)="remove(task)">Usuń</button>
           <button type="button" class="btn btn-success" (click)="done(task)">Zrobione</button>
           {{ '!'}}

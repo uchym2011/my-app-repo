@@ -16,7 +16,7 @@ export class ProjectDetailsComponent implements OnInit {
     this._taskData = value;
     if (this.detailsForm) {
       this.detailsForm.patchValue({
-        finishDate: formatDate(this._taskData.finishDate, "yyyy-MM-dd", "en"),
+        finishDate: formatDate(this._taskData.end, "yyyy-MM-dd", "en"),
         description: this._taskData.description,
       });
     }
@@ -37,7 +37,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.detailsForm = this.fb.group({
-      finishDate: formatDate(this._taskData.finishDate, "yyyy-MM-dd", "en"),
+      finishDate: formatDate(this._taskData.end, "yyyy-MM-dd", "en"),
       description: this._taskData.description,
     });
   }
@@ -51,9 +51,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   unactivePanel() {
-    const { finishDate, description } = this.detailsForm.getRawValue();
-    const { id } = this._taskData;
-    this.projectsService.changeTask({ id, finishDate, description });
+    const { end, description } = this.detailsForm.getRawValue();
+    const { _id } = this._taskData;
+    this.projectsService.changeTask({ _id, end, description });
     this.active = false;
     this.unactiveDetails.emit(this.active);
   }
