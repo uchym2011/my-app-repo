@@ -3,8 +3,7 @@
     </app-todo-task> -->
   <!-- <ul class="tasks__list"> -->
   <!--  TODO -->
-  <app-management-tools (activeDescription)="handleDescription($event)" (beginFinding)="filterList($event)"
-    [environment]="'tasks'">
+  <app-management-tools (activeDescription)="handleDescription($event)" [environment]="'tasks'">
   </app-management-tools>
 
   <ng-container *ngIf="activeDetails">
@@ -20,7 +19,7 @@
       <app-task *ngFor="let task of project.tasks" [project]="task" (taskClicked)="test1($event)"></app-task>
     </ng-container> -->
 
-    <ng-container *ngIf="dailyTasks$ | async as project">
+    <ng-container *ngIf="tasks$ | async as project">
       <app-task *ngFor="let task of project" [project]="task" (taskClicked)="test1($event)"></app-task>
     </ng-container>
     <!-- dailyTasks$ -->

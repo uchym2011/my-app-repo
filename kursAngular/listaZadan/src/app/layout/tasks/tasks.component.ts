@@ -2,9 +2,25 @@ import { Component, OnInit, Input } from "@angular/core";
 import { ProjectsService } from "src/app/services/projects.service";
 import { Project } from "src/app/models/project";
 import { Task } from "src/app/models/task";
-import { Observable, forkJoin, combineLatest } from "rxjs";
+import {
+  Observable,
+  forkJoin,
+  combineLatest,
+  BehaviorSubject,
+  Subject,
+  merge,
+  zip,
+  iif,
+} from "rxjs";
 
-import { filter, tap, map } from "rxjs/operators";
+import {
+  filter,
+  tap,
+  map,
+  withLatestFrom,
+  mergeMap,
+  startWith,
+} from "rxjs/operators";
 
 import { ActivatedRoute } from "@angular/router";
 import { TasksService } from "src/app/services/tasks.service";
@@ -24,11 +40,9 @@ export class TasksComponent implements OnInit {
   // NAWIGATION
   projectId: number;
 
-  dailyTasks$ = this.tasksService.getTasksListObs().pipe(
-    map((tasks) => tasks.filter((task) => task.projectid === 44)),
-    tap((v) => console.log(v))
-    // filter(tasks => tasks.projectId === 44)
-  );
+  //  ZRÓB TAK ABY FILTROWANA LISTA WYŚWIETLAŁA SIĘ DOMYŚLNIE
+  tasks$ = this.tasksService.filteredTasks$;
+  // tasks$ = this.tasksService.dailyTasks$;
 
   constructor(
     private projectsService: ProjectsService,
@@ -37,11 +51,11 @@ export class TasksComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.dailyTasks$.subscribe((v) => console.log(v));
+    this.tasksService
+      .getTasksListObs()
+      .subscribe((values) => console.log(values));
 
-    this.projectsService
-      .getInitialProject()
-      .subscribe((values) => (this.project = values));
+    this.tasks$.subscribe((v) => console.log("TASKS", v));
 
     this.router.params.subscribe((params) => {
       this.projectId = +params["projectId"]; // (+) converts string 'id' to a number
@@ -65,11 +79,13 @@ export class TasksComponent implements OnInit {
   }
 
   filterList(event) {
-    console.log(event.toLowerCase());
+    console.log("clg to:", event);
     const searchingElement = event ? event.toLowerCase() : event;
-    this.filteredTasks = this.project.tasks.filter(
-      (task) => task.title.toLowerCase().indexOf(searchingElement) > -1
-    );
+    // ! ZROBIE TO W SERWISIE
+    // this.startSearchingSubject$.next(searchingElement);
+    // this.filteredTasks = this.project.tasks.filter(
+    //   (task) => task.title.toLowerCase().indexOf(searchingElement) > -1
+    // );
   }
 
   handleDescription(detailsState) {

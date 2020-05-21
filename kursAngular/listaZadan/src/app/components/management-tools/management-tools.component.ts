@@ -11,6 +11,9 @@ import { ManagementIcons } from "src/app/models/ManagementToolIcons";
 import { TasksService } from "src/app/services/tasks.service";
 import { Project } from "src/app/models/project";
 import { AuthService } from "src/app/auth/auth.service";
+import { Task } from "src/app/models/task";
+import { withLatestFrom, switchMap, tap, filter, map } from "rxjs/operators";
+import { Observable, combineLatest } from "rxjs";
 
 @Component({
   selector: "app-management-tools",
@@ -22,11 +25,6 @@ export class ManagementToolsComponent implements OnInit {
    * Where the component should operate.
    */
   @Input() environment;
-
-  /**
-   * Trigger finding item proces
-   */
-  @Output() beginFinding: EventEmitter<any> = new EventEmitter();
 
   /**
    * Trigger opening description panel
@@ -62,7 +60,12 @@ export class ManagementToolsComponent implements OnInit {
    */
   form: FormGroup;
 
+  // !
+  filtredTask$: any;
+  searchngText$: Observable<string>;
+
   addFormProject: FormGroup;
+  addForm2: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -77,9 +80,9 @@ export class ManagementToolsComponent implements OnInit {
       searching: "",
     });
 
-    this.form.controls["searching"].valueChanges.subscribe((text) => {
-      this.beginFinding.emit(text);
-    });
+    this.form.controls["searching"].valueChanges.subscribe((value) =>
+      this.tasksService.emitSearchingValue(value)
+    );
   }
 
   hidePanel(): void {
@@ -102,7 +105,6 @@ export class ManagementToolsComponent implements OnInit {
       this.setupPanel("fa-plus");
     } else {
       // stop searching elements
-      this.beginFinding.emit("");
       this.setupPanel("fa-plus");
     }
   }
@@ -146,7 +148,7 @@ export class ManagementToolsComponent implements OnInit {
     for (var _i = 0; _i < nameArr.length; _i++) {
       const project = {
         projectid: null,
-        name: nameArr[_i],
+        name: this.form.controls["title"].value,
         created: new Date(),
         description: descriptionArr[_i],
         status: "P",
@@ -159,16 +161,67 @@ export class ManagementToolsComponent implements OnInit {
     return projectList;
   }
 
+  createTaskList() {
+    const tasksList = new Array<Task>();
+
+    const tasksArr = <[string]>this.addForm2.get("taskName").value; //pobieramy talbice tasków
+
+    const priorArr = <[number]>this.addForm2.get("priority").value; //pobieramy priorytety
+
+    // w petli dla każdego taskName pobieramy taski.
+    /*     tasksArr.forEach(taskName => {
+      const task = { name: taskName, userId: this.authService.user.uid, created: new Date().toLocaleString(), isDone: 0 , priority: 1};
+      tasksList.push(task);
+    }); */
+
+    for (var _i = 0; _i < tasksArr.length; _i++) {
+      const task = {
+        id: null,
+        userId: this.authService.user.uid,
+        name: this.form.controls["title"].value,
+        created: new Date().toLocaleString(),
+        end: null,
+        isDone: 0,
+        priority: priorArr[_i],
+        projectid: this.tasksService.projectListService[0].projectid,
+      };
+      console.log(
+        "Wykonuję add-task.component.ts createTaskList() #2 [task] =" + task
+      );
+      tasksList.push(task);
+      //debugger;
+      //! tutaj potrzebne jest odczytanie projectId dla konkretnego użytkownika
+      //! sprobować w serwisie odczytać projectId a potem go odczytać tutaj
+    }
+
+    return tasksList;
+  }
+
+  addTask() {
+    console.log("Wykonuję add-task.component.ts addTask() #2" + this.addForm2);
+    this.addForm2 = this.initForm2();
+    const taskList = this.createTaskList();
+    this.tasksService.add(taskList);
+    this.tasksService.saveTaskInDB();
+  }
+
+  initForm2() {
+    return new FormGroup({
+      taskName: new FormArray([new FormControl(null, Validators.required)]),
+      priority: new FormArray([new FormControl("1")]),
+    });
+  }
+
   formSubmit(): void {
     if (this.mode === this.icons.addition) {
       const { title } = this.form.getRawValue();
-      this.environment === "tasks"
-        ? this.projectService.addTask(title)
-        : this.addProject();
+      this.environment === "tasks" ? this.addTask() : this.addProject();
       // : this.projectService.addProject(title);
       this.mode = "";
       this.finderPanel = !this.finderPanel;
       this.activeDescription.emit(true);
     }
+
+    console.log(this.tasksService.getTasksListObs());
   }
 }

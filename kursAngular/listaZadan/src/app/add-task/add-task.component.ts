@@ -8,50 +8,36 @@ import { AuthService } from "../auth/auth.service";
 @Component({
   selector: "app-add-task",
   templateUrl: "./add-task.component.html",
-  styleUrls: ["./add-task.component.scss"]
+  styleUrls: ["./add-task.component.scss"],
 })
 export class AddTaskComponent implements OnInit {
   addForm2: FormGroup;
 
-  constructor(private tasksService: TasksService,private authService: AuthService) {
-  }
+  constructor(
+    private tasksService: TasksService,
+    private authService: AuthService
+  ) {}
 
   /**
-  * @Output()
-  * emitTask = new EventEmitter<string>();
-  */
+   * @Output()
+   * emitTask = new EventEmitter<string>();
+   */
 
- add2() {
-  console.log('Wykonuję add-task.component.ts add2() #2' + this.addForm2);
-  const taskList = this.createTaskList();
-  this.tasksService.add(taskList);
-  this.addForm2 = this.initForm2();
-  //console.log(this.addForm);
-  /**   this.tasksList.push(this.newTask);
-
-    console.log(this.tasksList);
-    this.newTask = '';*/
-
-    //this.emitTask.emit(this.newTask);
-    //this.tasksService.add(task);
-    //this.newTask = '';
+  add2() {
+    console.log("Wykonuję add-task.component.ts add2() #2" + this.addForm2);
+    const taskList = this.createTaskList();
+    this.tasksService.add(taskList);
+    this.addForm2 = this.initForm2();
   }
 
   ngOnInit() {
-    // Tworzymy listę kontrolek
-    // drugi formularz
-
-    console.log("Wykonuję add-task.component.ts ngOnInit() #1");
-
     this.addForm2 = this.initForm2();
-
   }
 
   initForm2() {
-    console.log("Wykonuję add-task.component.ts initForm2() #1");
     return new FormGroup({
       taskName: new FormArray([new FormControl(null, Validators.required)]),
-      priority: new FormArray([new FormControl("1")])
+      priority: new FormArray([new FormControl("1")]),
     });
   }
 
@@ -70,8 +56,19 @@ export class AddTaskComponent implements OnInit {
     }); */
 
     for (var _i = 0; _i < tasksArr.length; _i++) {
-      const task = {id: null, userId: this.authService.user.uid, name: tasksArr[_i], created: new Date().toLocaleString(), end: null, isDone: 0, priority: priorArr[_i], projectId: this.tasksService.projectListService[0].projectid};
-      console.log('Wykonuję add-task.component.ts createTaskList() #2 [task] =' + task);
+      const task = {
+        id: null,
+        userId: this.authService.user.uid,
+        name: tasksArr[_i],
+        created: new Date().toLocaleString(),
+        end: null,
+        isDone: 0,
+        priority: priorArr[_i],
+        projectId: this.tasksService.projectListService[0].projectid,
+      };
+      console.log(
+        "Wykonuję add-task.component.ts createTaskList() #2 [task] =" + task
+      );
       tasksList.push(task);
       //debugger;
       //! tutaj potrzebne jest odczytanie projectId dla konkretnego użytkownika

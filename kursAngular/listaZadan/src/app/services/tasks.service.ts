@@ -1,5 +1,11 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, merge } from "rxjs";
+import {
+  BehaviorSubject,
+  Observable,
+  merge,
+  Subject,
+  combineLatest,
+} from "rxjs";
 import { Task } from "../models/task";
 import { HttpService } from "./http.service";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -7,6 +13,8 @@ import { User } from "firebase";
 
 import { User as UserDB } from "../models/user";
 import { Project } from "../models/project";
+import { map, withLatestFrom, tap, startWith, concatMap } from "rxjs/operators";
+import { isNgTemplate } from "@angular/compiler";
 
 @Injectable()
 export class TasksService {
@@ -18,13 +26,41 @@ export class TasksService {
 
   public projectListService: Array<Project> = [];
 
+  //!  MY
+  private findTextSubject$: Subject<string> = new Subject();
+  public findTextAction$ = this.findTextSubject$.asObservable();
+
+  getProjects$ = this.httpSevice.getInitProject$;
+
+  dailyTasks$ = combineLatest(this.getTasksListObs(), this.getProjects$).pipe(
+    map(([tasks, projects]) =>
+      tasks.filter(
+        (task) =>
+          task.projectid ===
+          projects.find((item) => item.name === "Bieżący").projectid
+      )
+    )
+  );
+
+  //  ZRÓB TAK ABY FILTROWANA LISTA WYŚWIETLAŁA SIĘ DOMYŚLNIE
+
+  findDailyTasks$ = this.findTextAction$.pipe(
+    withLatestFrom(this.dailyTasks$),
+    map(([findText, tasks]) =>
+      tasks.filter((task) => task.name.includes(findText))
+    )
+  );
+
+  filteredTasks$ = combineLatest(
+    this.dailyTasks$,
+    this.findDailyTasks$.pipe(startWith([]))
+  ).pipe(map(([daily, filtered]) => (filtered.length ? filtered : daily)));
+
   constructor(
     private httpSevice: HttpService,
     private angularFire: AngularFireAuth
   ) {
-    console.log("Wykonuję tasks.service.ts constructor #1");
-
-    angularFire.authState.subscribe(user => {
+    angularFire.authState.subscribe((user) => {
       if (user) {
         this.init();
       } else {
@@ -32,64 +68,27 @@ export class TasksService {
       }
     });
 
-    console.log('tasks.serive.ts contructor user: ' + this.angularFire.auth.currentUser.uid );
-
-    /*    const tasksList =
-         [
-         { name: 'Nauka Angulara', created: new Date().toLocaleString(), isDone: false },
-         { name: 'Nauka TypeScript', created: new Date().toLocaleString(), isDone: false },
-         { name: 'Ogladanie Gry o Tron', created: new Date().toLocaleString(), isDone: false },
-         { name: 'Ogladanie The Walking Dead', created: new Date().toLocaleString(), end: new Date().toLocaleString(),  isDone: true },
-         { name: 'Budowa Serwera NAS', created: new Date().toLocaleString(), end: new Date().toLocaleString(), isDone: true}
-         ];
-
-       // wrzucmay nasza liste wypełniona danymi
-       this.tasksListObs.next(tasksList); */
-
+    console.log(
+      "tasks.serive.ts contructor user: " +
+        this.angularFire.auth.currentUser.uid
+    );
   }
 
   init() {
-    this.httpSevice.getTasks().subscribe(list => {
+    this.httpSevice.getTasks().subscribe((list) => {
+      console.log("list: ", list);
       this.tasksListObs.next(list);
     });
 
-/*     const projectListBB: Array<Project> =
-    [
-     {
-       name:"Bieżący",
-       description:"Bieżący projekt",
-       status:"B",
-       userId: this.angularFire.auth.currentUser.uid,
-       endDate: null
-     }
-    ];
-    console.log('logiii ' + projectListBB);
-
-    const lista = this.projectsListObs.getValue().concat(projectListBB);
-    this.projectsListObs.next(lista);
-    console.log('dodaje project init ' + projectListBB); */
-
-
-/*     this.httpSevice.getProjectsUsers().subscribe(list => {
-      this.projectsListObs.next(list);
-    }); */
-
-     this.getProjectsListObs()
-        .subscribe((project: Array<Project>) => {
-        this.projectListService = project;
-        ///debugger;
-      });
-
-
-    /* TABELA_USERS NIE KASOWAC PRZYKLAD
-    console.log('Wykonuję tasks.service.ts init #2 gerUser');
-    this.httpSevice.getUser().subscribe(userdb => {
-      this.tasksUserObs.next(userdb);
-    }); */
-
+    this.getProjectsListObs().subscribe((project: Array<Project>) => {
+      console.log(project);
+      this.projectListService = project;
+      ///debugger;
+    });
   }
 
   add(task: Array<Task>) {
+    console.log(task);
     const list = this.tasksListObs.getValue().concat(task);
     this.tasksListObs.next(list);
   }
@@ -98,22 +97,19 @@ export class TasksService {
     console.log("Wykonuję tasks.service.ts addProject #1");
     //this.saveNewProjectInDB(project).subscribe(value => console.log("UNIKATOWE TEKSTY"));
 
-    this.httpSevice.saveProject(project).subscribe(value => {
-      this.httpSevice.getProjectsUsersOnly().subscribe(list => {
+    this.httpSevice.saveProject(project).subscribe((value) => {
+      this.httpSevice.getProjectsUsersOnly().subscribe((list) => {
         this.projectsListObs.next(list);
         //debugger;
       });
-    })
+    });
 
     //debugger;
 
     //const example = this.httpSevice.saveProject(project).pipe(merge(this.httpSevice.getProjectsUsers()));
-
-
   }
 
   remove(task: Task) {
-
     console.log("Wykonuję tasks.service.ts remove #1");
     task.isDone = -1;
     const list = this.tasksListObs.getValue();
@@ -129,15 +125,11 @@ export class TasksService {
   getTasksListObs(): Observable<Array<Task>> {
     return this.tasksListObs.asObservable();
   }
-
+  // METODA POBIERA INICJALNY PROJEKT "BIEŻACE"
   getProjectsListObs(): Observable<Array<Project>> {
-
-    console.log("Wykonuję tasks.service.ts getProjectsListObs #1");
-    // this.init();
-
-    this.httpSevice.getProjectsUsers().subscribe(list => {
+    this.httpSevice.getProjectsUsers().subscribe((list) => {
+      // console.log("getProjectsListObs: ", list);
       this.projectsListObs.next(list);
-      ///debugger;
     });
 
     return this.projectsListObs.asObservable();
@@ -149,6 +141,17 @@ export class TasksService {
 
   saveNewProjectInDB(project: Array<Project>) {
     this.httpSevice.saveProject(project);
+  }
 
+  // !!
+
+  //  ?
+  emitSearchingValue(value: string) {
+    this.findTextSubject$.next(value);
   }
 }
+
+// TODO: spraawdz czy działa porpawnie wszystko dla taskow i projektow
+//  TODO pomyśl jak można zrobi aby nawigacja dziala dla projektow po kliknieciu
+// TODO zacznij poprawiac czyli refaktor
+//  TODO rob rwd
