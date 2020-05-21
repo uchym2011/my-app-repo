@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Project } from "../models/project";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -328,6 +328,10 @@ export class ProjectsService {
       ],
     },
   ];
+
+  private findTextSubject$: Subject<string> = new Subject();
+  public findTextAction$ = this.findTextSubject$.asObservable();
+
   projectsObs = new BehaviorSubject<Array<any>>(this.projects);
   initialProjecObs = new BehaviorSubject<any>(this.initialProject);
 
@@ -380,4 +384,8 @@ export class ProjectsService {
     this.templateProject.title = title;
     projects.push(this.templateProject);
   }
+
+  // emitSearchingValue(value: string) {
+  //   this.findTextSubject$.next(value);
+  // }
 }

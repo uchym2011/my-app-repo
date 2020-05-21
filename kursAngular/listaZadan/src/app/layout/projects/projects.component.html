@@ -4,7 +4,10 @@
   <!--  TODO -->
   <app-management-tools [environment]="'projects'"></app-management-tools>
   <ul class="projects__list">
-    <app-project *ngFor="let project of projects" [project]="project" [routerLink]="['/daily', project.projectId]">
-    </app-project>
+
+    <ng-container *ngIf="projects$ | async as projects">
+      <app-project *ngFor="let project of projects" [project]="project" [routerLink]="['/daily', project.projectId]">
+      </app-project>
+    </ng-container>
   </ul>
 </main>

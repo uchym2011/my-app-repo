@@ -30,7 +30,8 @@ export class TasksService {
   private findTextSubject$: Subject<string> = new Subject();
   public findTextAction$ = this.findTextSubject$.asObservable();
 
-  getProjects$ = this.httpSevice.getInitProject$;
+  private findProjectSubject$: Subject<string> = new Subject();
+  public findProjectAction$ = this.findProjectSubject$.asObservable();
 
   dailyTasks$ = combineLatest(this.getTasksListObs(), this.getProjects$).pipe(
     map(([tasks, projects]) =>
@@ -54,6 +55,24 @@ export class TasksService {
   filteredTasks$ = combineLatest(
     this.dailyTasks$,
     this.findDailyTasks$.pipe(startWith([]))
+  ).pipe(map(([daily, filtered]) => (filtered.length ? filtered : daily)));
+
+  // *
+  // * PROJECTS
+  //  *
+
+  getProjects$ = this.httpSevice.getInitProject$;
+
+  findProjects$ = this.findProjectAction$.pipe(
+    withLatestFrom(this.getProjects$),
+    map(([findText, projects]) =>
+      projects.filter((project) => project.name.includes(findText))
+    )
+  );
+
+  filteredProjects$ = combineLatest(
+    this.getProjects$,
+    this.findProjects$.pipe(startWith([]))
   ).pipe(map(([daily, filtered]) => (filtered.length ? filtered : daily)));
 
   constructor(
@@ -149,9 +168,14 @@ export class TasksService {
   emitSearchingValue(value: string) {
     this.findTextSubject$.next(value);
   }
+
+  findProject(value: string) {
+    this.findProjectSubject$.next(value);
+  }
 }
 
 // TODO: spraawdz czy działa porpawnie wszystko dla taskow i projektow
+// ! Panel boczny (details musi się dopbrze wykonywać po klijknęciu w task)
 //  TODO pomyśl jak można zrobi aby nawigacja dziala dla projektow po kliknieciu
 // TODO zacznij poprawiac czyli refaktor
 //  TODO rob rwd

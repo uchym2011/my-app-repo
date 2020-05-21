@@ -81,7 +81,9 @@ export class ManagementToolsComponent implements OnInit {
     });
 
     this.form.controls["searching"].valueChanges.subscribe((value) =>
-      this.tasksService.emitSearchingValue(value)
+      this.environment === "tasks"
+        ? this.tasksService.emitSearchingValue(value)
+        : this.tasksService.findProject(value)
     );
   }
 

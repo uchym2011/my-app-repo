@@ -12,7 +12,7 @@ import { TasksService } from "src/app/services/tasks.service";
   styleUrls: ["./projects.component.scss"],
 })
 export class ProjectsComponent implements OnInit {
-  projects: Array<Project>;
+  projects$ = this.tasksService.filteredProjects$;
   constructor(
     private projectsService: ProjectsService,
     private tasksService: TasksService
@@ -22,11 +22,5 @@ export class ProjectsComponent implements OnInit {
     //   .subscribe((project) => (this.projects = project));
   }
 
-  ngOnInit() {
-    this.tasksService
-      .getProjectsListObs()
-      .subscribe((project: Array<Project>) => {
-        this.projects = project;
-      });
-  }
+  ngOnInit() {}
 }
