@@ -42,30 +42,30 @@ export class TasksComponent implements OnInit {
 
   //  ZRÓB TAK ABY FILTROWANA LISTA WYŚWIETLAŁA SIĘ DOMYŚLNIE
   tasks$ = this.tasksService.filteredTasks$;
+  projects$ = this.tasksService.filteredProjects$;
   // tasks$ = this.tasksService.dailyTasks$;
 
   constructor(
     private projectsService: ProjectsService,
     private router: ActivatedRoute,
     private tasksService: TasksService
-  ) {}
+  ) {
+    console.log("run TASKS");
+  }
 
   ngOnInit() {
     this.tasksService
       .getTasksListObs()
       .subscribe((values) => console.log(values));
 
-    this.tasks$.subscribe((v) => console.log("TASKS", v));
-
     this.router.params.subscribe((params) => {
       this.projectId = +params["projectId"]; // (+) converts string 'id' to a number
-      console.log(this.projectId);
-      this.projectsService.getProjects().subscribe((projects) => {
-        // WYKONUJEMY JEŚLI PRZEKAZALIŚMY PARAMETR DO ROUTERA
+
+      this.tasks$.subscribe((tasks) => {
         if (this.projectId) {
           // NOWA LISTA DO WYŚWIETLANIA TASKÓW
-          [this.project] = projects.filter(
-            (project) => project.projectId === this.projectId
+          [this.project] = tasks.filter(
+            (project) => project.projectid === this.projectId
           );
           // lISTA DO WYŚWIETLANIA DANYCH W DESCRIPTION PANELU BOCZNYM
           // NIE POTRZEBNE JEST TUTAJ PRZEKAZYWANIE DO TEGO OBIEKTU POKOMBINUJ
@@ -75,7 +75,6 @@ export class TasksComponent implements OnInit {
       });
       // In a real app: dispatch action to load the details here.
     });
-    console.log(this.projectId);
   }
 
   filterList(event) {

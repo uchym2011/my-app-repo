@@ -22,5 +22,7 @@ export class ProjectsComponent implements OnInit {
     //   .subscribe((project) => (this.projects = project));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projects$.subscribe((v) => console.log(v));
+  }
 }

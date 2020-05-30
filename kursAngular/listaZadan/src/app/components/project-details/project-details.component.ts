@@ -14,9 +14,13 @@ export class ProjectDetailsComponent implements OnInit {
 
   @Input() set taskData(value: Task) {
     this._taskData = value;
+
     if (this.detailsForm) {
       this.detailsForm.patchValue({
-        finishDate: formatDate(this._taskData.finishDate, "yyyy-MM-dd", "en"),
+        finishDate: this.correctDateFormat(
+          this._taskData.created,
+          "DD.MM.RRRR"
+        ),
         // description: this._taskData.description,
         description: "description", // ! Dopoprawnego wyświetlania potrzeba dodanie typu description na bazie
       });
@@ -25,7 +29,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   @Output() unactiveDetails: EventEmitter<any> = new EventEmitter();
 
-  _taskData: Task;
+  _taskData: any;
   detailsForm: FormGroup;
   chackIT = "TAK";
 
@@ -37,8 +41,13 @@ export class ProjectDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this._taskData);
     this.detailsForm = this.fb.group({
-      finishDate: formatDate(this._taskData.finishDate, "yyyy-MM-dd", "en"),
+      finishDate: formatDate(
+        new Date(this._taskData.created.slice(0, 10)),
+        "yyyy-MM-dd",
+        "en"
+      ),
       // description: this._taskData.description,
       description: "descrription",
     });
@@ -58,5 +67,20 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectsService.changeTask({ _id, finishDate, description });
     this.active = false;
     this.unactiveDetails.emit(this.active);
+  }
+
+  correctDateFormat(date: string, initFormat: "DD.MM.RRRR") {
+    // ! DOCELOWO Z BAZY POWINIEN LECIEĆ POPRAWNY FORMAT
+    const time: any = {};
+    const dataTime = date.slice(0, 10).split(".");
+    const restTime = date.slice(10, date.length);
+
+    // Create contain time object
+    initFormat
+      .slice(0, 10)
+      .split(".")
+      .forEach((type, index) => (time[type] = dataTime[index]));
+
+    return `${time.RRRR}-${time.MM}-${time.DD}`;
   }
 }

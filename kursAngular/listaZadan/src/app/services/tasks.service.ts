@@ -27,13 +27,20 @@ export class TasksService {
   public projectListService: Array<Project> = [];
 
   //!  MY
+  getProjects$ = this.httpSevice.getInitProject$.pipe(
+    tap((v) => console.log("PROJECT LIST:", v))
+  );
+
   private findTextSubject$: Subject<string> = new Subject();
   public findTextAction$ = this.findTextSubject$.asObservable();
 
   private findProjectSubject$: Subject<string> = new Subject();
   public findProjectAction$ = this.findProjectSubject$.asObservable();
 
-  dailyTasks$ = combineLatest(this.getTasksListObs(), this.getProjects$).pipe(
+  dailyTasks$ = combineLatest(
+    this.getTasksListObs(),
+    this.getProjectsListObs()
+  ).pipe(
     map(([tasks, projects]) =>
       tasks.filter(
         (task) =>
@@ -61,17 +68,15 @@ export class TasksService {
   // * PROJECTS
   //  *
 
-  getProjects$ = this.httpSevice.getInitProject$;
-
   findProjects$ = this.findProjectAction$.pipe(
-    withLatestFrom(this.getProjects$),
+    withLatestFrom(this.getProjectsListObs()),
     map(([findText, projects]) =>
       projects.filter((project) => project.name.includes(findText))
     )
   );
 
   filteredProjects$ = combineLatest(
-    this.getProjects$,
+    this.getProjectsListObs(),
     this.findProjects$.pipe(startWith([]))
   ).pipe(map(([daily, filtered]) => (filtered.length ? filtered : daily)));
 
@@ -173,9 +178,9 @@ export class TasksService {
     this.findProjectSubject$.next(value);
   }
 }
-
 // TODO: spraawdz czy działa porpawnie wszystko dla taskow i projektow
-// ! Panel boczny (details musi się dopbrze wykonywać po klijknęciu w task)
+// * TASKI SIĘ NIE WYŚWIETLAJA
+// * Taski musza sie dodawac na zywo z odpowiednia nazwa
 //  TODO pomyśl jak można zrobi aby nawigacja dziala dla projektow po kliknieciu
 // TODO zacznij poprawiac czyli refaktor
 //  TODO rob rwd

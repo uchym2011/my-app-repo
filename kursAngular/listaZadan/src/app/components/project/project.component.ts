@@ -24,6 +24,6 @@ export class ProjectComponent implements OnInit {
 
   openTasks() {
     // * Za pomocą id przekazywanego łączy się z odpowiednim taskiem w swoim projeckie
-    // this.router.navigate(["desktopApp/projects", this.project.projectId]);
+    this.router.navigate(["desktopApp/projects", this.project.projectid]);
   }
 }

@@ -6,7 +6,7 @@
   <ul class="projects__list">
 
     <ng-container *ngIf="projects$ | async as projects">
-      <app-project *ngFor="let project of projects" [project]="project" [routerLink]="['/daily', project.projectId]">
+      <app-project *ngFor="let project of projects" [project]="project" [routerLink]="['/projects', project.projectid]">
       </app-project>
     </ng-container>
   </ul>
