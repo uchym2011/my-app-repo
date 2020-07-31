@@ -12,7 +12,9 @@ export class TaskComponent implements OnInit {
   activeTask = false;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("task KOMPONENT WJEŻDZA NA BAZEE!");
+  }
 
   test(taskData) {
     this.activeTask = true;

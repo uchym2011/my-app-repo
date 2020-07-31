@@ -11,8 +11,9 @@
     </app-project-details>
   </ng-container>
   <ul class="tasks__list">
-    <ng-container *ngIf="tasks$ | async as project">
-      <app-task *ngFor="let task of project" [project]="task" (taskClicked)="test1($event)"></app-task>
+    <!-- OPERATOR RXJS ZROBIĆ TAK ABY BYŁO OBSŁUGIWAME PRZEZ tasks$ -->
+    <ng-container *ngIf="tasks$ | async as projects">
+      <app-task *ngFor="let task of projects" [project]="task" (taskClicked)="test1($event)"></app-task>
     </ng-container>
     <!-- dailyTasks$ -->
   </ul>

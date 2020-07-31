@@ -5,7 +5,7 @@ import { Task } from "../models/task";
 @Component({
   selector: "app-done-task",
   templateUrl: "./done-task.component.html",
-  styleUrls: ["./done-task.component.scss"]
+  styleUrls: ["./done-task.component.scss"],
 })
 export class DoneTaskComponent implements OnInit {
   // @Input()
@@ -13,9 +13,10 @@ export class DoneTaskComponent implements OnInit {
 
   constructor(private tasksService: TasksService) {
     console.log("Wykonuję done-task.component.ts constructor #1");
-    this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
-      this.tasksDone = tasks.filter(t => t.isDone === 1);
-    });
+    // ! nie usuwaj bo nie wiadomo czy potrzebne
+    // this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
+    //   this.tasksDone = tasks.filter(t => t.isDone === 1);
+    // });
   }
 
   ngOnInit() {}

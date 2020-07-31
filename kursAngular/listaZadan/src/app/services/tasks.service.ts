@@ -37,36 +37,48 @@ export class TasksService {
   private findProjectSubject$: Subject<string> = new Subject();
   public findProjectAction$ = this.findProjectSubject$.asObservable();
 
+  private projectIdForTasksSubject: Subject<number> = new Subject();
+  public projectIdForTasksAction = this.projectIdForTasksSubject.asObservable();
+  // * STARA DZIAŁAJĄCA WERSJA
+  // dailyTasks$ = combineLatest(
+  //   this.getTasksListObs(),
+  //   this.getProjectsListObs()
+  // ).pipe(
+  //   map(([tasks, projects]) =>
+  //     tasks.filter(
+  //       (task) =>
+  //         task.projectid ===
+  //         projects.find((item) => item.name === "Bieżący").projectid
+  //     )
+  //   )
+  // );
   dailyTasks$ = combineLatest(
     this.getTasksListObs(),
     this.getProjectsListObs()
-  ).pipe(
-    map(([tasks, projects]) =>
-      tasks.filter(
-        (task) =>
-          task.projectid ===
-          projects.find((item) => item.name === "Bieżący").projectid
-      )
-    )
   );
 
-  //  ZRÓB TAK ABY FILTROWANA LISTA WYŚWIETLAŁA SIĘ DOMYŚLNIE
-
-  findDailyTasks$ = this.findTextAction$.pipe(
-    withLatestFrom(this.dailyTasks$),
-    map(([findText, tasks]) =>
-      tasks.filter((task) => task.name.includes(findText))
-    )
+  dailyProjctId$ = this.getProjectsListObs().pipe(
+    tap((v) => console.log("PROJECT BIEZ ID1", v)),
+    map(
+      (projects) =>
+        projects.find((project) => project.name === "Bieżący").projectid
+    ),
+    tap((v) => console.log("PROJECT BIEZ ID2", v))
   );
 
   filteredTasks$ = combineLatest(
-    this.dailyTasks$,
-    this.findDailyTasks$.pipe(startWith([]))
-  ).pipe(map(([daily, filtered]) => (filtered.length ? filtered : daily)));
-
-  // *
-  // * PROJECTS
-  //  *
+    this.getTasksListObs()
+    // TODO UZUPEŁNIĆ FUNKCJE POZWLAJĄCĄ FILTROWANIE DANYCH
+    // TODO - W TAKSs component filtorwanie jest listy po subskrybcji router parametru --- id projektu szukanego
+    //  TODO - po wyfiltrowaniu należy założy funkcje która filtruje
+    // this.findDailyTasks$.pipe(startWith([]))
+  ).pipe(
+    map(
+      // ([tasksA, filtered]) => (filtered.length ? filtered : tasksA)
+      ([tasks, filtered]) => tasks
+    ),
+    tap((v) => console.log("FINAL FILTERED TASKS", v))
+  );
 
   findProjects$ = this.findProjectAction$.pipe(
     withLatestFrom(this.getProjectsListObs()),
@@ -98,16 +110,14 @@ export class TasksService {
     );
   }
 
+  changeProjectId(id: number) {
+    this.projectIdForTasksSubject.next(id);
+  }
+
   init() {
     this.httpSevice.getTasks().subscribe((list) => {
       console.log("list: ", list);
       this.tasksListObs.next(list);
-    });
-
-    this.getProjectsListObs().subscribe((project: Array<Project>) => {
-      console.log(project);
-      this.projectListService = project;
-      ///debugger;
     });
   }
 
@@ -124,13 +134,8 @@ export class TasksService {
     this.httpSevice.saveProject(project).subscribe((value) => {
       this.httpSevice.getProjectsUsersOnly().subscribe((list) => {
         this.projectsListObs.next(list);
-        //debugger;
       });
     });
-
-    //debugger;
-
-    //const example = this.httpSevice.saveProject(project).pipe(merge(this.httpSevice.getProjectsUsers()));
   }
 
   remove(task: Task) {
@@ -151,12 +156,7 @@ export class TasksService {
   }
   // METODA POBIERA INICJALNY PROJEKT "BIEŻACE"
   getProjectsListObs(): Observable<Array<Project>> {
-    this.httpSevice.getProjectsUsers().subscribe((list) => {
-      // console.log("getProjectsListObs: ", list);
-      this.projectsListObs.next(list);
-    });
-
-    return this.projectsListObs.asObservable();
+    return this.httpSevice.getProjectsUsers();
   }
 
   saveTaskInDB() {
@@ -179,8 +179,7 @@ export class TasksService {
   }
 }
 // TODO: spraawdz czy działa porpawnie wszystko dla taskow i projektow
-// * TASKI SIĘ NIE WYŚWIETLAJA
-// * Taski musza sie dodawac na zywo z odpowiednia nazwa
-//  TODO pomyśl jak można zrobi aby nawigacja dziala dla projektow po kliknieciu
+// * jest paere błed ów po wybraniu prajeku wczytuje się tylko biezący
+// * nowy task i wysypuja sie bledy zacznij refaktor od tego
 // TODO zacznij poprawiac czyli refaktor
 //  TODO rob rwd

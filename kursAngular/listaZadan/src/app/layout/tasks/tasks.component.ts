@@ -20,6 +20,7 @@ import {
   withLatestFrom,
   mergeMap,
   startWith,
+  switchMap,
 } from "rxjs/operators";
 
 import { ActivatedRoute } from "@angular/router";
@@ -41,9 +42,16 @@ export class TasksComponent implements OnInit {
   projectId: number;
 
   //  ZRÓB TAK ABY FILTROWANA LISTA WYŚWIETLAŁA SIĘ DOMYŚLNIE
-  tasks$ = this.tasksService.filteredTasks$;
+  tasks$ = combineLatest(
+    this.tasksService.filteredTasks$,
+    this.router.params
+  ).pipe(
+    map(([tasks, projectId]) =>
+      tasks.filter((task) => task.projectid === +projectId.projectId)
+    )
+  );
+
   projects$ = this.tasksService.filteredProjects$;
-  // tasks$ = this.tasksService.dailyTasks$;
 
   constructor(
     private projectsService: ProjectsService,
@@ -53,29 +61,7 @@ export class TasksComponent implements OnInit {
     console.log("run TASKS");
   }
 
-  ngOnInit() {
-    this.tasksService
-      .getTasksListObs()
-      .subscribe((values) => console.log(values));
-
-    this.router.params.subscribe((params) => {
-      this.projectId = +params["projectId"]; // (+) converts string 'id' to a number
-
-      this.tasks$.subscribe((tasks) => {
-        if (this.projectId) {
-          // NOWA LISTA DO WYŚWIETLANIA TASKÓW
-          [this.project] = tasks.filter(
-            (project) => project.projectid === this.projectId
-          );
-          // lISTA DO WYŚWIETLANIA DANYCH W DESCRIPTION PANELU BOCZNYM
-          // NIE POTRZEBNE JEST TUTAJ PRZEKAZYWANIE DO TEGO OBIEKTU POKOMBINUJ
-          this.taskData = this.project;
-          this.activeDetails = true;
-        }
-      });
-      // In a real app: dispatch action to load the details here.
-    });
-  }
+  ngOnInit() {}
 
   filterList(event) {
     console.log("clg to:", event);

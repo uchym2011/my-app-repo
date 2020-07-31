@@ -14,7 +14,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   @Input() set taskData(value: Task) {
     this._taskData = value;
-
+    console.log("project details", value);
     if (this.detailsForm) {
       this.detailsForm.patchValue({
         finishDate: this.correctDateFormat(

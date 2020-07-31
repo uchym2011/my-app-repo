@@ -67,6 +67,9 @@ export class ManagementToolsComponent implements OnInit {
   addFormProject: FormGroup;
   addForm2: FormGroup;
 
+  projectsList: any;
+  projectsList$ = this.tasksService.getProjectsListObs();
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectsService,
@@ -75,6 +78,7 @@ export class ManagementToolsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.projectsList$.subscribe((list) => (this.projectsList = list));
     this.form = this.fb.group({
       title: "",
       searching: "",
@@ -185,7 +189,7 @@ export class ManagementToolsComponent implements OnInit {
         end: null,
         isDone: 0,
         priority: priorArr[_i],
-        projectid: this.tasksService.projectListService[0].projectid,
+        projectid: this.projectsList[0].projectid,
       };
       console.log(
         "Wykonuję add-task.component.ts createTaskList() #2 [task] =" + task
@@ -223,7 +227,5 @@ export class ManagementToolsComponent implements OnInit {
       this.finderPanel = !this.finderPanel;
       this.activeDescription.emit(true);
     }
-
-    console.log(this.tasksService.getTasksListObs());
   }
 }

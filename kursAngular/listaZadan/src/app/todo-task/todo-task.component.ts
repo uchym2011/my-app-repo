@@ -53,17 +53,18 @@ export class TodoTaskComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.tasksListPrior);
-    this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
-      this.tasksList = tasks.filter((t) => t.isDone == 0);
+    // ! WYKASOWAŁEM WŁAAŚNIE
+    // this.tasksService.getTasksListObs().subscribe((tasks: Array<Task>) => {
+    //   this.tasksList = tasks.filter((t) => t.isDone == 0);
 
-      this.tasksListPrior = tasks.filter(
-        (t) => t.isDone == 0 && t.priority == 1
-      );
+    //   this.tasksListPrior = tasks.filter(
+    //     (t) => t.isDone == 0 && t.priority == 1
+    //   );
 
-      this.tasksListNorm = tasks.filter((t) => t.isDone == 0 && t.priority < 1);
-      console.log("TASKS LIST: " + this.tasksList.length);
-      // this.tasksList = tasks.filter(t => t.end === null);
-    });
+    //   this.tasksListNorm = tasks.filter((t) => t.isDone == 0 && t.priority < 1);
+    //   console.log("TASKS LIST: " + this.tasksList.length);
+    //   // this.tasksList = tasks.filter(t => t.end === null);
+    // });
 
     /* TABELA_USERS NIE KASOWAC PRZYKLAD
     this.tasksService.getUserListObs().subscribe((userdb: Array<User>) => {
@@ -72,11 +73,11 @@ export class TodoTaskComponent implements OnInit {
 
     // bylo to zakomentowane ponizej, ale mamy to juz odczytanie w tasksServisei
     // this.projectList = this.tasksService.projectListService;
-    this.tasksService
-      .getProjectsListObs()
-      .subscribe((project: Array<Project>) => {
-        this.projectList = project;
-      });
+    // this.tasksService
+    //   .getProjectsListObs()
+    //   .subscribe((project: Array<Project>) => {
+    //     this.projectList = project;
+    //   });
 
     console.log("PROJEKT LIST: " + this.projectList.length);
     /*     this.tasksService
