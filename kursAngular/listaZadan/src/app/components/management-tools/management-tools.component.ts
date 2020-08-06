@@ -12,8 +12,8 @@ import { TasksService } from "src/app/services/tasks.service";
 import { Project } from "src/app/models/project";
 import { AuthService } from "src/app/auth/auth.service";
 import { Task } from "src/app/models/task";
-import { withLatestFrom, switchMap, tap, filter, map } from "rxjs/operators";
-import { Observable, combineLatest } from "rxjs";
+import { Observable } from "rxjs";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: "app-management-tools",
@@ -61,6 +61,8 @@ export class ManagementToolsComponent implements OnInit {
   form: FormGroup;
 
   // !
+  currentProjectId: number;
+
   filtredTask$: any;
   searchngText$: Observable<string>;
 
@@ -74,10 +76,12 @@ export class ManagementToolsComponent implements OnInit {
     private fb: FormBuilder,
     private projectService: ProjectsService,
     private tasksService: TasksService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    this.router.params.subscribe(param => this.currentProjectId = +param.projectId);
     this.projectsList$.subscribe((list) => (this.projectsList = list));
     this.form = this.fb.group({
       title: "",
@@ -189,7 +193,7 @@ export class ManagementToolsComponent implements OnInit {
         end: null,
         isDone: 0,
         priority: priorArr[_i],
-        projectid: this.projectsList[0].projectid,
+        projectid: this.currentProjectId
       };
       console.log(
         "Wykonuję add-task.component.ts createTaskList() #2 [task] =" + task
